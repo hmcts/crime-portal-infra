@@ -11,11 +11,15 @@ subnets = {
     address_prefixes  = ["10.25.246.32/28"]
     service_endpoints = ["Microsoft.Storage"]
   }
+  backend-postgresql = {
+    address_prefixes  = ["10.25.246.48/28"]
+    service_endpoints = ["Microsoft.Storage", "Microsoft.Sql"]
+  }
 }
 
 route_tables = {
   rt = {
-    subnets = ["appgw", "frontend", "backend"]
+    subnets = ["appgw", "frontend", "backend", "backend-postgresql"]
     routes = {
       default = {
         address_prefix         = "0.0.0.0/0"
@@ -28,7 +32,7 @@ route_tables = {
 
 network_security_groups = {
   appgw-nsg = {
-    subnet = "appgw"
+    subnets = ["appgw"]
     rules = {
       "allow_http" = {
         priority                   = 200
@@ -44,7 +48,7 @@ network_security_groups = {
     }
   }
   frontend-nsg = {
-    subnet = "frontend"
+    subnets = ["frontend"]
     rules = {
       "allow_http" = {
         priority                   = 200
@@ -69,7 +73,7 @@ network_security_groups = {
     }
   }
   backend-nsg = {
-    subnet = "backend"
+    subnets = ["backend", "backend-postgresql"]
     rules = {
       "allow_ldap" = {
         priority                   = 200
@@ -89,7 +93,7 @@ network_security_groups = {
         source_port_range          = "*"
         destination_port_range     = "5432"
         source_address_prefix      = "10.25.246.16/28"
-        destination_address_prefix = "10.25.246.32/28"
+        destination_address_prefix = "10.25.246.48/28"
       }
       "allow_sql_mgmt" = {
         priority                   = 202
@@ -99,7 +103,7 @@ network_security_groups = {
         source_port_range          = "*"
         destination_port_range     = "5432"
         source_address_prefixes    = ["10.25.247.32/27", "10.25.250.0/26", "10.11.72.32/27"]
-        destination_address_prefix = "10.24.246.16/28"
+        destination_address_prefix = "10.24.246.48/28"
       }
     }
   }
