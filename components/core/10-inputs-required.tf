@@ -1,19 +1,14 @@
-variable "location" {
-  type        = string
-  description = "The Azure region to deploy resources to."
-}
-
 variable "env" {
-  type = string
+  type        = string
   description = "The environment to deploy resources to."
 }
 
 variable "builtFrom" {
-  type = string
+  type        = string
   description = "The name of the repository these resources are builtFrom."
 }
 
 variable "product" {
-  type = string
+  type        = string
   description = "The name of the prodcut this infrastructure supports."
 }
