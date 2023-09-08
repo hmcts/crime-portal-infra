@@ -124,4 +124,94 @@ ldap_vms = {
   }
 }
 
+resource_group = "crime-portal-rg-stg"
+
+vnet_resource_group            = "InternalSpoke-rg"
+vnet_name                      = "vnet-nle-int-01"
+location                       = "uksouth"
+subnet_address_prefix          = "10.25.245.0/27"
+route_table_name               = "NLE-INTERNAL-RT"
+boot_diag_storage_account_name = "crimeportalstg"
+
+key_vault_name = "crime-portal-kv-stg"
+
+vm_subnet_name = "crime-portal-stg"
+//TODO:
+vm_private_ip  = ["10.25.245.10", "10.25.245.11"]
+
+//TODO:
+# data disks
+vm_data_disks = [
+  {
+    datadisk1 = {
+      name                     = "crimeportalvm1stg-datadisk-01"
+      location                 = "uksouth"
+      resource_group_name      = "crime-portal-rg-stg"
+      storage_account_type     = "StandardSSD_LRS"
+      disk_create_option       = "Restore"
+      disk_size_gb             = "128"
+      disk_tier                = null
+      disk_zone                = "1"
+      source_resource_id       = "" //TODO
+      storage_account_id       = null
+      hyper_v_generation       = null
+      os_type                  = null
+      disk_lun                 = "10"
+      attachment_create_option = "Attach"
+      disk_caching             = "ReadWrite"
+    }
+  },
+  {
+    datadisk1 = {
+      name                     = "crimeportalvm2stg-datadisk-01"
+      location                 = "uksouth"
+      resource_group_name      = "crime-portal-rg-stg"
+      storage_account_type     = "StandardSSD_LRS"
+      disk_create_option       = "Restore"
+      disk_size_gb             = "128"
+      disk_tier                = null
+      disk_zone                = "2"
+      source_resource_id       = "" //TODO
+      storage_account_id       = null
+      hyper_v_generation       = null
+      os_type                  = null
+      disk_lun                 = "10"
+      attachment_create_option = "Attach"
+      disk_caching             = "ReadWrite"
+    }
+  }
+]
+
+# Dynatrace 
+
+tenant_id = "yrk32651"
+hostgroup = "NONPROD_CRIME_PORTAL"
+server    = "https://10.10.70.8:9999/e/yrk32651/api"
+
+cnp_vault_rg  = "cnp-core-infra"
 cnp_vault_sub = "1c4f0704-a29e-403d-b719-b90c34ef14c9"
+
+# VM Bootstrap module
+nessus_install  = true
+nessus_server   = "nessus-scanners-nonprod000005.platform.hmcts.net"
+nessus_groups   = "Nonprod-test"
+nessus_key_name = "nessus-agent-key-nonprod"
+
+run_command    = true
+rc_script_file = "scripts/windows_cis.ps1"
+
+# Azure Recovery Services
+azurerm_recovery_services_vault_name = "crime-portal-rsv-stg"
+azurerm_backup_policy_vm_name        = "crime-portal-app-daily-stg"
+
+# Instant restore retention must be between 1 and 30 days
+instant_restore_retention_days = "1"
+
+# Backup retention daily must be between 7 and 9999
+backup_retention_daily_count = "14"
+
+# Monthly count between 1 and 60
+backup_retention_monthly_count = "1"
+
+action_group_name = "crime-portal-stg-action-group"
+short_name        = "crimeportalstg"

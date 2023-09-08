@@ -37,6 +37,12 @@ parameters:
         service_connection: 'DTS-HERITAGE-INTSVC-STG'
         # Change this to Frontend
         dependsOn: 'stg_core'
+      - deployment: 'stg_vm'
+        environment: 'stg'
+        component: 'vm'
+        service_connection: 'DTS-HERITAGE-INTSVC-STG'
+        dependsOn: 'stg_core'
+
       - deployment: 'prod_core'
         environment: 'prod'
         component: 'core'
@@ -50,6 +56,13 @@ parameters:
         dependsOn: 
           - 'prod_core'
           - 'stg_backend'
+      - deployment: 'prod_vm'
+        environment: 'prod'
+        component: 'vm'
+        service_connection: 'DTS-HERITAGE-INTSVC-STG'
+        dependsOn:
+          - 'prod_core'
+          - 'stg_vm'
 
 variables:
   - name: timeoutInMinutes
