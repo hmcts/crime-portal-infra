@@ -13,7 +13,7 @@ module "postgresql" {
 
   pgsql_databases           = var.postgres_databases
   pgsql_version             = var.pgsql_version
-  pgsql_delegated_subnet_id = data.azurerm_subnet.backend.id
+  pgsql_delegated_subnet_id = data.azurerm_subnet.backend-postgresql.id
   admin_user_object_id      = data.azurerm_client_config.current.object_id
 
   common_tags = module.ctags.common_tags

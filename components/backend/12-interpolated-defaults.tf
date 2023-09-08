@@ -22,6 +22,12 @@ data "azurerm_subnet" "backend" {
   resource_group_name  = "InternalSpoke-rg"
 }
 
+data "azurerm_subnet" "backend-postgresql" {
+  name                 = "crime-portal-backend-postgresql-${var.env}"
+  virtual_network_name = "vnet-${local.env_map[var.env]}-int-01"
+  resource_group_name  = "InternalSpoke-rg"
+}
+
 data "azuread_group" "admin_group" {
   display_name     = local.admin_group
   security_enabled = true
