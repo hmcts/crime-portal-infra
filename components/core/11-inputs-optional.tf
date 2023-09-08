@@ -1,3 +1,5 @@
-variable "some-optional-input" {
-  type = string
+variable "location" {
+  type        = string
+  description = "The Azure region to deploy resources to."
+  default     = "uksouth"
 }
