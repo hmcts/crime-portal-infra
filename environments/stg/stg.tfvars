@@ -14,6 +14,12 @@ subnets = {
   backend-postgresql = {
     address_prefixes  = ["10.25.246.48/28"]
     service_endpoints = ["Microsoft.Storage", "Microsoft.Sql"]
+    delegations = {
+      flexibleserver = {
+        service_name = "Microsoft.DBforPostgreSQL/flexibleServers"
+        actions      = ["Microsoft.Network/virtualNetworks/subnets/join/action"]
+      }
+    }
   }
 }
 
