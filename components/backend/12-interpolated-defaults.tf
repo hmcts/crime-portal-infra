@@ -5,6 +5,7 @@ locals {
   }
   is_prod     = length(regexall(".*(prod).*", var.env)) > 0
   admin_group = local.is_prod ? "DTS Platform Operations SC" : "DTS Platform Operations"
+  resource_group_name = "crime-portal-rg-${var.env}"
 }
 
 module "ctags" {
@@ -27,4 +28,3 @@ data "azuread_group" "admin_group" {
 }
 
 data "azurerm_client_config" "current" {}
-

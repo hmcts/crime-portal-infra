@@ -103,3 +103,12 @@ network_security_groups = {
     }
   }
 }
+
+ldap_vms = {
+  crime-portal-ldap-vm01-prod = {
+    availability_zone = 1
+  }
+  crime-portal-ldap-vm02-prod = {
+    availability_zone = 2
+  }
+}
