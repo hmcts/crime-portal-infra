@@ -11,13 +11,9 @@ module "postgresql" {
   component     = "backend"
   business_area = "dlrm"
 
-  pgsql_databases = [
-    {
-      name : "application"
-    }
-  ]
+  pgsql_databases = var.postgres_databases
 
-  pgsql_version = "14"
+  pgsql_version = var.pgsql_version
 
   pgsql_delegated_subnet_id = data.azurerm_subnet.backend.id
   admin_user_object_id      = data.azurerm_client_config.current.object_id
