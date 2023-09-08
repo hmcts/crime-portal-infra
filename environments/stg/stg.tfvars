@@ -113,3 +113,5 @@ ldap_vms = {
     availability_zone = 2
   }
 }
+
+cnp_vault_sub = "1c4f0704-a29e-403d-b719-b90c34ef14c9"
