@@ -1,12 +1,15 @@
 subnets = {
   appgw = {
-    address_prefixes = ["10.25.246.0/28"]
+    address_prefixes  = ["10.25.246.0/28"]
+    service_endpoints = ["Microsoft.Storage"]
   }
   frontend = {
-    address_prefixes = ["10.25.246.16/28"]
+    address_prefixes  = ["10.25.246.16/28"]
+    service_endpoints = ["Microsoft.Storage"]
   }
   backend = {
-    address_prefixes = ["10.25.246.32/28"]
+    address_prefixes  = ["10.25.246.32/28"]
+    service_endpoints = ["Microsoft.Storage"]
   }
 }
 
@@ -41,7 +44,7 @@ network_security_groups = {
     }
   }
   frontend-nsg = {
-    subnet = "appgw"
+    subnet = "frontend"
     rules = {
       "allow_http" = {
         priority                   = 200
@@ -66,7 +69,7 @@ network_security_groups = {
     }
   }
   backend-nsg = {
-    subnet = "appgw"
+    subnet = "backend"
     rules = {
       "allow_ldap" = {
         priority                   = 200
