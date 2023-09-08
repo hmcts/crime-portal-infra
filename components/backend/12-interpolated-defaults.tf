@@ -3,8 +3,8 @@ locals {
     "stg"  = "nle"
     "prod" = "prod"
   }
-  is_prod     = length(regexall(".*(prod).*", var.env)) > 0
-  admin_group = local.is_prod ? "DTS Platform Operations SC" : "DTS Platform Operations"
+  is_prod             = length(regexall(".*(prod).*", var.env)) > 0
+  admin_group         = local.is_prod ? "DTS Platform Operations SC" : "DTS Platform Operations"
   resource_group_name = "crime-portal-rg-${var.env}"
 }
 
