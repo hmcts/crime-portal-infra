@@ -22,5 +22,5 @@ module "postgresql" {
   pgsql_delegated_subnet_id = data.azurerm_subnet.backend.id
   admin_user_object_id      = data.azurerm_client_config.current.object_id
 
-  common_tags = var.common_tags
+  common_tags = module.ctags.common_tags
 }
