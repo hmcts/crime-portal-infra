@@ -14,8 +14,17 @@ variable "product" {
 }
 
 variable "subnets" {
-  type        = map(object({ address_prefixes = list(string), service_endpoints = optional(list(string), []) }))
+  type = map(object({
+    address_prefixes  = list(string),
+    service_endpoints = optional(list(string), []),
+    use_default_rt    = optional(bool, false)
+    delegations = optional(map(object({
+      service_name = string,
+      actions      = optional(list(string), [])
+    })))
+  }))
   description = "Map of subnets to create."
+  default     = {}
 }
 
 variable "route_tables" {
@@ -32,23 +41,23 @@ variable "route_tables" {
 
 variable "network_security_groups" {
   type = map(object({
-    subnet = optional(string, null)
+    subnets = optional(list(string))
     rules = map(object({
       priority                                   = number,
       direction                                  = string,
       access                                     = string,
       protocol                                   = string,
-      source_port_range                          = optional(string, null)
-      source_port_ranges                         = optional(list(string), null)
-      destination_port_range                     = optional(string, null)
-      destination_port_ranges                    = optional(list(string), null)
-      source_address_prefix                      = optional(string, null)
-      source_address_prefixes                    = optional(list(string), null)
-      source_application_security_group_ids      = optional(list(string), null)
-      destination_address_prefix                 = optional(string, null)
-      destination_address_prefixes               = optional(list(string), null)
-      destination_application_security_group_ids = optional(list(string), null)
-      description                                = optional(string, null)
+      source_port_range                          = optional(string)
+      source_port_ranges                         = optional(list(string))
+      destination_port_range                     = optional(string)
+      destination_port_ranges                    = optional(list(string))
+      source_address_prefix                      = optional(string)
+      source_address_prefixes                    = optional(list(string))
+      source_application_security_group_ids      = optional(list(string))
+      destination_address_prefix                 = optional(string)
+      destination_address_prefixes               = optional(list(string))
+      destination_application_security_group_ids = optional(list(string))
+      description                                = optional(string)
     }))
   }))
   description = "Map of network security groups to create."
