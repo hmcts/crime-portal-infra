@@ -10,7 +10,18 @@ subnets = {
   }
 }
 
-route_tables = {}
+route_tables = {
+  rt = {
+    subnets = ["appgw", "frontend", "backend"]
+    routes = {
+      default = {
+        address_prefix         = "0.0.0.0/0"
+        next_hop_type          = "VirtualAppliance"
+        next_hop_in_ip_address = "10.11.8.36"
+      }
+    }
+  }
+}
 
 network_security_groups = {
   appgw-nsg = {

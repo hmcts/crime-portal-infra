@@ -20,7 +20,7 @@ variable "subnets" {
 
 variable "route_tables" {
   type = map(object({
-    subnet = string,
+    subnets = list(string),
     routes = map(object({
       address_prefix         = string,
       next_hop_type          = string,
