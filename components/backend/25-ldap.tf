@@ -21,5 +21,5 @@ module "virtual_machine" {
   vm_size              = "Standard_D2ds_v5"
   vm_version           = "latest"
   vm_availabilty_zones = each.value.availability_zone
-  tags                 = var.common_tags
+  tags                 = module.ctags.common_tags
 }
