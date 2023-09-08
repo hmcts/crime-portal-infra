@@ -50,14 +50,14 @@ data "azurerm_subnet" "vm_subnet" {
 }
 
 variable "vm_private_ip" {
-  type        = list
+  type        = list(string)
   description = "Private IP(s) for the virtual machine"
 }
 
 //// VM Disk vars \\\\
 
 variable "vm_data_disks" {
-  type = list
+  type        = list(any)
   description = "list of disk configurations for each VM"
 }
 
@@ -198,8 +198,8 @@ variable "nessus_groups" {
 }
 
 data "azurerm_key_vault_secret" "nessus_key" {
-  count    = var.nessus_install ? 1 : 0
-  provider = azurerm.soc
+  count        = var.nessus_install ? 1 : 0
+  provider     = azurerm.soc
   name         = var.nessus_key_name
   key_vault_id = data.azurerm_key_vault.soc_vault[0].id
 }

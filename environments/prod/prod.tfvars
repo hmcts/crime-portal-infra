@@ -131,7 +131,7 @@ key_vault_name = "crime-portal-kv-prod"
 vm_subnet_name = "crime-portal-prod"
 
 //TODO:
-vm_private_ip  = ["10.25.245.10", "10.25.245.11"]
+vm_private_ip = ["10.25.245.10", "10.25.245.11"]
 
 //TODO:
 # data disks
