@@ -1,3 +1,33 @@
+resource "random_string" "vm_username" {
+  for_each = var.ldap_vms
+  length   = 4
+  special  = false
+}
+
+resource "random_password" "vm_password" {
+  for_each         = var.ldap_vms
+  length           = 16
+  special          = true
+  override_special = "#$%&@()_[]{}<>:?"
+  min_upper        = 1
+  min_lower        = 1
+  min_numeric      = 1
+}
+
+resource "azurerm_key_vault_secret" "vm_username_secret" {
+  for_each     = var.ldap_vms
+  name         = "${each.key}-vm-username-${var.env}"
+  value        = random_string.vm_username[each.key].result
+  key_vault_id = data.azurerm_key_vault.vault.id
+}
+
+resource "azurerm_key_vault_secret" "vm_password_secret" {
+  for_each     = var.ldap_vms
+  name         = "${each.key}-vm-password-${var.env}"
+  value        = random_password.vm_password[each.key].result
+  key_vault_id = data.azurerm_key_vault.vault.id
+}
+
 module "virtual_machine" {
   for_each = var.ldap_vms
 
@@ -13,7 +43,8 @@ module "virtual_machine" {
   vm_type              = "linux"
   vm_name              = each.key
   vm_resource_group    = local.resource_group_name
-  vm_admin_password    = "example-super-secure-password"
+  vm_admin_name        = random_string.vm_username[each.key].result
+  vm_admin_password    = random_password.vm_password[each.key].result
   vm_subnet_id         = data.azurerm_subnet.backend.id
   vm_publisher_name    = "canonical"
   vm_offer             = "0001-com-ubuntu-server-jammy"

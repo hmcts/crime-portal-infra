@@ -28,3 +28,8 @@ data "azuread_group" "admin_group" {
 }
 
 data "azurerm_client_config" "current" {}
+
+data "azurerm_key_vault" "vault" {
+  name                = "crime-portal-kv-${var.env}"
+  resource_group_name = local.resource_group_name
+}
