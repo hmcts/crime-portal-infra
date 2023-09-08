@@ -1,6 +1,12 @@
 module "virtual_machine" {
   for_each = var.ldap_vms
 
+  providers = {
+    azurerm     = azurerm
+    azurerm.soc = azurerm.soc
+    azurerm.cnp = azurerm.cnp
+  }
+
   source = "git::https://github.com/hmcts/terraform-module-virtual-machine.git?ref=master"
 
   vm_type              = "linux"
