@@ -10,6 +10,8 @@ subnets = {
   }
 }
 
+route_tables = {}
+
 network_security_groups = {
   appgw-nsg = {
     subnet = "appgw"
