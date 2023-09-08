@@ -46,9 +46,9 @@ module "virtual_machine" {
   vm_admin_name        = random_string.vm_username[each.key].result
   vm_admin_password    = random_password.vm_password[each.key].result
   vm_subnet_id         = data.azurerm_subnet.backend.id
-  vm_publisher_name    = "canonical"
-  vm_offer             = "0001-com-ubuntu-server-jammy"
-  vm_sku               = "22_04-lts-gen2"
+  vm_publisher_name    = "RedHat"
+  vm_offer             = "RHEL"
+  vm_sku               = "79-gen2"
   vm_size              = "Standard_D2ds_v5"
   vm_version           = "latest"
   vm_availabilty_zones = each.value.availability_zone
