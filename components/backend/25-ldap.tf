@@ -60,7 +60,5 @@ module "virtual_machine" {
   install_splunk_uf          = true
   nessus_install             = true
 
-
-
   custom_script_extension_name = "HMCTSVMBootstrap"
 }
