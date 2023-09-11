@@ -53,4 +53,9 @@ module "virtual_machine" {
   vm_version           = "latest"
   vm_availabilty_zones = each.value.availability_zone
   tags                 = module.ctags.common_tags
+
+  install_azure_monitor      = true
+  install_dynatrace_oneagent = true
+  install_splunk_uf          = true
+  nessus_install             = true
 }
