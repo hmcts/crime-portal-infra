@@ -26,8 +26,7 @@ module "vm_app" {
   dns_servers          = ["10.172.68.148", "10.172.68.149", "10.172.68.150", "10.171.68.148", "10.171.68.149", "10.171.68.150"]
   ipconfig_name        = local.ipconfig_name
   vm_subnet_id         = local.vm_subnet_id
-  vm_private_ip        = var.vm_private_ip[count.index]
-  privateip_allocation = "Static"
+  privateip_allocation = "Dynamic"
 
   #storage_image_reference
   vm_publisher_name = local.marketplace_publisher

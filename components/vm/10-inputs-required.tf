@@ -49,11 +49,6 @@ data "azurerm_subnet" "vm_subnet" {
   resource_group_name  = var.vnet_resource_group
 }
 
-variable "vm_private_ip" {
-  type        = list(string)
-  description = "Private IP(s) for the virtual machine"
-}
-
 //// VM Disk vars \\\\
 
 variable "vm_data_disks" {

@@ -136,50 +136,9 @@ boot_diag_storage_account_name = "crimeportalsastg"
 key_vault_name = "crime-portal-kv-stg"
 
 vm_subnet_name = "crime-portal-frontend-stg"
-//TODO:
-vm_private_ip = ["10.25.245.10", "10.25.245.11"]
 
-//TODO:
 # data disks
 vm_data_disks = [
-  {
-    datadisk1 = {
-      name                     = "crimeportalvm1stg-datadisk-01"
-      location                 = "uksouth"
-      resource_group_name      = "crime-portal-rg-stg"
-      storage_account_type     = "StandardSSD_LRS"
-      disk_create_option       = "Restore"
-      disk_size_gb             = "128"
-      disk_tier                = null
-      disk_zone                = "1"
-      source_resource_id       = "" //TODO
-      storage_account_id       = null
-      hyper_v_generation       = null
-      os_type                  = null
-      disk_lun                 = "10"
-      attachment_create_option = "Attach"
-      disk_caching             = "ReadWrite"
-    }
-  },
-  {
-    datadisk1 = {
-      name                     = "crimeportalvm2stg-datadisk-01"
-      location                 = "uksouth"
-      resource_group_name      = "crime-portal-rg-stg"
-      storage_account_type     = "StandardSSD_LRS"
-      disk_create_option       = "Restore"
-      disk_size_gb             = "128"
-      disk_tier                = null
-      disk_zone                = "2"
-      source_resource_id       = "" //TODO
-      storage_account_id       = null
-      hyper_v_generation       = null
-      os_type                  = null
-      disk_lun                 = "10"
-      attachment_create_option = "Attach"
-      disk_caching             = "ReadWrite"
-    }
-  }
 ]
 
 # Dynatrace 
