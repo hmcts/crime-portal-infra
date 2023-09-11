@@ -15,7 +15,7 @@ locals {
   vm_availability_zones = [1, 2]
   marketplace_product   = "RHEL"
   marketplace_publisher = "RedHat"
-  marketplace_sku       = "7.9"
+  marketplace_sku       = "7_9"
   vm_version            = "7.9.2023030110"
 
   boot_diagnostics_enabled = true
