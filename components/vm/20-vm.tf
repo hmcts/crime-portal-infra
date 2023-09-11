@@ -69,6 +69,6 @@ resource "azurerm_backup_protected_vm" "vm" {
   count               = local.vm_count
   resource_group_name = var.resource_group
   recovery_vault_name = var.azurerm_recovery_services_vault_name
-  source_vm_id        = module.vm_database[count.index].vm_id
+  source_vm_id        = module.vm_app[count.index].vm_id
   backup_policy_id    = data.azurerm_backup_policy_vm.policy.id
 }

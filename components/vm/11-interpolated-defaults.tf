@@ -31,14 +31,14 @@ resource "azurerm_key_vault_secret" "vm_username_secret" {
   count        = local.vm_count
   name         = lower("crime-portal-vm${count.index + 1}-vm-username-${var.env}")
   value        = "martha${count.index + 1}_${random_string.vm_username.result}"
-  key_vault_id = data.azurerm_key_vault.martha_vault.id
+  key_vault_id = data.azurerm_key_vault.crime_portal_vault.id
 }
 
 resource "azurerm_key_vault_secret" "vm_password_secret" {
   count        = local.vm_count
   name         = lower("crime-portal-vm${count.index + 1}-vm-password-${var.env}")
   value        = random_password.vm_password[count.index].result
-  key_vault_id = data.azurerm_key_vault.martha_vault.id
+  key_vault_id = data.azurerm_key_vault.crime_portal_vault.id
 }
 
 data "azurerm_backup_policy_vm" "policy" {
