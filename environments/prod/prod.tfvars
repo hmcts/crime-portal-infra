@@ -178,9 +178,9 @@ vm_data_disks = [
 
 # Dynatrace 
 
-tenant_id = "yrk32651"
+tenant_id = "ebe20728"
 hostgroup = "PROD_CRIME_PORTAL"
-server    = "https://10.10.70.8:9999/e/yrk32651/api"
+server    = "https://10.10.70.8:9999/e/ebe20728/api"
 
 cnp_vault_rg  = "core-infra-prod"
 cnp_vault_sub = "8999dec3-0104-4a27-94ee-6588559729d1"
@@ -207,5 +207,5 @@ backup_retention_daily_count = "14"
 # Monthly count between 1 and 60
 backup_retention_monthly_count = "1"
 
-action_group_name = "martha-prod-action-group"
-short_name        = "marthaprod"
+action_group_name = "crime-portal-prod-action-group"
+short_name        = "crimeportalprod"
