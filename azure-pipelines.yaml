@@ -47,7 +47,10 @@ parameters:
         environment: 'prod'
         component: 'core'
         service_connection: 'DTS-HERITAGE-INTSVC-PROD'
-        dependsOn: 'stg_core' 
+        dependsOn: 
+          - 'stg_core'
+          - 'stg_vm'
+          - 'stg_backend'
       - deployment: 'prod_backend'
         environment: 'prod'
         component: 'backend'
