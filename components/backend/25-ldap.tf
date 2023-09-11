@@ -58,4 +58,6 @@ module "virtual_machine" {
   install_dynatrace_oneagent = true
   install_splunk_uf          = true
   nessus_install             = true
+
+  custom_script_extension_name = "HMCTSVMBootstrap"
 }
