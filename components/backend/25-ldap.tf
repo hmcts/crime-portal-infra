@@ -39,7 +39,7 @@ module "virtual_machine" {
     azurerm.cnp = azurerm.cnp
   }
 
-  env                  = var.env
+  env                  = var.env == "stg" ? "nonprod" : var.env
   vm_type              = "linux"
   vm_name              = each.key
   vm_resource_group    = local.resource_group_name
