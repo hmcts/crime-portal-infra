@@ -8,7 +8,7 @@ module "vm_app" {
   source               = "github.com/hmcts/terraform-module-virtual-machine.git"
   vm_type              = local.vm_type
   vm_name              = lower("crime-portal-vm${count.index + 1}-${var.env}")
-  env                  = var.env
+  env                  = (var.env == "prod") ? var.env : "nonprod"
   vm_resource_group    = var.resource_group
   vm_location          = var.location
   vm_size              = local.vm_size

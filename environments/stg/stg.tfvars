@@ -131,11 +131,11 @@ vnet_name                      = "vnet-nle-int-01"
 location                       = "uksouth"
 subnet_address_prefix          = "10.25.245.0/27"
 route_table_name               = "NLE-INTERNAL-RT"
-boot_diag_storage_account_name = "crimeportalstg"
+boot_diag_storage_account_name = "crimeportalsastg"
 
 key_vault_name = "crime-portal-kv-stg"
 
-vm_subnet_name = "crime-portal-stg"
+vm_subnet_name = "crime-portal-frontend-stg"
 //TODO:
 vm_private_ip = ["10.25.245.10", "10.25.245.11"]
 
@@ -202,7 +202,7 @@ rc_script_file = "scripts/windows_cis.ps1"
 
 # Azure Recovery Services
 azurerm_recovery_services_vault_name = "crime-portal-rsv-stg"
-azurerm_backup_policy_vm_name        = "crime-portal-app-daily-stg"
+azurerm_backup_policy_vm_name        = "crime-portal-daily-bp-stg"
 
 # Instant restore retention must be between 1 and 30 days
 instant_restore_retention_days = "1"
