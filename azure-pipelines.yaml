@@ -55,7 +55,7 @@ parameters:
         # Change this to Frontend
         dependsOn: 
           - 'prod_core'
-          - 'stg_backend'
+          - 'stg_backend_database'
       - deployment: 'prod_backend_ldap'
         environment: 'prod'
         component: 'ldap'
@@ -63,7 +63,7 @@ parameters:
         # Change this to Frontend
         dependsOn: 
           - 'prod_core'
-          - 'stg_backend'
+          - 'stg_backend_ldap'
 
 variables:
   - name: timeoutInMinutes
