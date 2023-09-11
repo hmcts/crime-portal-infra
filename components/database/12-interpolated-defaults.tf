@@ -3,7 +3,7 @@ locals {
     "stg"  = "nle"
     "prod" = "prod"
   }
-  is_prod = length(regexall(".*(prod).*", var.env)) > 0
+  is_prod             = length(regexall(".*(prod).*", var.env)) > 0
   resource_group_name = "crime-portal-rg-${var.env}"
 }
 
