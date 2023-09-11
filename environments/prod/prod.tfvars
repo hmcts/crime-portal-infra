@@ -127,5 +127,55 @@ ldap_vms = {
   }
 }
 
+resource_group = "crime-portal-rg-prod"
+
+vnet_resource_group            = "InternalSpoke-rg"
+vnet_name                      = "vnet-prod-int-01"
+location                       = "uksouth"
+subnet_address_prefix          = "10.25.245.0/27"
+route_table_name               = "PROD-INTERNAL-RT"
+boot_diag_storage_account_name = "crimeportalsaprod"
+
+key_vault_name = "crime-portal-kv-prod"
+
+vm_subnet_name = "crime-portal-frontend-prod"
+
+# data disks
+vm_data_disks = [
+  {},
+  {}
+]
+
+# Dynatrace 
+
+tenant_id = "ebe20728"
+hostgroup = "PROD_CRIME_PORTAL"
+server    = "https://10.10.70.8:9999/e/ebe20728/api"
+
+cnp_vault_rg  = "core-infra-prod"
 cnp_vault_sub = "8999dec3-0104-4a27-94ee-6588559729d1"
 
+# VM Bootstrap module
+nessus_install  = true
+nessus_server   = "nessus-scanners-prod000005.platform.hmcts.net"
+nessus_groups   = "crime-portal-prod"
+nessus_key_name = "nessus-agent-key-prod"
+
+run_command    = true
+rc_script_file = "scripts/windows_cis.ps1"
+
+# Azure Recovery Services
+azurerm_recovery_services_vault_name = "crime-portal-rsv-prod"
+azurerm_backup_policy_vm_name        = "crime-portal-daily-bp-prod"
+
+# Instant restore retention must be between 1 and 30 days
+instant_restore_retention_days = "1"
+
+# Backup retention daily must be between 7 and 9999
+backup_retention_daily_count = "14"
+
+# Monthly count between 1 and 60
+backup_retention_monthly_count = "1"
+
+action_group_name = "crime-portal-prod-action-group"
+short_name        = "crimeportalprod"
