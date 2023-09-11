@@ -23,7 +23,6 @@ module "vm_app" {
   encrypt_ADE = false
 
   nic_name             = lower("crime-portal-vm${count.index + 1}-nic-${var.env}")
-  dns_servers          = ["10.172.68.148", "10.172.68.149", "10.172.68.150", "10.171.68.148", "10.171.68.149", "10.171.68.150"]
   ipconfig_name        = local.ipconfig_name
   vm_subnet_id         = local.vm_subnet_id
   privateip_allocation = "Dynamic"
