@@ -21,11 +21,6 @@ data "azurerm_subnet" "backend" {
   resource_group_name  = "InternalSpoke-rg"
 }
 
-data "azuread_group" "admin_group" {
-  display_name     = local.admin_group
-  security_enabled = true
-}
-
 data "azurerm_client_config" "current" {}
 
 data "azurerm_key_vault" "vault" {
