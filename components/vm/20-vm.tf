@@ -1,4 +1,9 @@
 module "vm_app" {
+  providers = {
+    azurerm     = azurerm
+    azurerm.cnp = azurerm.cnp
+    azurerm.soc = azurerm.soc
+  }
   count                = local.vm_count
   source               = "github.com/hmcts/terraform-module-virtual-machine.git"
   vm_type              = local.vm_type
