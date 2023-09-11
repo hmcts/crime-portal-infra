@@ -31,9 +31,15 @@ parameters:
         component: 'core'
         service_connection: 'DTS-HERITAGE-INTSVC-STG'
         dependsOn: 'Precheck'
-      - deployment: 'stg_backend'
+      - deployment: 'stg_backend_database'
         environment: 'stg'
-        component: 'backend'
+        component: 'database'
+        service_connection: 'DTS-HERITAGE-INTSVC-STG'
+        # Change this to Frontend
+        dependsOn: 'stg_core'
+      - deployment: 'stg_backend_ldap'
+        environment: 'stg'
+        component: 'ldap'
         service_connection: 'DTS-HERITAGE-INTSVC-STG'
         # Change this to Frontend
         dependsOn: 'stg_core'
@@ -50,15 +56,24 @@ parameters:
         dependsOn: 
           - 'stg_core'
           - 'stg_vm'
-          - 'stg_backend'
-      - deployment: 'prod_backend'
+          - 'stg_backend_database'
+          - 'stg_backend_ldap'
+      - deployment: 'prod_backend_database'
         environment: 'prod'
-        component: 'backend'
+        component: 'database'
         service_connection: 'DTS-HERITAGE-INTSVC-PROD'
         # Change this to Frontend
         dependsOn: 
           - 'prod_core'
-          - 'stg_backend'
+          - 'stg_backend_database'
+      - deployment: 'prod_backend_ldap'
+        environment: 'prod'
+        component: 'ldap'
+        service_connection: 'DTS-HERITAGE-INTSVC-PROD'
+        # Change this to Frontend
+        dependsOn: 
+          - 'prod_core'
+          - 'stg_backend_ldap'
       - deployment: 'prod_vm'
         environment: 'prod'
         component: 'vm'
@@ -97,8 +112,7 @@ stages:
       dependsOn: ${{ deployment.dependsOn }}
       jobs:
         - job: TerraformPlanApply
-          pool: 
-            vmImage: ${{ variables.agentImage }}
+          pool: hmcts-sds-ptl
           timeoutInMinutes: ${{ variables.timeoutInMinutes }}
           steps:
             - template: steps/terraform.yaml@cnp-azuredevops-libraries
