@@ -15,8 +15,8 @@ locals {
   vm_availability_zones = [1, 2]
   marketplace_product   = "RHEL"
   marketplace_publisher = "RedHat"
-  marketplace_sku       = "7.3"
-  vm_version            = "7.3.2017090800"
+  marketplace_sku       = "7.9"
+  vm_version            = "7.9.2023030110"
 
   boot_diagnostics_enabled = true
   boot_storage_uri         = data.azurerm_storage_account.db_boot_diagnostics_storage.primary_blob_endpoint
