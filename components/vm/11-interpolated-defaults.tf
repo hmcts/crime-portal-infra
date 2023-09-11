@@ -30,7 +30,7 @@ data "azurerm_key_vault" "crime_portal_vault" {
 resource "azurerm_key_vault_secret" "vm_username_secret" {
   count        = local.vm_count
   name         = lower("crime-portal-vm${count.index + 1}-vm-username-${var.env}")
-  value        = "martha${count.index + 1}_${random_string.vm_username.result}"
+  value        = "crimeportal${count.index + 1}_${random_string.vm_username.result}"
   key_vault_id = data.azurerm_key_vault.crime_portal_vault.id
 }
 
