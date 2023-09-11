@@ -132,6 +132,8 @@ vm_subnet_name = "crime-portal-frontend-prod"
 
 # data disks
 vm_data_disks = [
+  {},
+  {}
 ]
 
 # Dynatrace 
