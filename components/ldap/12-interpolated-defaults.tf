@@ -4,7 +4,6 @@ locals {
     "prod" = "prod"
   }
   is_prod             = length(regexall(".*(prod).*", var.env)) > 0
-  admin_group         = local.is_prod ? "DTS Platform Operations SC" : "DTS Platform Operations"
   resource_group_name = "crime-portal-rg-${var.env}"
 }
 
@@ -18,12 +17,6 @@ module "ctags" {
 
 data "azurerm_subnet" "backend" {
   name                 = "crime-portal-backend-${var.env}"
-  virtual_network_name = "vnet-${local.env_map[var.env]}-int-01"
-  resource_group_name  = "InternalSpoke-rg"
-}
-
-data "azurerm_subnet" "backend-postgresql" {
-  name                 = "crime-portal-backend-postgresql-${var.env}"
   virtual_network_name = "vnet-${local.env_map[var.env]}-int-01"
   resource_group_name  = "InternalSpoke-rg"
 }
