@@ -53,9 +53,6 @@ parameters:
         service_connection: 'DTS-HERITAGE-INTSVC-PROD'
         dependsOn: 
           - 'stg_core'
-          - 'stg_backend_database'
-          - 'stg_backend_ldap'
-          - 'stg_vm'
       - deployment: 'prod_backend_database'
         environment: 'prod'
         component: 'database'
