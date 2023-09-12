@@ -9,6 +9,7 @@ module "postgresql" {
   product             = var.product
   component           = "backend"
   business_area       = "dlrm"
+  name                = var.env == "stg" ? "crime-portal-backend01" : ""
   resource_group_name = local.resource_group_name
 
   pgsql_databases               = var.postgres_databases
