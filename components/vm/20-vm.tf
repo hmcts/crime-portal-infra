@@ -15,7 +15,7 @@ module "vm_app" {
   vm_admin_password    = random_password.vm_password[count.index].result
   vm_availabilty_zones = local.vm_availability_zones[count.index]
   managed_disks        = var.vm_data_disks[count.index]
-  vm_subnet_id         = var.vm_subnet_name
+  vm_subnet_id         = data.azurerm_subnet.frontend.id
   vm_publisher_name    = "RedHat"
   vm_offer             = "RHEL"
   vm_sku               = "79-gen2"
