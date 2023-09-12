@@ -39,7 +39,7 @@ module "virtual_machine" {
     azurerm.cnp = azurerm.cnp
   }
 
-  env                  = var.env
+  env                  = var.env == "stg" ? "nonprod" : var.env
   vm_type              = "linux"
   vm_name              = each.key
   vm_resource_group    = local.resource_group_name
@@ -53,4 +53,12 @@ module "virtual_machine" {
   vm_version           = "latest"
   vm_availabilty_zones = each.value.availability_zone
   tags                 = module.ctags.common_tags
+  privateip_allocation = "Dynamic"
+
+  install_azure_monitor      = true
+  install_dynatrace_oneagent = true
+  install_splunk_uf          = true
+  nessus_install             = true
+
+  custom_script_extension_name = "HMCTSVMBootstrap"
 }
