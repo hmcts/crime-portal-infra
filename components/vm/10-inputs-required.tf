@@ -30,30 +30,6 @@ variable "resource_group" {
   description = "Resource group for the VM"
 }
 
-
-//// VM Networking vars \\\\
-
-variable "vnet_name" {
-  type        = string
-  description = "Name of the existing VNET"
-}
-
-variable "vnet_resource_group" {
-  type        = string
-  description = "Resource group the VNET is in"
-}
-
-variable "vm_subnet_name" {
-  type        = string
-  description = "Name of the subnet this VM is in"
-}
-
-data "azurerm_subnet" "vm_subnet" {
-  name                 = var.vm_subnet_name
-  virtual_network_name = var.vnet_name
-  resource_group_name  = var.vnet_resource_group
-}
-
 //// VM Disk vars \\\\
 
 variable "vm_data_disks" {

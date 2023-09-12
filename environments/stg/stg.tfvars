@@ -136,8 +136,6 @@ ldap_vms = {
 
 resource_group = "crime-portal-rg-stg"
 
-vnet_resource_group            = "InternalSpoke-rg"
-vnet_name                      = "vnet-nle-int-01"
 location                       = "uksouth"
 subnet_address_prefix          = "10.25.245.0/27"
 route_table_name               = "NLE-INTERNAL-RT"
