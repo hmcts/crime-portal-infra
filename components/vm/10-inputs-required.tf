@@ -18,6 +18,11 @@ variable "subnets" {
   description = "Map of subnets to create."
 }
 
+variable "cnp_vault_sub" {
+  type        = string
+  description = "Subscription for the CNP key vault"
+}
+
 //// VM Basic vars \\\\
 
 variable "resource_group" {

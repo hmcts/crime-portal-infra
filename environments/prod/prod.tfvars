@@ -144,6 +144,7 @@ boot_diag_storage_account_name = "crimeportalsaprod"
 
 key_vault_name = "crime-portal-kv-prod"
 vm_subnet_name = "crime-portal-frontend-prod"
+cnp_vault_sub = "8999dec3-0104-4a27-94ee-6588559729d1"
 
 # data disks
 vm_data_disks = [
