@@ -3,7 +3,7 @@ module "postgresql" {
     azurerm.postgres_network = azurerm
   }
 
-  source = "git::https://github.com/hmcts/terraform-module-postgresql-flexible?ref=fix%2Fset-db-permissions-script-ado-fix"
+  source = "git::https://github.com/hmcts/terraform-module-postgresql-flexible?ref=fix%2Fsimplify-permission-script"
 
   env                 = var.env
   product             = var.product
