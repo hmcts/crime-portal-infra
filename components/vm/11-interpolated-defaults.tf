@@ -6,6 +6,12 @@ module "ctags" {
   product     = var.product
 }
 
+data "azurerm_subnet" "frontend" {
+  name                 = "crime-portal-frontend-${var.env}"
+  virtual_network_name = "vnet-${var.env == "prod" ? var.env : "nle"}-int-01"
+  resource_group_name  = "InternalSpoke-rg"
+}
+
 resource "random_string" "vm_username" {
   length  = 4
   special = false
