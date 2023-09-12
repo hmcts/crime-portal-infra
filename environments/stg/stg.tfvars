@@ -134,7 +134,6 @@ route_table_name               = "NLE-INTERNAL-RT"
 boot_diag_storage_account_name = "crimeportalsastg"
 
 key_vault_name = "crime-portal-kv-stg"
-
 vm_subnet_name = "crime-portal-frontend-stg"
 
 # data disks
@@ -143,36 +142,5 @@ vm_data_disks = [
   {}
 ]
 
-# Dynatrace 
-
-tenant_id = "yrk32651"
-hostgroup = "NONPROD_CRIME_PORTAL"
-server    = "https://10.10.70.8:9999/e/yrk32651/api"
-
-cnp_vault_rg  = "cnp-core-infra"
-cnp_vault_sub = "1c4f0704-a29e-403d-b719-b90c34ef14c9"
-
-# VM Bootstrap module
-nessus_install  = true
-nessus_server   = "nessus-scanners-nonprod000005.platform.hmcts.net"
-nessus_groups   = "Nonprod-test"
-nessus_key_name = "nessus-agent-key-nonprod"
-
-run_command    = true
-rc_script_file = "scripts/windows_cis.ps1"
-
-# Azure Recovery Services
 azurerm_recovery_services_vault_name = "crime-portal-rsv-stg"
 azurerm_backup_policy_vm_name        = "crime-portal-daily-bp-stg"
-
-# Instant restore retention must be between 1 and 30 days
-instant_restore_retention_days = "1"
-
-# Backup retention daily must be between 7 and 9999
-backup_retention_daily_count = "14"
-
-# Monthly count between 1 and 60
-backup_retention_monthly_count = "1"
-
-action_group_name = "crime-portal-stg-action-group"
-short_name        = "crimeportalstg"
