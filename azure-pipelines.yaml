@@ -35,13 +35,11 @@ parameters:
         environment: 'stg'
         component: 'database'
         service_connection: 'DTS-HERITAGE-INTSVC-STG'
-        # Change this to Frontend
         dependsOn: 'stg_core'
       - deployment: 'stg_backend_ldap'
         environment: 'stg'
         component: 'ldap'
         service_connection: 'DTS-HERITAGE-INTSVC-STG'
-        # Change this to Frontend
         dependsOn: 'stg_core'
       - deployment: 'stg_vm'
         environment: 'stg'
@@ -55,22 +53,16 @@ parameters:
         service_connection: 'DTS-HERITAGE-INTSVC-PROD'
         dependsOn: 
           - 'stg_core'
-          - 'stg_vm'
-          - 'stg_backend_database'
-          - 'stg_backend_ldap'
       - deployment: 'prod_backend_database'
         environment: 'prod'
         component: 'database'
         service_connection: 'DTS-HERITAGE-INTSVC-PROD'
-        # Change this to Frontend
         dependsOn: 
           - 'prod_core'
-          - 'stg_backend_database'
       - deployment: 'prod_backend_ldap'
         environment: 'prod'
         component: 'ldap'
         service_connection: 'DTS-HERITAGE-INTSVC-PROD'
-        # Change this to Frontend
         dependsOn: 
           - 'prod_core'
           - 'stg_backend_ldap'
