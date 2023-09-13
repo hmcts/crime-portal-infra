@@ -14,11 +14,12 @@ variable "product" {
 }
 
 variable "ldap_vms" {
-  type        = map(object({ availability_zone = string }))
-  description = "The LDAP VMs to deploy."
+  type        = map(any)
+  description = "The LDAP VMs to create role assignments for."
 }
 
-variable "cnp_vault_sub" {
-  type        = string
-  description = "The subscription ID of the CNP KeyVault."
+variable "frontend_vms" {
+  type        = map(any)
+  description = "The Frontend VMs to create role assignments for."
 }
+

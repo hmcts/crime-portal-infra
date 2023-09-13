@@ -128,27 +128,40 @@ network_security_groups = {
 ldap_vms = {
   crime-portal-ldap-vm01-stg = {
     availability_zone = 1
+    subnet_name       = "backend"
   }
   crime-portal-ldap-vm02-stg = {
     availability_zone = 2
+    subnet_name       = "backend"
   }
 }
 
-resource_group = "crime-portal-rg-stg"
+frontend_vms = {
+  crime-portal-frontend-vm01-stg = {
+    availability_zone = 1
+    subnet_name       = "frontend"
+  }
+  crime-portal-frontend-vm02-stg = {
+    availability_zone = 2
+    subnet_name       = "frontend"
+  }
+}
 
-location                       = "uksouth"
-subnet_address_prefix          = "10.25.245.0/27"
-route_table_name               = "NLE-INTERNAL-RT"
-boot_diag_storage_account_name = "crimeportalsastg"
-
-key_vault_name = "crime-portal-kv-stg"
+location     = "uksouth"
 cnp_vault_sub = "1c4f0704-a29e-403d-b719-b90c34ef14c9"
 
-# data disks
-vm_data_disks = [
-  {},
-  {}
-]
+ldap_users = {
+  "DTS Platform Operations" = {
+    is_group               = true
+    group_security_enabled = true
+    role_type              = "admin"
+  }
+}
 
-azurerm_recovery_services_vault_name = "crime-portal-rsv-stg"
-azurerm_backup_policy_vm_name        = "crime-portal-daily-bp-stg"
+frontend_users = {
+  "DTS Platform Operations" = {
+    is_group               = true
+    group_security_enabled = true
+    role_type              = "admin"
+  }
+}

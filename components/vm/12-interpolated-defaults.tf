@@ -3,7 +3,6 @@ locals {
     "stg"  = "nle"
     "prod" = "prod"
   }
-  is_prod             = length(regexall(".*(prod).*", var.env)) > 0
   resource_group_name = "crime-portal-rg-${var.env}"
 }
 
@@ -15,15 +14,20 @@ module "ctags" {
   product     = var.product
 }
 
-data "azurerm_subnet" "backend" {
-  name                 = "crime-portal-backend-${var.env}"
+data "azurerm_subnet" "subnets" {
+  for_each             = merge(var.frontend_vms, var.ldap_vms)
+  name                 = "crime-portal-${each.value.subnet_name}-${var.env}"
   virtual_network_name = "vnet-${local.env_map[var.env]}-int-01"
   resource_group_name  = "InternalSpoke-rg"
 }
 
-data "azurerm_client_config" "current" {}
-
 data "azurerm_key_vault" "vault" {
   name                = "crime-portal-kv-${var.env}"
+  resource_group_name = local.resource_group_name
+}
+
+data "azurerm_backup_policy_vm" "policy" {
+  name                = "crime-portal-daily-bp-${var.env}"
+  recovery_vault_name = "crime-portal-rsv-${var.env}"
   resource_group_name = local.resource_group_name
 }
