@@ -62,3 +62,22 @@ module "virtual_machine" {
 
   custom_script_extension_name = "HMCTSVMBootstrap"
 }
+
+resource "azurerm_backup_protected_vm" "ldap_protected_vm" {
+  for_each            = var.ldap_vms
+  resource_group_name = local.resource_group_name
+  recovery_vault_name = "crime-portal-rsv-${var.env}"
+  source_vm_id        = module.virtual_machine[each.key].vm_id
+  backup_policy_id    = "crime-portal-daily-bp-${var.env}"
+}
+
+resource "azurerm_virtual_machine_extension" "AADSSHLoginForLinux" {
+  for_each                   = var.ldap_vms
+  name                       = "AADSSHLoginForLinux"
+  virtual_machine_id         = module.virtual_machine[each.key].vm_id
+  publisher                  = "Microsoft.Azure.ActiveDirectory"
+  type                       = "AADSSHLoginForLinux"
+  type_handler_version       = "1.0"
+  auto_upgrade_minor_version = true
+  tags                       = module.ctags.common_tags
+}

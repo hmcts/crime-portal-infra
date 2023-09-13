@@ -34,3 +34,14 @@ resource "azurerm_backup_protected_vm" "vm" {
   source_vm_id        = module.vm_app[count.index].vm_id
   backup_policy_id    = data.azurerm_backup_policy_vm.policy.id
 }
+
+resource "azurerm_virtual_machine_extension" "AADSSHLoginForLinux" {
+  count                      = local.vm_count
+  name                       = "AADSSHLoginForLinux"
+  virtual_machine_id         = module.vm_app[count.index].vm_id
+  publisher                  = "Microsoft.Azure.ActiveDirectory"
+  type                       = "AADSSHLoginForLinux"
+  type_handler_version       = "1.0"
+  auto_upgrade_minor_version = true
+  tags                       = module.ctags.common_tags
+}
