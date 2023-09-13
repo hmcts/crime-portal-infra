@@ -27,6 +27,17 @@ module "vm_app" {
   tags                         = module.ctags.common_tags
 }
 
+resource "azurerm_virtual_machine_extension" "AADSSHLoginForLinux" {
+  for_each                   = module.vm_app
+  name                       = "AADSSHLoginForLinux"
+  virtual_machine_id         = each.vm_id
+  publisher                  = "Microsoft.Azure.ActiveDirectory"
+  type                       = "AADSSHLoginForLinux"
+  type_handler_version       = "1.0"
+  auto_upgrade_minor_version = true
+  tags                       = module.ctags.common_tags
+}
+
 resource "azurerm_backup_protected_vm" "vm" {
   count               = local.vm_count
   resource_group_name = var.resource_group
