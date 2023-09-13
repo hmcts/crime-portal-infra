@@ -12,7 +12,7 @@ locals {
         user_key = user_key
         user     = user
         vm_key   = ldap_vm_key
-        vm       = ldap_vm
+        vm_id    = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourceGroups/${local.resource_group_name}/providers/Microsoft.Compute/virtualMachines/${ldap_vm_key}"
       }
     ]
   ])
@@ -25,6 +25,8 @@ module "ctags" {
   environment = var.env
   product     = var.product
 }
+
+data "azurerm_client_config" "current" {}
 
 data "azuread_user" "ldap_users" {
   for_each            = { for key, value in var.ldap_users : key => value if value.is_user == true }
@@ -40,10 +42,4 @@ data "azuread_group" "ldap_groups" {
 data "azuread_service_principal" "ldap_sps" {
   for_each     = { for key, value in var.ldap_users : key => value if value.is_service_principal == true }
   display_name = each.key
-}
-
-data "azurerm_virtual_machine" "ldap_vms" {
-  for_each            = var.ldap_vms
-  name                = each.key
-  resource_group_name = local.resource_group_name
 }
