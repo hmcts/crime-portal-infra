@@ -20,6 +20,14 @@ variable "frontend_vms" {
   description = "The frontend VMs to deploy."
 }
 
+variable "ldap_vms" {
+  type = map(object({
+    availability_zone = string,
+    subnet_name       = string
+  }))
+  description = "The LDAP VMs to deploy."
+}
+
 variable "cnp_vault_sub" {
   type        = string
   description = "Subscription for the CNP key vault"
