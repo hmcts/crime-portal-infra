@@ -62,7 +62,6 @@ parameters:
           - 'stg_backend_database'
           - 'stg_backend_ldap'
           - 'stg_vm'
-          - 'stg_rbac'
       - deployment: 'prod_backend_database'
         environment: 'prod'
         component: 'database'
