@@ -54,6 +54,7 @@ parameters:
           - 'stg_core'
           - 'stg_backend_database'
           - 'stg_vm'
+          - 'stg_rbac'
       - deployment: 'prod_backend_database'
         environment: 'prod'
         component: 'database'
