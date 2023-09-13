@@ -28,9 +28,9 @@ module "vm_app" {
 }
 
 resource "azurerm_virtual_machine_extension" "AADSSHLoginForLinux" {
-  for_each                   = module.vm_app
+  count                      = local.vm_count
   name                       = "AADSSHLoginForLinux"
-  virtual_machine_id         = each.value.vm_id
+  virtual_machine_id         = module.vm_app[count.index].vm_id
   publisher                  = "Microsoft.Azure.ActiveDirectory"
   type                       = "AADSSHLoginForLinux"
   type_handler_version       = "1.0"
