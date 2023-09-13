@@ -16,7 +16,7 @@ variable "ldap_users" {
   default     = {}
   validation {
     condition = alltrue([
-      for user in var.ldap_users : anytrue([user.is_group != null], [user.is_user != null], [user.is_service_principal != null])
+      for user in var.ldap_users : anytrue([user.is_group != null, user.is_user != null, user.is_service_principal != null])
       && contains(["admin", "user"], lower(user.role_type))
     ])
     error_message = "One of is_group, is_user or is_service_principal must be set to true for each user, group or service principal. The valid values for role_type are admin and user."
