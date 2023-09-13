@@ -146,7 +146,8 @@ frontend_vms = {
   }
 }
 
-location = "uksouth"
+location      = "uksouth"
+cnp_vault_sub = "8999dec3-0104-4a27-94ee-6588559729d1"
 
 ldap_users = {
   "DTS Platform Operations SC" = {
