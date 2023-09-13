@@ -27,3 +27,9 @@ data "azurerm_key_vault" "vault" {
   name                = "crime-portal-kv-${var.env}"
   resource_group_name = local.resource_group_name
 }
+
+data "azurerm_backup_policy_vm" "policy" {
+  name                = "crime-portal-daily-bp-${var.env}"
+  recovery_vault_name = "crime-portal-rsv-${var.env}"
+  resource_group_name = local.resource_group_name
+}

@@ -68,7 +68,7 @@ resource "azurerm_backup_protected_vm" "ldap_protected_vm" {
   resource_group_name = local.resource_group_name
   recovery_vault_name = "crime-portal-rsv-${var.env}"
   source_vm_id        = module.virtual_machine[each.key].vm_id
-  backup_policy_id    = "crime-portal-daily-bp-${var.env}"
+  backup_policy_id    = data.azurerm_backup_policy_vm.policy.id
 }
 
 resource "azurerm_virtual_machine_extension" "AADSSHLoginForLinux" {
