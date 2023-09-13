@@ -46,13 +46,23 @@ parameters:
         component: 'vm'
         service_connection: 'DTS-HERITAGE-INTSVC-STG'
         dependsOn: 'stg_core'
-
+      - deployment: 'stg_rbac'
+        environment: 'stg'
+        component: 'rbac'
+        service_connection: 'ops-approval-gate-stg-envs'
+        dependsOn: 
+          - 'stg_backend_ldap'
+          - 'stg_vm'
       - deployment: 'prod_core'
         environment: 'prod'
         component: 'core'
         service_connection: 'DTS-HERITAGE-INTSVC-PROD'
         dependsOn: 
           - 'stg_core'
+          - 'stg_backend_database'
+          - 'stg_backend_ldap'
+          - 'stg_vm'
+          - 'stg_rbac'
       - deployment: 'prod_backend_database'
         environment: 'prod'
         component: 'database'
@@ -71,6 +81,13 @@ parameters:
         service_connection: 'DTS-HERITAGE-INTSVC-PROD'
         dependsOn:
           - 'prod_core'
+      - deployment: 'prod_rbac'
+        environment: 'prod'
+        component: 'rbac'
+        service_connection: 'ops-approval-gate-prod-envs'
+        dependsOn: 
+          - 'prod_backend_ldap'
+          - 'prod_vm'
 
 variables:
   - name: timeoutInMinutes

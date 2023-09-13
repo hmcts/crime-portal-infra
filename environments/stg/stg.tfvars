@@ -142,7 +142,7 @@ route_table_name               = "NLE-INTERNAL-RT"
 boot_diag_storage_account_name = "crimeportalsastg"
 
 key_vault_name = "crime-portal-kv-stg"
-cnp_vault_sub = "1c4f0704-a29e-403d-b719-b90c34ef14c9"
+cnp_vault_sub  = "1c4f0704-a29e-403d-b719-b90c34ef14c9"
 
 # data disks
 vm_data_disks = [
@@ -152,3 +152,11 @@ vm_data_disks = [
 
 azurerm_recovery_services_vault_name = "crime-portal-rsv-stg"
 azurerm_backup_policy_vm_name        = "crime-portal-daily-bp-stg"
+
+ldap_users = {
+  "DTS Platform Operations" = {
+    is_group               = true
+    group_security_enabled = true
+    role_type              = "admin"
+  }
+}
