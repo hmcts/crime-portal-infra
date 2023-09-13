@@ -12,5 +12,6 @@ locals {
 
   vm_availability_zones = [1, 2]
 
-  vm_count = 2
+  vm_count            = 2
+  resource_group_name = "crime-portal-rg-${var.env}"
 }

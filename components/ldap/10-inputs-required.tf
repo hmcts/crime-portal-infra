@@ -14,7 +14,9 @@ variable "product" {
 }
 
 variable "ldap_vms" {
-  type        = map(object({ availability_zone = string }))
+  type = map(object({
+    availability_zone = string
+  }))
   description = "The LDAP VMs to deploy."
 }
 

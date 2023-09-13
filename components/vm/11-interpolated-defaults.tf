@@ -1,3 +1,11 @@
+locals {
+  env_map = {
+    "stg"  = "nle"
+    "prod" = "prod"
+  }
+  resource_group_name = "crime-portal-rg-${var.env}"
+}
+
 module "ctags" {
   source = "github.com/hmcts/terraform-module-common-tags"
 
@@ -8,47 +16,17 @@ module "ctags" {
 
 data "azurerm_subnet" "frontend" {
   name                 = "crime-portal-frontend-${var.env}"
-  virtual_network_name = "vnet-${var.env == "prod" ? var.env : "nle"}-int-01"
+  virtual_network_name = "vnet-${local.env_map[var.env]}-int-01"
   resource_group_name  = "InternalSpoke-rg"
 }
 
-resource "random_string" "vm_username" {
-  length  = 4
-  special = false
-}
-
-resource "random_password" "vm_password" {
-  count            = local.vm_count
-  length           = 16
-  special          = true
-  override_special = "#$%&@()_[]{}<>:?"
-  min_upper        = 1
-  min_lower        = 1
-  min_numeric      = 1
-}
-
-data "azurerm_key_vault" "crime_portal_vault" {
-
-  name                = var.key_vault_name
-  resource_group_name = var.resource_group
-}
-
-resource "azurerm_key_vault_secret" "vm_username_secret" {
-  count        = local.vm_count
-  name         = lower("crime-portal-vm${count.index + 1}-vm-username-${var.env}")
-  value        = "crimeportal${count.index + 1}_${random_string.vm_username.result}"
-  key_vault_id = data.azurerm_key_vault.crime_portal_vault.id
-}
-
-resource "azurerm_key_vault_secret" "vm_password_secret" {
-  count        = local.vm_count
-  name         = lower("crime-portal-vm${count.index + 1}-vm-password-${var.env}")
-  value        = random_password.vm_password[count.index].result
-  key_vault_id = data.azurerm_key_vault.crime_portal_vault.id
+data "azurerm_key_vault" "vault" {
+  name                = "crime-portal-kv-${var.env}"
+  resource_group_name = local.resource_group_name
 }
 
 data "azurerm_backup_policy_vm" "policy" {
-  name                = var.azurerm_backup_policy_vm_name
-  recovery_vault_name = var.azurerm_recovery_services_vault_name
-  resource_group_name = var.resource_group
+  name                = "crime-portal-daily-bp-${var.env}"
+  recovery_vault_name = "crime-portal-rsv-${var.env}"
+  resource_group_name = local.resource_group_name
 }
