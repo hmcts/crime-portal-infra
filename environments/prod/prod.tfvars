@@ -127,9 +127,22 @@ network_security_groups = {
 ldap_vms = {
   crime-portal-ldap-vm01-prod = {
     availability_zone = 1
+    subnet_name       = "backend"
   }
   crime-portal-ldap-vm02-prod = {
     availability_zone = 2
+    subnet_name       = "backend"
+  }
+}
+
+frontend_vms = {
+  crime-portal-frontend-vm01-prod = {
+    availability_zone = 1
+    subnet_name       = "frontend"
+  }
+  crime-portal-frontend-vm02-prod = {
+    availability_zone = 2
+    subnet_name       = "frontend"
   }
 }
 
