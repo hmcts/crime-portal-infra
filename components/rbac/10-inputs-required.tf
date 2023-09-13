@@ -18,3 +18,8 @@ variable "ldap_vms" {
   description = "The LDAP VMs to create role assignments for."
 }
 
+variable "frontend_vms" {
+  type        = map(any)
+  description = "The Frontend VMs to create role assignments for."
+}
+
