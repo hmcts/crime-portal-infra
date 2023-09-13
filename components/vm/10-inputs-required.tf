@@ -15,7 +15,8 @@ variable "product" {
 
 variable "frontend_vms" {
   type = map(object({
-    availability_zone = string
+    availability_zone = string,
+    subnet_name       = string
   }))
   description = "The frontend VMs to deploy."
 }
