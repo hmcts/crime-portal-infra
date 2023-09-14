@@ -16,9 +16,9 @@ module "virtual-machines" {
   vm_admin_password    = random_password.password[each.key].result
   vm_availabilty_zones = each.value.availability_zone
   vm_subnet_id         = data.azurerm_subnet.subnets[each.key].id
-  vm_publisher_name    = "RedHat"
-  vm_offer             = "RHEL"
-  vm_sku               = "79-gen2"
+  vm_publisher_name    = "canonical"
+  vm_offer             = "0001-com-ubuntu-server-jammy"
+  vm_sku               = "22_04-lts-gen2"
   vm_size              = "Standard_D2ds_v5"
   vm_version           = "latest"
   privateip_allocation = "Dynamic"
