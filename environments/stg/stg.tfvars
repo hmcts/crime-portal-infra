@@ -165,3 +165,5 @@ frontend_users = {
     role_type              = "admin"
   }
 }
+
+subscription_id = "ae75b9fb-7d34-4112-82ff-64bd3855ce27"

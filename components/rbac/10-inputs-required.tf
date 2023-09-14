@@ -23,3 +23,8 @@ variable "frontend_vms" {
   description = "The Frontend VMs to create role assignments for."
 }
 
+variable "subscription_id" {
+  type        = string
+  description = "The subscription ID to create role assignments in."
+}
+
