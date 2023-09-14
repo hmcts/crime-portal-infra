@@ -7,13 +7,17 @@ resource "azurerm_application_gateway" "appgw" {
   zones               = each.value.availability_zones == null ? var.env == "prod" ? ["1", "2"] : [] : each.value.availability_zones
 
   sku {
-    name = each.value.sku_name
-    tier = each.value.sku_tier
+    name     = each.value.sku_name
+    tier     = each.value.sku_tier
+    capacity = each.value.capacity
   }
 
-  autoscale_configuration {
-    min_capacity = each.value.min_capacity
-    max_capacity = each.value.max_capacity
+  dynamic "autoscale_configuration" {
+    for_each = each.value.sku_name == "Standard_v2" || each.value.sku_name == "WAF_v2" ? [each.value] : []
+    content {
+      min_capacity = each.value.min_capacity
+      max_capacity = each.value.max_capacity
+    }
   }
 
   dynamic "gateway_ip_configuration" {

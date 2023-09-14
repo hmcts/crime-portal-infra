@@ -169,6 +169,9 @@ subscription_id = "17390ec1-5a5e-4a20-afb3-38d8d726ae45"
 
 app_gateways = {
   crime-portal-appgw = {
+    sku_name = "Standard_Medium"
+    sku_tier = "Standard"
+    capacity = 2
     gateway_ip_configurations = {
       crime-portal-appgw-gw-ipconfig = {
         subnet_name = "appgw"
