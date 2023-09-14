@@ -66,6 +66,6 @@ data "azurerm_subnet" "frontend_subnets" {
 
 data "azurerm_virtual_machine" "backend_vms" {
   for_each            = { for virtual_machine_name in local.flattened_backend_vms : "${virtual_machine_name.appgw_key}-${virtual_machine_name.virtual_machine_name}" => virtual_machine_name }
-  name                = each.key
+  name                = each.value.virtual_machine_name
   resource_group_name = local.resource_group_name
 }
