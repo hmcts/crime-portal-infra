@@ -190,12 +190,15 @@ app_gateways = {
       }
     }
     probes = {
-      http = {}
+      http = {
+        host = "crime-portal.platform.hmcts.net"
+      }
     }
     backend_http_settings = {
       crime-portal-appgw-http-settings = {
-        port     = 80
-        protocol = "Http"
+        port      = 80
+        protocol  = "Http"
+        host_name = "crime-portal.platform.hmcts.net"
       }
     }
     http_listeners = {
@@ -203,6 +206,7 @@ app_gateways = {
         frontend_ip_configuration_name = "crime-portal-appgw-fe-ipconfig"
         frontend_port_name             = "Http"
         protocol                       = "Http"
+        host_name                      = "crime-portal.platform.hmcts.net"
       }
     }
     request_routing_rules = {
