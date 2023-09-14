@@ -171,7 +171,6 @@ subscription_id = "ae75b9fb-7d34-4112-82ff-64bd3855ce27"
 
 app_gateways = {
   crime-portal-appgw = {
-    max_capacity = 1
     gateway_ip_configurations = {
       crime-portal-appgw-gw-ipconfig = {
         subnet_name = "appgw"
