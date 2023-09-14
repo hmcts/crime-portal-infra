@@ -40,7 +40,7 @@ variable "app_gateways" {
       host                                      = optional(string)
       pick_host_name_from_backend_http_settings = optional(bool)
       path                                      = optional(string, "/")
-      protocol                                  = optional(string, "http")
+      protocol                                  = optional(string, "Http")
       port                                      = optional(number)
       timeout                                   = optional(number, 15)
       unhealthy_threshold                       = optional(number, 3)
