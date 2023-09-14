@@ -195,14 +195,14 @@ app_gateways = {
     backend_http_settings = {
       crime-portal-appgw-http-settings = {
         port     = 80
-        protocol = "http"
+        protocol = "Http"
       }
     }
     http_listeners = {
       crime-portal-appgw-http-listener = {
         frontend_ip_configuration_name = "crime-portal-appgw-fe-ipconfig"
-        frontend_port_name             = "http"
-        protocol                       = "http"
+        frontend_port_name             = "Http"
+        protocol                       = "Http"
       }
     }
     request_routing_rules = {
