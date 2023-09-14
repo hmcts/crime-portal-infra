@@ -166,3 +166,52 @@ frontend_users = {
 }
 
 subscription_id = "17390ec1-5a5e-4a20-afb3-38d8d726ae45"
+
+app_gateways = {
+  crime-portal-appgw = {
+    gateway_ip_configurations = {
+      crime-portal-appgw-gw-ipconfig = {
+        subnet_name = "appgw"
+      }
+    }
+    frontend_ports = {
+      http = {
+        port = 80
+      }
+    }
+    frontend_ip_configurations = {
+      crime-portal-appgw-fe-ipconfig = {
+        subnet_name = "appgw"
+      }
+    }
+    backend_address_pools = {
+      crime-portal-appgw-pool = {
+        virtual_machine_names = ["crime-portal-frontend-vm01-prod", "crime-portal-frontend-vm02-prod"]
+      }
+    }
+    probes = {
+      http = {}
+    }
+    backend_http_settings = {
+      crime-portal-appgw-http-settings = {
+        port     = 80
+        protocol = "Http"
+      }
+    }
+    http_listeners = {
+      crime-portal-appgw-http-listener = {
+        frontend_ip_configuration_name = "crime-portal-appgw-fe-ipconfig"
+        frontend_port_name             = "Http"
+        protocol                       = "Http"
+      }
+    }
+    request_routing_rules = {
+      crime-portal-appgw-http-rule = {
+        http_listener_name         = "crime-portal-appgw-http-listener"
+        backend_address_pool_name  = "crime-portal-appgw-pool"
+        backend_http_settings_name = "crime-portal-appgw-http-settings"
+        rule_type                  = "Basic"
+      }
+    }
+  }
+}
