@@ -43,7 +43,7 @@ resource "azurerm_application_gateway" "appgw" {
     content {
       name         = backend_address_pool.key
       fqdns        = backend_address_pool.value.fqdns
-      ip_addresses = backend_address_pool.value.ip_addresses
+      ip_addresses = backend_address_pool.value.ip_addresses != null ? backend_address_pool.value.ip_addresses : [for vm in data.azurerm_virtual_machine.backend_vms : vm.private_ip_address]
     }
   }
 
@@ -56,6 +56,7 @@ resource "azurerm_application_gateway" "appgw" {
       pick_host_name_from_backend_http_settings = probe.value.pick_host_name_from_backend_http_settings
       path                                      = probe.value.path
       protocol                                  = probe.value.protocol
+      port                                      = probe.value.port
       timeout                                   = probe.value.timeout
       unhealthy_threshold                       = probe.value.unhealthy_threshold
     }
@@ -96,7 +97,7 @@ resource "azurerm_application_gateway" "appgw" {
       backend_address_pool_name  = request_routing_rule.value.backend_address_pool_name
       backend_http_settings_name = request_routing_rule.value.backend_http_settings_name
       priority                   = request_routing_rule.value.priority
-      rewrite_rule_set_name = local.x_fwded_proto_ruleset
+      rewrite_rule_set_name      = local.x_fwded_proto_ruleset
     }
   }
 

@@ -23,6 +23,17 @@ locals {
       }
     ]
   ])
+  flattened_backend_vms = flatten([
+    for appgw_key, appgw in var.app_gateways : [
+      for backend_pool_key, backend_pool in appgw.backend_address_pools : [
+        for virtual_machine_name in backend_pool.virtual_machine_names : {
+          appgw_key            = appgw_key
+          backend_pool_key     = backend_pool_key
+          virtual_machine_name = virtual_machine_name
+        }
+      ]
+    ]
+  ])
 }
 
 module "ctags" {
@@ -51,4 +62,10 @@ data "azurerm_subnet" "frontend_subnets" {
   name                 = "crime-portal-${each.value.subnet_name}-${var.env}"
   virtual_network_name = "vnet-${local.env_map[var.env]}-int-01"
   resource_group_name  = "InternalSpoke-rg"
+}
+
+data "azurerm_virtual_machine" "backend_vms" {
+  for_each            = { for virtual_machine_name in local.flattened_backend_vms : "${virtual_machine_name.appgw_key}-${virtual_machine_name.virtual_machine_name}" => virtual_machine_name }
+  name                = each.key
+  resource_group_name = local.resource_group_name
 }

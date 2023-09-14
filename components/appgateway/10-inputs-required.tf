@@ -31,8 +31,9 @@ variable "app_gateways" {
       public_ip_address_id          = optional(string)
     })))
     backend_address_pools = map(object({
-      ip_addresses = optional(list(string))
-      fqdns        = optional(list(string))
+      ip_addresses          = optional(list(string))
+      fqdns                 = optional(list(string))
+      virtual_machine_names = optional(list(string))
     }))
     probes = map(object({
       interval                                  = optional(number, 20)
@@ -40,6 +41,7 @@ variable "app_gateways" {
       pick_host_name_from_backend_http_settings = optional(bool)
       path                                      = optional(string, "/")
       protocol                                  = optional(string, "http")
+      port                                      = optional(number)
       timeout                                   = optional(number, 15)
       unhealthy_threshold                       = optional(number, 3)
     }))
@@ -67,4 +69,5 @@ variable "app_gateways" {
       priority                   = optional(number, 20)
     }))
   }))
+  description = "Values to use when deploy the app gateway(s)"
 }
