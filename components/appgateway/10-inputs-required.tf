@@ -18,6 +18,8 @@ variable "app_gateways" {
     availability_zones = optional(list(string))
     sku_name           = optional(string, "Standard_v2")
     sku_tier           = optional(string, "Standard_v2")
+    min_capacity       = optional(number, 1)
+    max_capacity       = optional(number, 2)
     gateway_ip_configurations = map(object({
       subnet_name = string
     }))

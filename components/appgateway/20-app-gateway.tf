@@ -11,6 +11,11 @@ resource "azurerm_application_gateway" "appgw" {
     tier = each.value.sku_tier
   }
 
+  autoscale_configuration {
+    min_capacity = each.value.min_capacity
+    max_capacity = each.value.max_capacity
+  }
+
   dynamic "gateway_ip_configuration" {
     for_each = each.value.gateway_ip_configurations
     content {
