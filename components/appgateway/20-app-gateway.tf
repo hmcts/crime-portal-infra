@@ -106,30 +106,33 @@ resource "azurerm_application_gateway" "appgw" {
       backend_address_pool_name  = request_routing_rule.value.backend_address_pool_name
       backend_http_settings_name = request_routing_rule.value.backend_http_settings_name
       priority                   = request_routing_rule.value.priority
-      rewrite_rule_set_name      = local.x_fwded_proto_ruleset
+      rewrite_rule_set_name      = each.value.sku_name == "Standard_v2" || each.value.sku_name == "WAF_v2" ? local.x_fwded_proto_ruleset : null
     }
   }
 
-  rewrite_rule_set {
-    name = local.x_fwded_proto_ruleset
+  dynamic "rewrite_rule_set" {
+    for_each = each.value.sku_name == "Standard_v2" || each.value.sku_name == "WAF_v2" ? [each.value] : []
+    content {
+      name = local.x_fwded_proto_ruleset
 
-    rewrite_rule {
-      name          = local.x_fwded_proto_ruleset
-      rule_sequence = 100
+      rewrite_rule {
+        name          = local.x_fwded_proto_ruleset
+        rule_sequence = 100
 
-      request_header_configuration {
-        header_name  = "X-Forwarded-Proto"
-        header_value = "https"
-      }
+        request_header_configuration {
+          header_name  = "X-Forwarded-Proto"
+          header_value = "https"
+        }
 
-      request_header_configuration {
-        header_name  = "X-Forwarded-Port"
-        header_value = "443"
-      }
+        request_header_configuration {
+          header_name  = "X-Forwarded-Port"
+          header_value = "443"
+        }
 
-      request_header_configuration {
-        header_name  = "X-Forwarded-For"
-        header_value = "{var_add_x_forwarded_for_proxy}"
+        request_header_configuration {
+          header_name  = "X-Forwarded-For"
+          header_value = "{var_add_x_forwarded_for_proxy}"
+        }
       }
     }
   }
