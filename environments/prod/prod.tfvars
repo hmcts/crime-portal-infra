@@ -190,7 +190,7 @@ load_balancer = {
   }
   rules = {
     crime-portal-rule01-prod = {
-      protocol                       = "Http"
+      protocol                       = "Tcp"
       frontend_port                  = 80
       backend_port                   = 80
       frontend_ip_configuration_name = "crime-portal-feip01-prod"
