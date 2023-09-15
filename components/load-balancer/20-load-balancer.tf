@@ -26,7 +26,7 @@ resource "azurerm_lb_backend_address_pool" "backend" {
 }
 
 resource "azurerm_lb_backend_address_pool_address" "backend_ip_address" {
-  for_each                = { for value in local.flattened_backend_vm_ip_addresses : "${value.pool_key}-${value.ip_key}" => value }
+  for_each                = { for value in local.flattened_backend_ip_addresses : "${value.pool_key}-${value.ip_key}" => value }
   name                    = each.value.ip_key
   backend_address_pool_id = azurerm_lb_backend_address_pool.backend[each.value.pool_key].id
   ip_address              = each.value.ip
