@@ -24,8 +24,8 @@ variable "load_balancer" {
       zones                         = optional(list(string))
     }))
     backend_address_pools = map(object({
-      ip_addresses          = optional(map(string))
-      virtual_machine_names = optional(list(string))
+      ip_addresses          = optional(map(string), [])
+      virtual_machine_names = optional(list(string), [])
     }))
     probes = map(object({
       protocol            = string
