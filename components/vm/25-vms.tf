@@ -6,7 +6,7 @@ module "virtual-machines" {
   }
 
   for_each                = merge(var.frontend_vms, var.ldap_vms)
-  source                  = "github.com/hmcts/terraform-module-virtual-machine.git"
+  source                  = "github.com/hmcts/terraform-module-virtual-machine.git?ref=DTSPO-15222-remove-ade"
   vm_type                 = "linux"
   vm_name                 = each.key
   env                     = var.env == "stg" ? "nonprod" : var.env
