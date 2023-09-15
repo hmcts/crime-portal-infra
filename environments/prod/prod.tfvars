@@ -1,5 +1,5 @@
 subnets = {
-  appgw = {
+  lb = {
     address_prefixes  = ["10.24.246.0/28"]
     service_endpoints = ["Microsoft.Storage"]
   }
@@ -25,7 +25,7 @@ subnets = {
 
 route_tables = {
   rt = {
-    subnets = ["appgw", "frontend", "backend", "backend-postgresql"]
+    subnets = ["lb", "frontend", "backend", "backend-postgresql"]
     routes = {
       default = {
         address_prefix         = "0.0.0.0/0"
@@ -37,8 +37,8 @@ route_tables = {
 }
 
 network_security_groups = {
-  appgw-nsg = {
-    subnets = ["appgw"]
+  lb-nsg = {
+    subnets = ["lb"]
     rules = {
       "allow_http" = {
         priority                   = 200
@@ -167,58 +167,35 @@ frontend_users = {
 
 subscription_id = "17390ec1-5a5e-4a20-afb3-38d8d726ae45"
 
-app_gateways = {
-  crime-portal-appgw = {
-    sku_name = "Standard_Medium"
-    sku_tier = "Standard"
-    capacity = 2
-    gateway_ip_configurations = {
-      crime-portal-appgw-gw-ipconfig = {
-        subnet_name = "appgw"
-      }
+load_balancer = {
+  name = "crime-portal-lb"
+  sku  = "Standard"
+  frontend_ip_configurations = {
+    crime-portal-feip01-prod = {
+      subnet_name = "lb"
+      zones       = ["1", "2"]
     }
-    frontend_ports = {
-      http = {
-        port = 80
-      }
+  }
+  backend_address_pools = {
+    crime-portal-bap01-prod = {
+      virtual_machine_names = ["crime-portal-frontend-vm01-prod", "crime-portal-frontend-vm02-prod"]
     }
-    frontend_ip_configurations = {
-      crime-portal-appgw-fe-ipconfig = {
-        subnet_name = "appgw"
-      }
+  }
+  probes = {
+    crime-portal-probe01-prod = {
+      protocol     = "Http"
+      request_path = "/"
+      port         = 80
     }
-    backend_address_pools = {
-      crime-portal-appgw-pool = {
-        virtual_machine_names = ["crime-portal-frontend-vm01-prod", "crime-portal-frontend-vm02-prod"]
-      }
-    }
-    probes = {
-      http = {
-        host = "crime-portal.platform.hmcts.net"
-      }
-    }
-    backend_http_settings = {
-      crime-portal-appgw-http-settings = {
-        port      = 80
-        protocol  = "Http"
-        host_name = "crime-portal.platform.hmcts.net"
-      }
-    }
-    http_listeners = {
-      crime-portal-appgw-http-listener = {
-        frontend_ip_configuration_name = "crime-portal-appgw-fe-ipconfig"
-        frontend_port_name             = "Http"
-        protocol                       = "Http"
-        host_name                      = "crime-portal.platform.hmcts.net"
-      }
-    }
-    request_routing_rules = {
-      crime-portal-appgw-http-rule = {
-        http_listener_name         = "crime-portal-appgw-http-listener"
-        backend_address_pool_name  = "crime-portal-appgw-pool"
-        backend_http_settings_name = "crime-portal-appgw-http-settings"
-        rule_type                  = "Basic"
-      }
+  }
+  rules = {
+    crime-portal-rule01-prod = {
+      protocol                       = "Http"
+      frontend_port                  = 80
+      backend_port                   = 80
+      frontend_ip_configuration_name = "crime-portal-feip01-prod"
+      backend_address_pool_names     = ["crime-portal-bap01-prod"]
+      probe_name                     = "crime-portal-probe01-prod"
     }
   }
 }
