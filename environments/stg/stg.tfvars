@@ -1,5 +1,5 @@
 subnets = {
-  appgw = {
+  lb = {
     address_prefixes  = ["10.25.246.0/28"]
     service_endpoints = ["Microsoft.Storage"]
   }
@@ -25,7 +25,7 @@ subnets = {
 
 route_tables = {
   rt = {
-    subnets = ["appgw", "frontend", "backend", "backend-postgresql"]
+    subnets = ["lb", "frontend", "backend", "backend-postgresql"]
     routes = {
       default = {
         address_prefix         = "0.0.0.0/0"
@@ -37,8 +37,8 @@ route_tables = {
 }
 
 network_security_groups = {
-  appgw-nsg = {
-    subnets = ["appgw"]
+  lb-nsg = {
+    subnets = ["lb"]
     rules = {
       "allow_http" = {
         priority                   = 200
@@ -167,60 +167,3 @@ frontend_users = {
 }
 
 subscription_id = "ae75b9fb-7d34-4112-82ff-64bd3855ce27"
-
-
-app_gateways = {
-  crime-portal-appgw = {
-    sku_name = "Standard_Small"
-    sku_tier = "Standard"
-    capacity = 1
-    gateway_ip_configurations = {
-      crime-portal-appgw-gw-ipconfig = {
-        subnet_name = "appgw"
-      }
-    }
-    frontend_ports = {
-      http = {
-        port = 80
-      }
-    }
-    frontend_ip_configurations = {
-      crime-portal-appgw-fe-ipconfig = {
-        subnet_name = "appgw"
-      }
-    }
-    backend_address_pools = {
-      crime-portal-appgw-pool = {
-        virtual_machine_names = ["crime-portal-frontend-vm01-stg", "crime-portal-frontend-vm02-stg"]
-      }
-    }
-    probes = {
-      http = {
-        host = "crime-portal.stg.platform.hmcts.net"
-      }
-    }
-    backend_http_settings = {
-      crime-portal-appgw-http-settings = {
-        port      = 80
-        protocol  = "Http"
-        host_name = "crime-portal.stg.platform.hmcts.net"
-      }
-    }
-    http_listeners = {
-      crime-portal-appgw-http-listener = {
-        frontend_ip_configuration_name = "crime-portal-appgw-fe-ipconfig"
-        frontend_port_name             = "Http"
-        protocol                       = "Http"
-        host_name                      = "crime-portal.stg.platform.hmcts.net"
-      }
-    }
-    request_routing_rules = {
-      crime-portal-appgw-http-rule = {
-        http_listener_name         = "crime-portal-appgw-http-listener"
-        backend_address_pool_name  = "crime-portal-appgw-pool"
-        backend_http_settings_name = "crime-portal-appgw-http-settings"
-        rule_type                  = "Basic"
-      }
-    }
-  }
-}
