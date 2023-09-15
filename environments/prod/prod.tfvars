@@ -166,3 +166,36 @@ frontend_users = {
 }
 
 subscription_id = "17390ec1-5a5e-4a20-afb3-38d8d726ae45"
+
+load_balancer = {
+  name = "crime-portal-lb"
+  sku  = "Standard"
+  frontend_ip_configurations = {
+    crime-portal-feip01-prod = {
+      subnet_name = "lb"
+      zones       = ["1", "2"]
+    }
+  }
+  backend_address_pools = {
+    crime-portal-bap01-prod = {
+      virtual_machine_names = ["crime-portal-frontend-vm01-prod", "crime-portal-frontend-vm02-prod"]
+    }
+  }
+  probes = {
+    crime-portal-probe01-prod = {
+      protocol     = "Http"
+      request_path = "/"
+      port         = 80
+    }
+  }
+  rules = {
+    crime-portal-rule01-prod = {
+      protocol                       = "Tcp"
+      frontend_port                  = 80
+      backend_port                   = 80
+      frontend_ip_configuration_name = "crime-portal-feip01-prod"
+      backend_address_pool_names     = ["crime-portal-bap01-prod"]
+      probe_name                     = "crime-portal-probe01-prod"
+    }
+  }
+}

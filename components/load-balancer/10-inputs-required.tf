@@ -1,0 +1,49 @@
+variable "env" {
+  type        = string
+  description = "The environment to deploy resources to."
+}
+
+variable "builtFrom" {
+  type        = string
+  description = "The name of the repository these resources are builtFrom."
+}
+
+variable "product" {
+  type        = string
+  description = "The name of the prodcut this infrastructure supports."
+}
+
+variable "load_balancer" {
+  type = object({
+    name = string
+    sku  = string
+    frontend_ip_configurations = map(object({
+      subnet_name                   = string
+      private_ip_address            = optional(string)
+      private_ip_address_allocation = optional(string, "Dynamic")
+      zones                         = optional(list(string))
+    }))
+    backend_address_pools = map(object({
+      ip_addresses          = optional(map(string), {})
+      virtual_machine_names = optional(list(string), [])
+    }))
+    probes = map(object({
+      protocol            = string
+      port                = number
+      request_path        = optional(string)
+      interval            = optional(number, 15)
+      threshold           = optional(number, 1)
+      unhealthy_threshold = optional(number, 3)
+    }))
+    rules = map(object({
+      protocol                       = string
+      frontend_port                  = number
+      backend_port                   = number
+      frontend_ip_configuration_name = string
+      backend_address_pool_names     = list(string)
+      probe_name                     = optional(string)
+      load_distribution              = optional(string, "Default")
+      enable_floating_ip             = optional(bool, false)
+    }))
+  })
+}
