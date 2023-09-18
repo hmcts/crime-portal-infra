@@ -62,7 +62,7 @@ resource "azurerm_virtual_machine_extension" "install_docker" {
   auto_upgrade_minor_version = true
 
   protected_settings = jsonencode({
-    script = file("${path.module}/provision/install_docker.sh")
+    script = file("${path.module}/provision/install-docker.sh")
   })
 
   tags = module.ctags.common_tags
