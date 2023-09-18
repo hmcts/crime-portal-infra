@@ -51,3 +51,19 @@ resource "azurerm_virtual_machine_extension" "AADSSHLoginForLinux" {
   auto_upgrade_minor_version = true
   tags                       = module.ctags.common_tags
 }
+
+resource "azurerm_virtual_machine_extension" "install_docker" {
+  for_each                   = var.frontend_vms
+  name                       = "InstallDocker"
+  virtual_machine_id         = module.virtual-machines[each.key].vm_id
+  publisher                  = "Microsoft.CPlat.Core"
+  type                       = "RunCommandLinux"
+  type_handler_version       = "1.0"
+  auto_upgrade_minor_version = true
+
+  protected_settings = jsonencode({
+    script = compact(tolist(["${path.module}/provision/install-docker.sh"]))
+  })
+
+  tags = module.ctags.common_tags
+}
