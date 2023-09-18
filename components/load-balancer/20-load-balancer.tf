@@ -65,4 +65,5 @@ resource "azurerm_lb_rule" "rule" {
   backend_address_pool_ids       = [for pool_name in each.value.backend_address_pool_names : azurerm_lb_backend_address_pool.backend[pool_name].id]
   probe_id                       = azurerm_lb_probe.probe[each.value.probe_name].id
   load_distribution              = each.value.load_distribution
+  enable_tcp_reset               = each.value.enable_tcp_reset
 }

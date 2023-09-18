@@ -44,6 +44,7 @@ variable "load_balancer" {
       probe_name                     = optional(string)
       load_distribution              = optional(string, "Default")
       enable_floating_ip             = optional(bool, false)
+      enable_tcp_reset               = optional(bool, false)
     }))
   })
 }
