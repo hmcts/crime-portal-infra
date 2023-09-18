@@ -15,13 +15,14 @@ variable "product" {
 
 variable "load_balancer" {
   type = object({
-    name = string
-    sku  = string
+    name     = string
+    sku      = string
+    sku_tier = optional(string, "Regional")
     frontend_ip_configurations = map(object({
       subnet_name                   = string
       private_ip_address            = optional(string)
       private_ip_address_allocation = optional(string, "Dynamic")
-      zones                         = optional(list(string))
+      zones                         = optional(list(string), ["1", "2", "3"])
     }))
     backend_address_pools = map(object({
       ip_addresses          = optional(map(string), {})
@@ -44,6 +45,7 @@ variable "load_balancer" {
       probe_name                     = optional(string)
       load_distribution              = optional(string, "Default")
       enable_floating_ip             = optional(bool, false)
+      enable_tcp_reset               = optional(bool, false)
     }))
   })
 }
