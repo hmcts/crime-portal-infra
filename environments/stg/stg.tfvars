@@ -76,6 +76,16 @@ network_security_groups = {
         source_address_prefixes    = ["10.25.247.32/27", "10.25.250.0/26", "10.11.72.32/27"]
         destination_address_prefix = "10.25.246.16/28"
       }
+      "allow_lb" = {
+        priority                   = 202
+        direction                  = "Inbound"
+        access                     = "Allow"
+        protocol                   = "*"
+        source_port_range          = "*"
+        destination_port_range     = "*"
+        source_address_prefix      = "AzureLoadBalancer"
+        destination_address_prefix = "10.25.246.16/28"
+      }
     }
   }
   backend-nsg = {
@@ -101,13 +111,13 @@ network_security_groups = {
         source_address_prefix      = "10.25.246.16/28"
         destination_address_prefix = "10.25.246.48/28"
       }
-      "allow_sql_mgmt" = {
+      "allow_mgmt" = {
         priority                   = 202
         direction                  = "Inbound"
         access                     = "Allow"
         protocol                   = "Tcp"
         source_port_range          = "*"
-        destination_port_range     = "5432"
+        destination_port_ranges    = ["5432", "22"]
         source_address_prefixes    = ["10.25.247.32/27", "10.25.250.0/26", "10.11.72.32/27"]
         destination_address_prefix = "10.25.246.48/28"
       }
