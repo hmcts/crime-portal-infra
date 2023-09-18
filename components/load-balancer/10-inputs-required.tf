@@ -22,7 +22,7 @@ variable "load_balancer" {
       subnet_name                   = string
       private_ip_address            = optional(string)
       private_ip_address_allocation = optional(string, "Dynamic")
-      zones                         = optional(list(string))
+      zones                         = optional(list(string), ["1", "2", "3"])
     }))
     backend_address_pools = map(object({
       ip_addresses          = optional(map(string), {})
