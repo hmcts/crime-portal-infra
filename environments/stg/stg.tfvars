@@ -207,6 +207,7 @@ load_balancer = {
       frontend_ip_configuration_name = "crime-portal-feip01-stg"
       backend_address_pool_names     = ["crime-portal-bap01-stg"]
       probe_name                     = "crime-portal-probe01-stg"
+      enable_floating_ip             = true
     }
   }
 }
