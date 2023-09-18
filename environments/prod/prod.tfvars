@@ -111,14 +111,14 @@ network_security_groups = {
         destination_address_prefix = "10.24.246.48/28"
       }
       "allow_mgmt" = {
-        priority                   = 202
-        direction                  = "Inbound"
-        access                     = "Allow"
-        protocol                   = "Tcp"
-        source_port_range          = "*"
-        destination_port_ranges    = ["5432", "22"]
-        source_address_prefixes    = ["10.24.247.32/27", "10.24.250.0/26", "10.11.8.32/27"]
-        destination_address_prefix = "10.24.246.48/28"
+        priority                     = 202
+        direction                    = "Inbound"
+        access                       = "Allow"
+        protocol                     = "Tcp"
+        source_port_range            = "*"
+        destination_port_ranges      = ["5432", "22"]
+        source_address_prefixes      = ["10.24.247.32/27", "10.24.250.0/26", "10.11.8.32/27"]
+        destination_address_prefixes = ["10.24.246.48/28", "10.24.246.32/28"]
       }
       "allow_sql_ss_ptl" = {
         priority                   = 203
