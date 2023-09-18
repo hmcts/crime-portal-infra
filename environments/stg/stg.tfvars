@@ -184,7 +184,7 @@ load_balancer = {
   frontend_ip_configurations = {
     crime-portal-feip01-stg = {
       subnet_name = "lb"
-      zones       = ["1", "2"]
+      zones       = ["1", "2", "3"]
     }
   }
   backend_address_pools = {

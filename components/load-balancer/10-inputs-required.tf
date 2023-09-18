@@ -15,8 +15,9 @@ variable "product" {
 
 variable "load_balancer" {
   type = object({
-    name = string
-    sku  = string
+    name     = string
+    sku      = string
+    sku_tier = optional(string, "Regional")
     frontend_ip_configurations = map(object({
       subnet_name                   = string
       private_ip_address            = optional(string)
