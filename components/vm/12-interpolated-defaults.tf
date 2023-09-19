@@ -3,7 +3,9 @@ locals {
     "stg"  = "nle"
     "prod" = "prod"
   }
-  resource_group_name = "crime-portal-rg-${var.env}"
+  resource_group_name              = "crime-portal-rg-${var.env}"
+  virtual_machines                 = merge(var.frontend_vms, var.ldap_vms)
+  azure_reserved_ip_address_offset = 4
 }
 
 module "ctags" {
@@ -15,7 +17,7 @@ module "ctags" {
 }
 
 data "azurerm_subnet" "subnets" {
-  for_each             = merge(var.frontend_vms, var.ldap_vms)
+  for_each             = local.virtual_machines
   name                 = "crime-portal-${each.value.subnet_name}-${var.env}"
   virtual_network_name = "vnet-${local.env_map[var.env]}-int-01"
   resource_group_name  = "InternalSpoke-rg"

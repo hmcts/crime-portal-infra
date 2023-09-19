@@ -10,7 +10,7 @@ variable "builtFrom" {
 
 variable "product" {
   type        = string
-  description = "The name of the prodcut this infrastructure supports."
+  description = "The name of the product this infrastructure supports."
 }
 
 variable "subnets" {

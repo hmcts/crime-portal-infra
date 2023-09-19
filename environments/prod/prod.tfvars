@@ -67,7 +67,7 @@ network_security_groups = {
         source_port_range          = "*"
         destination_port_range     = "80"
         source_address_prefix      = "*"
-        destination_address_prefix = "10.24.246.16/28"
+        destination_address_prefix = "10.24.246.0/27"
       }
       "allow_mgmt" = {
         priority                   = 201
@@ -169,10 +169,30 @@ ldap_users = {
     group_security_enabled = true
     role_type              = "admin"
   }
+  "DTS Crime Portal VM Login (env:production)" = {
+    is_group               = true
+    group_security_enabled = true
+    role_type              = "user"
+  }
+  "DTS Crime Portal VM Admin Login (env:production)" = {
+    is_group               = true
+    group_security_enabled = true
+    role_type              = "admin"
+  }
 }
 
 frontend_users = {
   "DTS Platform Operations SC" = {
+    is_group               = true
+    group_security_enabled = true
+    role_type              = "admin"
+  }
+  "DTS Crime Portal VM Login (env:production)" = {
+    is_group               = true
+    group_security_enabled = true
+    role_type              = "user"
+  }
+  "DTS Crime Portal VM Admin Login (env:production)" = {
     is_group               = true
     group_security_enabled = true
     role_type              = "admin"

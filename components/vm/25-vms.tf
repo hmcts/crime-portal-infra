@@ -5,7 +5,7 @@ module "virtual-machines" {
     azurerm.soc = azurerm.soc
   }
 
-  for_each                = merge(var.frontend_vms, var.ldap_vms)
+  for_each                = local.virtual_machines
   source                  = "github.com/hmcts/terraform-module-virtual-machine.git?ref=master"
   vm_type                 = "linux"
   vm_name                 = each.key
@@ -21,7 +21,7 @@ module "virtual-machines" {
   vm_sku                  = "22_04-lts-gen2"
   vm_size                 = "Standard_D2ds_v5"
   vm_version              = "latest"
-  privateip_allocation    = "Dynamic"
+  vm_private_ip           = each.value.private_ip != null ? each.value.private_ip : cidrhost(data.azurerm_subnet.subnets[each.key].address_prefixes[0], index(keys(local.virtual_machines), each.key) + local.azure_reserved_ip_address_offset)
   systemassigned_identity = true
 
   install_azure_monitor      = true
@@ -34,7 +34,7 @@ module "virtual-machines" {
 }
 
 resource "azurerm_backup_protected_vm" "vm" {
-  for_each            = merge(var.frontend_vms, var.ldap_vms)
+  for_each            = local.virtual_machines
   resource_group_name = local.resource_group_name
   recovery_vault_name = "crime-portal-rsv-${var.env}"
   source_vm_id        = module.virtual-machines[each.key].vm_id
@@ -42,7 +42,7 @@ resource "azurerm_backup_protected_vm" "vm" {
 }
 
 resource "azurerm_virtual_machine_extension" "AADSSHLoginForLinux" {
-  for_each                   = merge(var.frontend_vms, var.ldap_vms)
+  for_each                   = local.virtual_machines
   name                       = "AADSSHLoginForLinux"
   virtual_machine_id         = module.virtual-machines[each.key].vm_id
   publisher                  = "Microsoft.Azure.ActiveDirectory"
