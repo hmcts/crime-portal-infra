@@ -33,7 +33,7 @@ variable "route_tables" {
     routes = map(object({
       address_prefix         = string,
       next_hop_type          = string,
-      next_hop_in_ip_address = string
+      next_hop_in_ip_address = optional(string)
     }))
   }))
   description = "Map of route tables to create."
