@@ -17,7 +17,7 @@ resource "random_password" "password" {
 resource "azurerm_key_vault_secret" "username_secret" {
   for_each     = local.virtual_machines
   name         = "${each.key}-vm-username-${var.env}"
-  value        = random_string.username[each.key].result
+  value        = "crimeportal_${random_string.username[each.key].result}"
   key_vault_id = data.azurerm_key_vault.vault.id
 }
 

@@ -12,7 +12,7 @@ module "virtual-machines" {
   env                     = var.env == "stg" ? "nonprod" : var.env
   vm_resource_group       = local.resource_group_name
   vm_location             = var.location
-  vm_admin_name           = random_string.username[each.key].result
+  vm_admin_name           = "crimeportal_${random_string.username[each.key].result}"
   vm_admin_password       = random_password.password[each.key].result
   vm_availabilty_zones    = each.value.availability_zone
   vm_subnet_id            = data.azurerm_subnet.subnets[each.key].id

@@ -32,10 +32,6 @@ route_tables = {
         next_hop_type          = "VirtualAppliance"
         next_hop_in_ip_address = "10.11.8.36"
       }
-      vnetlocal = {
-        address_prefix = "10.24.246.0/26"
-        next_hop_type  = "VnetLocal"
-      }
     }
   }
 }
@@ -67,7 +63,7 @@ network_security_groups = {
         source_port_range          = "*"
         destination_port_range     = "80"
         source_address_prefix      = "*"
-        destination_address_prefix = "10.24.246.0/27"
+        destination_address_prefix = "10.24.246.16/28"
       }
       "allow_mgmt" = {
         priority                   = 201
