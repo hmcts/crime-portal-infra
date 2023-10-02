@@ -50,7 +50,6 @@ network_security_groups = {
         source_address_prefix      = "*"
         destination_address_prefix = "10.25.246.0/28"
       }
-
     }
   }
   frontend-nsg = {
