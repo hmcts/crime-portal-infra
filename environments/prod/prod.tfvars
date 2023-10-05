@@ -130,6 +130,26 @@ network_security_groups = {
         source_address_prefixes    = ["10.147.64.0/20", "10.147.80.0/20"]
         destination_address_prefix = "10.24.246.48/28"
       }
+      "allow_sql_postgres_ha" = {
+        priority                   = 204
+        direction                  = "Inbound"
+        access                     = "Allow"
+        protocol                   = "Tcp"
+        source_port_range          = "*"
+        destination_port_range     = "5432"
+        source_address_prefix      = "VirtualNetwork"
+        destination_address_prefix = "10.24.246.48/28"
+      }
+      "allow_sql_postgres_backup_storage" = {
+        priority                   = 204
+        direction                  = "Inbound"
+        access                     = "Allow"
+        protocol                   = "Tcp"
+        source_port_range          = "*"
+        destination_port_range     = "5432"
+        source_address_prefix      = "VirtualNetwork"
+        destination_address_prefix = "Storage"
+      }
     }
   }
 }
