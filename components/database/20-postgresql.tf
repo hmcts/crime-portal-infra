@@ -22,6 +22,10 @@ module "postgresql" {
     {
       name  = "azure.extensions"
       value = "LO,PGCRYPTO,TABLEFUNC"
+    },
+    {
+      name  = "backslash_quote"
+      value = "on"
     }
   ]
 
