@@ -18,6 +18,13 @@ module "postgresql" {
   admin_user_object_id          = data.azurerm_client_config.current.object_id
   enable_read_only_group_access = false
 
+  pgsql_server_configuration = [
+    {
+      name  = "azure.extensions"
+      value = "LO,PGCRYPTO,TABLEFUNC"
+    }
+  ]
+
   common_tags = module.ctags.common_tags
 }
 
