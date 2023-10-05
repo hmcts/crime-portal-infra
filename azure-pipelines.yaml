@@ -58,6 +58,7 @@ parameters:
         dependsOn: 
           - 'stg_lb'
           - 'stg_rbac'
+          - 'stg_backend_database'
       - deployment: 'prod_backend_database'
         environment: 'prod'
         component: 'database'
