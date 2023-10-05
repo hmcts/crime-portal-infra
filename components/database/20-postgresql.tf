@@ -20,3 +20,14 @@ module "postgresql" {
 
   common_tags = module.ctags.common_tags
 }
+
+resource "azurerm_postgresql_flexible_server_active_directory_administrator" "db_admin" {
+  server_name         = "crime-portal-postgresql-${var.env}"
+  resource_group_name = local.resource_group_name
+  tenant_id           = data.azurerm_client_config.current.tenant_id
+  object_id           = data.azuread_group.db_admin.object_id
+  principal_name      = data.azuread_group.db_admin.display_name
+  principal_type      = "Group"
+
+  depends_on = [module.postgresql]
+}

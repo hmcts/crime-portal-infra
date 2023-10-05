@@ -7,7 +7,7 @@ variable "location" {
 variable "pgsql_version" {
   type        = number
   description = "Version of Postgresql to deploy."
-  default     = 14
+  default     = 15
 }
 
 variable "postgres_databases" {
