@@ -21,7 +21,7 @@ module "postgresql" {
   pgsql_server_configuration = [
     {
       name  = "azure.extensions"
-      value = "LO,PGCRYPTO,TABLEFUNC"
+      value = "LO,PGCRYPTO,TABLEFUNC,PG_STAT_STATEMENTS"
     },
     {
       name  = "backslash_quote"
