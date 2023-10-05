@@ -141,7 +141,7 @@ network_security_groups = {
         destination_address_prefix = "10.24.246.48/28"
       }
       "allow_sql_postgres_backup_storage" = {
-        priority                   = 204
+        priority                   = 205
         direction                  = "Inbound"
         access                     = "Allow"
         protocol                   = "Tcp"
