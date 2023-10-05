@@ -22,3 +22,8 @@ data "azurerm_subnet" "backend-postgresql" {
 }
 
 data "azurerm_client_config" "current" {}
+
+data "azuread_group" "db_admin" {
+  display_name     = is_prod ? "DTS Crime Portal DB Admin (env:production)" : "DTS Crime Portal DB Admin (env:staging)"
+  security_enabled = true
+}
