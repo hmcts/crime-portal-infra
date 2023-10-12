@@ -85,6 +85,16 @@ network_security_groups = {
         source_address_prefix      = "AzureLoadBalancer"
         destination_address_prefix = "10.25.246.16/28"
       }
+      "allow_intra_subnet" = {
+        priority                   = 203
+        direction                  = "Inbound"
+        access                     = "Allow"
+        protocol                   = "Tcp"
+        source_port_range          = "*"
+        destination_port_range     = "*"
+        source_address_prefix      = "10.25.246.16/28"
+        destination_address_prefix = "10.25.246.16/28"
+      }
     }
   }
   backend-nsg = {
@@ -96,7 +106,7 @@ network_security_groups = {
         access                     = "Allow"
         protocol                   = "Tcp"
         source_port_range          = "*"
-        destination_port_range     = "636"
+        destination_port_range     = "10389"
         source_address_prefix      = "10.25.246.16/28"
         destination_address_prefix = "10.25.246.32/28"
       }
@@ -149,6 +159,16 @@ network_security_groups = {
         destination_port_range     = "5432"
         source_address_prefix      = "VirtualNetwork"
         destination_address_prefix = "Storage"
+      }
+      "allow_intra_subnet" = {
+        priority                   = 206
+        direction                  = "Inbound"
+        access                     = "Allow"
+        protocol                   = "Tcp"
+        source_port_range          = "*"
+        destination_port_range     = "*"
+        source_address_prefix      = "10.25.246.32/28"
+        destination_address_prefix = "10.25.246.32/28"
       }
     }
   }
