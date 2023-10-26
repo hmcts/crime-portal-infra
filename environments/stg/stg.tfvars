@@ -50,6 +50,16 @@ network_security_groups = {
         source_address_prefix      = "*"
         destination_address_prefix = "10.25.246.0/28"
       }
+      "allow_https" = {
+        priority                   = 201
+        direction                  = "Inbound"
+        access                     = "Allow"
+        protocol                   = "Tcp"
+        source_port_range          = "*"
+        destination_port_range     = "443"
+        source_address_prefix      = "*"
+        destination_address_prefix = "10.25.246.0/28"
+      }
     }
   }
   frontend-nsg = {
@@ -65,8 +75,18 @@ network_security_groups = {
         source_address_prefix      = "*"
         destination_address_prefix = "10.25.246.16/28"
       }
-      "allow_mgmt" = {
+      "allow_https" = {
         priority                   = 201
+        direction                  = "Inbound"
+        access                     = "Allow"
+        protocol                   = "Tcp"
+        source_port_range          = "*"
+        destination_port_range     = "443"
+        source_address_prefix      = "*"
+        destination_address_prefix = "10.25.246.16/28"
+      }
+      "allow_mgmt" = {
+        priority                   = 202
         direction                  = "Inbound"
         access                     = "Allow"
         protocol                   = "Tcp"
@@ -76,7 +96,7 @@ network_security_groups = {
         destination_address_prefix = "10.25.246.16/28"
       }
       "allow_lb" = {
-        priority                   = 202
+        priority                   = 203
         direction                  = "Inbound"
         access                     = "Allow"
         protocol                   = "*"
@@ -86,7 +106,7 @@ network_security_groups = {
         destination_address_prefix = "10.25.246.16/28"
       }
       "allow_intra_subnet" = {
-        priority                   = 203
+        priority                   = 204
         direction                  = "Inbound"
         access                     = "Allow"
         protocol                   = "Tcp"
@@ -243,10 +263,16 @@ load_balancer = {
   frontend_ip_configurations = {
     crime-portal-feip01-stg = {
       subnet_name = "lb"
+    },
+    crime-portal-feip02-stg = {
+      subnet_name = "lb"
     }
   }
   backend_address_pools = {
     crime-portal-bap01-stg = {
+      virtual_machine_names = ["crime-portal-frontend-vm01-stg", "crime-portal-frontend-vm02-stg"]
+    },
+    crime-portal-bap02-stg = {
       virtual_machine_names = ["crime-portal-frontend-vm01-stg", "crime-portal-frontend-vm02-stg"]
     }
   }
@@ -255,6 +281,11 @@ load_balancer = {
       protocol     = "Http"
       request_path = "/"
       port         = 80
+    },
+    crime-portal-probe02-stg = {
+      protocol     = "Https"
+      request_path = "/"
+      port         = 443
     }
   }
   rules = {
@@ -265,6 +296,14 @@ load_balancer = {
       frontend_ip_configuration_name = "crime-portal-feip01-stg"
       backend_address_pool_names     = ["crime-portal-bap01-stg"]
       probe_name                     = "crime-portal-probe01-stg"
+    },
+    crime-portal-rule02-stg = {
+      protocol                       = "Tcp"
+      frontend_port                  = 443
+      backend_port                   = 443
+      frontend_ip_configuration_name = "crime-portal-feip02-stg"
+      backend_address_pool_names     = ["crime-portal-bap02-stg"]
+      probe_name                     = "crime-portal-probe02-stg"
     }
   }
 }
