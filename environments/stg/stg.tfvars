@@ -297,7 +297,7 @@ load_balancer = {
       backend_address_pool_names     = ["crime-portal-bap01-stg"]
       probe_name                     = "crime-portal-probe01-stg"
     },
-    crime-portal-rule01-stg = {
+    crime-portal-rule02-stg = {
       protocol                       = "Tcp"
       frontend_port                  = 443
       backend_port                   = 443
