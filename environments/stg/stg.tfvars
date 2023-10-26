@@ -243,10 +243,16 @@ load_balancer = {
   frontend_ip_configurations = {
     crime-portal-feip01-stg = {
       subnet_name = "lb"
+    },
+    crime-portal-feip02-stg = {
+      subnet_name = "lb"
     }
   }
   backend_address_pools = {
     crime-portal-bap01-stg = {
+      virtual_machine_names = ["crime-portal-frontend-vm01-stg", "crime-portal-frontend-vm02-stg"]
+    },
+    crime-portal-bap02-stg = {
       virtual_machine_names = ["crime-portal-frontend-vm01-stg", "crime-portal-frontend-vm02-stg"]
     }
   }
@@ -255,6 +261,11 @@ load_balancer = {
       protocol     = "Http"
       request_path = "/"
       port         = 80
+    },
+    crime-portal-probe02-stg = {
+      protocol     = "Https"
+      request_path = "/"
+      port         = 443
     }
   }
   rules = {
@@ -265,6 +276,14 @@ load_balancer = {
       frontend_ip_configuration_name = "crime-portal-feip01-stg"
       backend_address_pool_names     = ["crime-portal-bap01-stg"]
       probe_name                     = "crime-portal-probe01-stg"
+    },
+    crime-portal-rule01-stg = {
+      protocol                       = "Tcp"
+      frontend_port                  = 443
+      backend_port                   = 443
+      frontend_ip_configuration_name = "crime-portal-feip02-stg"
+      backend_address_pool_names     = ["crime-portal-bap02-stg"]
+      probe_name                     = "crime-portal-probe02-stg"
     }
   }
 }
