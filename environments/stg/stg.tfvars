@@ -319,7 +319,7 @@ app_gateway = {
   }
   http_listeners = {
     crime-portal-http-listener = {
-      frontend_ip_configuration_name = "crime-portal-feip01-stg"
+      frontend_ip_configuration_name = "crime-portal-private-stg"
       frontend_port_name             = "Http"
       protocol                       = "Http"
     }
