@@ -23,7 +23,7 @@ resource "azurerm_application_gateway" "this" {
     for_each = var.app_gateway.gateway_ip_configurations
     content {
       name      = gateway_ip_configuration.key
-      subnet_id = data.azurerm_subnet.gateway_subnets["${each.key}-${gateway_ip_configuration.key}"].id
+      subnet_id = data.azurerm_subnet.gateway_subnets["${gateway_ip_configuration.key}"].id
     }
   }
 
@@ -39,7 +39,7 @@ resource "azurerm_application_gateway" "this" {
     for_each = var.app_gateway.frontend_ip_configurations
     content {
       name                          = frontend_ip_configuration.key
-      subnet_id                     = data.azurerm_subnet.frontend_subnets["${each.key}-${frontend_ip_configuration.key}"].id
+      subnet_id                     = data.azurerm_subnet.frontend_subnets["${frontend_ip_configuration.key}"].id
       private_ip_address_allocation = frontend_ip_configuration.value.private_ip_address_allocation
       private_ip_address            = frontend_ip_configuration.value.private_ip_address
       public_ip_address_id          = frontend_ip_configuration.value.public_ip_address_id
