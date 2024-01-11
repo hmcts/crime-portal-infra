@@ -32,6 +32,8 @@ module "ctags" {
   product     = var.product
 }
 
+data "azurerm_subscription" "current" {}
+
 data "azurerm_subnet" "frontend_subnets" {
   for_each             = var.load_balancer.frontend_ip_configurations
   name                 = "crime-portal-${each.value.subnet_name}-${var.env}"

@@ -309,3 +309,8 @@ load_balancer = {
     }
   }
 }
+
+log_analyics_workspace = {
+  retention_in_days = 10
+  daily_quota_gb    = 5
+}
