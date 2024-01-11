@@ -1,5 +1,5 @@
 subnets = {
-  lb = {
+  gateway = {
     address_prefixes  = ["10.25.246.0/28"]
     service_endpoints = ["Microsoft.Storage"]
   }
@@ -25,7 +25,7 @@ subnets = {
 
 route_tables = {
   rt = {
-    subnets = ["lb", "frontend", "backend", "backend-postgresql"]
+    subnets = ["frontend", "backend", "backend-postgresql"]
     routes = {
       default = {
         address_prefix         = "0.0.0.0/0"
@@ -34,11 +34,31 @@ route_tables = {
       }
     }
   }
+  rt-gateway = {
+    subnets = ["gateway"]
+    routes = {
+      RFC_1918_A = {
+        address_prefix         = "10.0.0.0/8"
+        next_hop_type          = "VirtualAppliance"
+        next_hop_in_ip_address = "10.11.72.36"
+      }
+      RFC_1918_B = {
+        address_prefix         = "172.16.0.0/12"
+        next_hop_type          = "VirtualAppliance"
+        next_hop_in_ip_address = "10.11.72.36"
+      }
+      RFC_1918_C = {
+        address_prefix         = "192.168.0.0/16"
+        next_hop_type          = "VirtualAppliance"
+        next_hop_in_ip_address = "10.11.72.36"
+      }
+    }
+  }
 }
 
 network_security_groups = {
-  lb-nsg = {
-    subnets = ["lb"]
+  gateway-nsg = {
+    subnets = ["gateway"]
     rules = {
       "allow_http" = {
         priority                   = 200
