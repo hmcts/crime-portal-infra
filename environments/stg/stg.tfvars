@@ -28,7 +28,7 @@ route_tables = {
     subnets = ["frontend", "backend", "backend-postgresql"]
     routes = {
       default = {
-        address_prefix         = "0.0.0.0/8"
+        address_prefix         = "0.0.0.0/0"
         next_hop_type          = "VirtualAppliance"
         next_hop_in_ip_address = "10.11.72.36"
       }
@@ -310,9 +310,10 @@ app_gateway = {
   }
   backend_http_settings = {
     crime-portal-behttp01-stg = {
-      port      = 80
-      protocol  = "Http"
-      host_name = "crime-portal.staging.platform.hmcts.net"
+      port                  = 80
+      protocol              = "Http"
+      host_name             = "crime-portal.staging.platform.hmcts.net"
+      cookie_based_affinity = "Enabled"
     }
   }
   http_listeners = {
