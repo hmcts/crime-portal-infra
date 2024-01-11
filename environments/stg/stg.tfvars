@@ -280,7 +280,6 @@ subscription_id = "ae75b9fb-7d34-4112-82ff-64bd3855ce27"
 app_gateway = {
   name               = "crime-portal-appgw"
   availability_zones = ["1", "2"]
-  capacity           = 1
   gateway_ip_configurations = {
     crime-portal-gwip01-stg = {
       subnet_name = "gateway"

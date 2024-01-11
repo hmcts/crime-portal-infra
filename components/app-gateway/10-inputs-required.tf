@@ -17,11 +17,11 @@ variable "app_gateway" {
   type = object({
     name               = string
     availability_zones = optional(list(string))
-    sku_name           = optional(string, "Standard_Small")
-    sku_tier           = optional(string, "Standard")
+    sku_name           = optional(string, "Standard_v2")
+    sku_tier           = optional(string, "Standard_v2")
     capacity           = optional(number)
-    min_capacity       = optional(number)
-    max_capacity       = optional(number)
+    min_capacity       = optional(number, 1)
+    max_capacity       = optional(number, 10)
     gateway_ip_configurations = map(object({
       subnet_name = string
     }))
