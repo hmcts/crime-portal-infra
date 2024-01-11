@@ -277,6 +277,59 @@ frontend_users = {
 
 subscription_id = "ae75b9fb-7d34-4112-82ff-64bd3855ce27"
 
+app_gateway = {
+  name               = "crime-portal-appgw"
+  availability_zones = ["1", "2"]
+  capacity           = 1
+  gateway_ip_configurations = {
+    crime-portal-gwip01-stg = {
+      subnet_name = "gateway"
+    }
+  }
+  frontend_ports = {
+    http = {
+      port = 80
+    }
+  }
+  frontend_ip_configurations = {
+    crime-portal-feip01-stg = {
+      subnet_name                   = "gateway"
+      private_ip_address_allocation = "Static"
+      private_ip_Address            = "10.25.246.4"
+    }
+  }
+  backend_address_pools = {
+    crime-portal-bap01-stg = {
+      virtual_machine_names = ["crime-portal-frontend-vm01-stg", "crime-portal-frontend-vm02-stg"]
+    }
+  }
+  probes = {
+    http = {}
+  }
+  backend_http_settings = {
+    crime-portal-behttp01-stg = {
+      port                  = 80
+      protocol              = "Http"
+      cookie_based_affinity = "Enabled"
+    }
+  }
+  http_listeners = {
+    crime-portal-http-listener = {
+      frontend_ip_configuration_name = "crime-portal-feip01-stg"
+      frontend_port_name             = "Http"
+      protocol                       = "Http"
+    }
+  }
+  request_routing_rules = {
+    crime-portal-http-rule = {
+      http_listener_name         = "crime-portal-http-listener"
+      backend_address_pool_name  = "crime-portal-bap01-stg"
+      backend_http_settings_name = "crime-portal-behttp01-stg"
+      rule_type                  = "Basic"
+    }
+  }
+}
+
 load_balancer = {
   name = "crime-portal-lb"
   sku  = "Standard"
