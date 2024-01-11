@@ -5,7 +5,7 @@ resource "azurerm_public_ip" "this" {
   resource_group_name = local.resource_group_name
   location            = var.location
   allocation_method   = "Static"
-  zones               = var.app_gateway.availability_zones == null ? var.env == "prod" ? ["1", "2"] : [] : var.app_gateway.availability_zones
+  zones               = ["1", "2", "3"]
 }
 
 resource "azurerm_application_gateway" "this" {

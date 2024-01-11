@@ -291,11 +291,13 @@ app_gateway = {
     }
   }
   frontend_ip_configurations = {
-    crime-portal-feip01-stg = {
+    crime-portal-private-stg = {
       subnet_name                   = "gateway"
       private_ip_address_allocation = "Static"
       private_ip_address            = "10.25.246.4"
-      public_ip_address_name        = "crime-portal-appgw-stg-pip"
+    }
+    crime-portal-public-stg = {
+      public_ip_address_name = "crime-portal-appgw-stg-pip"
     }
   }
   backend_address_pools = {
