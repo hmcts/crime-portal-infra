@@ -44,7 +44,7 @@ data "azurerm_subnet" "gateway_subnets" {
 }
 
 data "azurerm_subnet" "frontend_subnets" {
-  for_each             = { for frontend_ip_configuration in local.flattened_frontend_ip_configurations : "${frontend_ip_configuration.frontend_ip_configuration_key}" => frontend_ip_configuration }
+  for_each             = { for frontend_ip_configuration in local.flattened_frontend_ip_configurations : "${frontend_ip_configuration.frontend_ip_configuration_key}" => frontend_ip_configuration if frontend_ip_configuration.subnet_name != null }
   name                 = "crime-portal-${each.value.subnet_name}-${var.env}"
   virtual_network_name = "vnet-${local.env_map[var.env]}-int-01"
   resource_group_name  = "InternalSpoke-rg"
