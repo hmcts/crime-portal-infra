@@ -61,7 +61,7 @@ parameters:
         component: 'core'
         service_connection: 'DTS-HERITAGE-INTSVC-PROD'
         dependsOn: 
-          - 'stg_lb'
+          - 'stg_appgw'
           - 'stg_rbac'
           - 'stg_backend_database'
       - deployment: 'prod_backend_database'
