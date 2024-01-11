@@ -88,7 +88,7 @@ network_security_groups = {
         source_port_range          = "*"
         destination_port_range     = "65200-65535"
         source_address_prefix      = "Internet"
-        destination_address_prefix = "10.25.246.0/28"
+        destination_address_prefix = "*"
       }
     }
   }
