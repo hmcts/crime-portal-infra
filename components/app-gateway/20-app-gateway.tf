@@ -49,10 +49,10 @@ resource "azurerm_application_gateway" "this" {
     for_each = var.app_gateway.frontend_ip_configurations
     content {
       name                          = frontend_ip_configuration.key
-      subnet_id                     = data.azurerm_subnet.frontend_subnets["${frontend_ip_configuration.key}"].id
+      subnet_id                     = frontend_ip_configuration.subnet_name != null ? data.azurerm_subnet.frontend_subnets["${frontend_ip_configuration.key}"].id : null
       private_ip_address_allocation = frontend_ip_configuration.value.private_ip_address_allocation
       private_ip_address            = frontend_ip_configuration.value.private_ip_address
-      public_ip_address_id          = azurerm_public_ip.this[frontend_ip_configuration.key].id
+      public_ip_address_id          = frontend_ip_configuration.public_ip_address_name != null ? azurerm_public_ip.this[frontend_ip_configuration.key].id : null
     }
   }
 
