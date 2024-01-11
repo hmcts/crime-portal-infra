@@ -1,6 +1,7 @@
 resource "azurerm_public_ip" "this" {
   for_each            = { for frontend_ip_configuration in local.flattened_frontend_ip_configurations : "${frontend_ip_configuration.frontend_ip_configuration_key}" => frontend_ip_configuration if frontend_ip_configuration.public_ip_address_name != null }
   name                = each.value.public_ip_address_name
+  sku                 = "Standard"
   resource_group_name = local.resource_group_name
   location            = var.location
   allocation_method   = "Dynamic"
