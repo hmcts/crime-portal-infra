@@ -25,7 +25,7 @@ subnets = {
 
 route_tables = {
   rt = {
-    subnets = ["lb", "frontend", "backend", "backend-postgresql"]
+    subnets = ["gateway", "frontend", "backend", "backend-postgresql"]
     routes = {
       RFC_1918_A = {
         address_prefix         = "10.0.0.0/8"
@@ -47,8 +47,8 @@ route_tables = {
 }
 
 network_security_groups = {
-  lb-nsg = {
-    subnets = ["lb"]
+  gateway-nsg = {
+    subnets = ["gateway"]
     rules = {
       "allow_http" = {
         priority                   = 200
