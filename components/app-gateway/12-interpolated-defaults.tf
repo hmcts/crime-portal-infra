@@ -35,12 +35,6 @@ module "ctags" {
   product     = var.product
 }
 
-data "azurerm_subnet" "appgw" {
-  name                 = "crime-portal-appgw-${var.env}"
-  virtual_network_name = "vnet-${local.env_map[var.env]}-int-01"
-  resource_group_name  = "InternalSpoke-rg"
-}
-
 data "azurerm_subnet" "gateway_subnets" {
   for_each             = { for gateway_ip_config in local.flattened_gateway_ip_configurations : "${gateway_ip_config.gateway_ip_config_key}" => gateway_ip_config }
   name                 = "crime-portal-${each.value.subnet_name}-${var.env}"

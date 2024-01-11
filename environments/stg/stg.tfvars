@@ -27,18 +27,8 @@ route_tables = {
   rt = {
     subnets = ["frontend", "backend", "backend-postgresql"]
     routes = {
-      RFC_1918_A = {
-        address_prefix         = "10.0.0.0/8"
-        next_hop_type          = "VirtualAppliance"
-        next_hop_in_ip_address = "10.11.72.36"
-      }
-      RFC_1918_B = {
-        address_prefix         = "172.16.0.0/12"
-        next_hop_type          = "VirtualAppliance"
-        next_hop_in_ip_address = "10.11.72.36"
-      }
-      RFC_1918_C = {
-        address_prefix         = "192.168.0.0/16"
+      default = {
+        address_prefix         = "0.0.0.0/8"
         next_hop_type          = "VirtualAppliance"
         next_hop_in_ip_address = "10.11.72.36"
       }
