@@ -315,6 +315,7 @@ app_gateway = {
       port                  = 80
       protocol              = "Http"
       cookie_based_affinity = "Enabled"
+      probe_name            = "http"
     }
   }
   http_listeners = {
