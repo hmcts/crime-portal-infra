@@ -80,6 +80,16 @@ network_security_groups = {
         source_address_prefix      = "*"
         destination_address_prefix = "10.25.246.0/28"
       }
+      "appgw_allow_internet_in" = {
+        priority                   = 202
+        direction                  = "Inbound"
+        access                     = "Allow"
+        protocol                   = "*"
+        source_port_range          = "*"
+        destination_port_range     = "65200-65535"
+        source_address_prefix      = "Internet"
+        destination_address_prefix = "10.25.246.0/28"
+      }
     }
   }
   frontend-nsg = {
