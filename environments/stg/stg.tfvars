@@ -1,5 +1,5 @@
 subnets = {
-  lb = {
+  gateway = {
     address_prefixes  = ["10.25.246.0/28"]
     service_endpoints = ["Microsoft.Storage"]
   }
@@ -27,8 +27,18 @@ route_tables = {
   rt = {
     subnets = ["lb", "frontend", "backend", "backend-postgresql"]
     routes = {
-      default = {
-        address_prefix         = "0.0.0.0/0"
+      RFC_1918_A = {
+        address_prefix         = "10.0.0.0/8"
+        next_hop_type          = "VirtualAppliance"
+        next_hop_in_ip_address = "10.11.72.36"
+      }
+      RFC_1918_B = {
+        address_prefix         = "172.16.0.0/12"
+        next_hop_type          = "VirtualAppliance"
+        next_hop_in_ip_address = "10.11.72.36"
+      }
+      RFC_1918_C = {
+        address_prefix         = "192.168.0.0/16"
         next_hop_type          = "VirtualAppliance"
         next_hop_in_ip_address = "10.11.72.36"
       }
@@ -256,6 +266,62 @@ frontend_users = {
 }
 
 subscription_id = "ae75b9fb-7d34-4112-82ff-64bd3855ce27"
+
+app_gateway = {
+  name               = "crime-portal-appgw"
+  availability_zones = ["1", "2"]
+  capacity           = 1
+  gateway_ip_configurations = {
+    crime-portal-gwip01-stg = {
+      subnet_name = "gateway"
+    }
+  }
+  frontend_ports = {
+    http = {
+      port = 80
+    }
+  }
+  frontend_ip_configurations = {
+    crime-portal-feip01-stg = {
+      subnet_name                   = "gateway"
+      private_ip_address_allocation = "Static"
+      private_ip_Address            = "10.25.246.4"
+    }
+  }
+  backend_address_pools = {
+    crime-portal-bap01-stg = {
+      virtual_machine_names = ["crime-portal-frontend-vm01-stg", "crime-portal-frontend-vm02-stg"]
+    }
+  }
+  probes = {
+    http = {
+      host = "crime-portal.staging.platform.hmcts.net"
+    }
+  }
+  backend_http_settings = {
+    crime-portal-behttp01-stg = {
+      port      = 80
+      protocol  = "Http"
+      host_name = "crime-portal.staging.platform.hmcts.net"
+    }
+  }
+  http_listeners = {
+    crime-portal-http-listener = {
+      frontend_ip_configuration_name = "crime-portal-feip01-stg"
+      frontend_port_name             = "Http"
+      protocol                       = "Http"
+      host_name                      = "crime-portal.staging.platform.hmcts.net"
+    }
+  }
+  request_routing_rules = {
+    crime-portal-http-rule = {
+      http_listener_name         = "crime-portal-http-listener"
+      backend_address_pool_name  = "crime-portal-bap01-stg"
+      backend_http_settings_name = "crime-portal-behttp01-stg"
+      rule_type                  = "Basic"
+    }
+  }
+}
 
 load_balancer = {
   name = "crime-portal-lb"

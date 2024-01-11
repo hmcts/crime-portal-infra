@@ -6,32 +6,26 @@ locals {
   resource_group_name   = "crime-portal-rg-${var.env}"
   x_fwded_proto_ruleset = "x_fwded_proto"
   flattened_gateway_ip_configurations = flatten([
-    for appgw_key, appgw in var.app_gateways : [
-      for gateway_ip_config_key, gateway_ip_config in appgw.gateway_ip_configurations : {
-        appgw_key             = appgw_key
-        gateway_ip_config_key = gateway_ip_config_key
-        subnet_name           = gateway_ip_config.subnet_name
-      }
-    ]
+    for gateway_ip_config_key, gateway_ip_config in var.app_gateway.gateway_ip_configurations : {
+      appgw_key             = appgw_key
+      gateway_ip_config_key = gateway_ip_config_key
+      subnet_name           = gateway_ip_config.subnet_name
+    }
   ])
   flattened_frontend_ip_configurations = flatten([
-    for appgw_key, appgw in var.app_gateways : [
-      for frontend_ip_configuration_key, frontend_ip_configuration in appgw.frontend_ip_configurations : {
-        appgw_key                     = appgw_key
-        frontend_ip_configuration_key = frontend_ip_configuration_key
-        subnet_name                   = frontend_ip_configuration.subnet_name
-      }
-    ]
+    for frontend_ip_configuration_key, frontend_ip_configuration in var.app_gateway.frontend_ip_configurations : {
+      appgw_key                     = appgw_key
+      frontend_ip_configuration_key = frontend_ip_configuration_key
+      subnet_name                   = frontend_ip_configuration.subnet_name
+    }
   ])
   flattened_backend_vms = flatten([
-    for appgw_key, appgw in var.app_gateways : [
-      for backend_pool_key, backend_pool in appgw.backend_address_pools : [
-        for virtual_machine_name in backend_pool.virtual_machine_names : {
-          appgw_key            = appgw_key
-          backend_pool_key     = backend_pool_key
-          virtual_machine_name = virtual_machine_name
-        }
-      ]
+    for backend_pool_key, backend_pool in var.app_gateway.backend_address_pools : [
+      for virtual_machine_name in backend_pool.virtual_machine_names : {
+        appgw_key            = appgw_key
+        backend_pool_key     = backend_pool_key
+        virtual_machine_name = virtual_machine_name
+      }
     ]
   ])
 }

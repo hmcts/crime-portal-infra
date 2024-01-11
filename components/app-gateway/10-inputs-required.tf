@@ -13,8 +13,9 @@ variable "product" {
   description = "The name of the prodcut this infrastructure supports."
 }
 
-variable "app_gateways" {
-  type = map(object({
+variable "app_gateway" {
+  type = object({
+    name               = string
     availability_zones = optional(list(string))
     sku_name           = optional(string, "Standard_Small")
     sku_tier           = optional(string, "Standard")
@@ -71,6 +72,6 @@ variable "app_gateways" {
       backend_http_settings_name = optional(string)
       priority                   = optional(number, 20)
     }))
-  }))
+  })
   description = "Values to use when deploy the app gateway(s)"
 }
