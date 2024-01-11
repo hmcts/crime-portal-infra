@@ -4,7 +4,7 @@ resource "azurerm_public_ip" "this" {
   sku                 = "Standard"
   resource_group_name = local.resource_group_name
   location            = var.location
-  allocation_method   = "Dynamic"
+  allocation_method   = "Static"
 }
 
 resource "azurerm_application_gateway" "this" {
