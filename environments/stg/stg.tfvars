@@ -304,15 +304,12 @@ app_gateway = {
     }
   }
   probes = {
-    http = {
-      host = "crime-portal.staging.platform.hmcts.net"
-    }
+    http = {}
   }
   backend_http_settings = {
     crime-portal-behttp01-stg = {
       port                  = 80
       protocol              = "Http"
-      host_name             = "crime-portal.staging.platform.hmcts.net"
       cookie_based_affinity = "Enabled"
     }
   }
@@ -321,7 +318,6 @@ app_gateway = {
       frontend_ip_configuration_name = "crime-portal-feip01-stg"
       frontend_port_name             = "Http"
       protocol                       = "Http"
-      host_name                      = "crime-portal.staging.platform.hmcts.net"
     }
   }
   request_routing_rules = {
