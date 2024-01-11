@@ -294,7 +294,7 @@ app_gateway = {
     crime-portal-feip01-stg = {
       subnet_name                   = "gateway"
       private_ip_address_allocation = "Static"
-      private_ip_Address            = "10.25.246.4"
+      private_ip_address            = "10.25.246.4"
     }
   }
   backend_address_pools = {
