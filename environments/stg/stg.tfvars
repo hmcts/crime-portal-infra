@@ -304,7 +304,9 @@ app_gateway = {
     }
   }
   probes = {
-    http = {}
+    http = {
+      host = "crimeportal.staging.apps.hmcts.net"
+    }
   }
   backend_http_settings = {
     crime-portal-behttp01-stg = {
