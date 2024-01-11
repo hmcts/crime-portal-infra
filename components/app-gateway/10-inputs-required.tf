@@ -29,10 +29,10 @@ variable "app_gateway" {
       port = number
     }))
     frontend_ip_configurations = optional(map(object({
-      subnet_name                   = string
+      subnet_name                   = optional(string)
       private_ip_address_allocation = optional(string, "Dynamic")
       private_ip_address            = optional(string)
-      public_ip_address_id          = optional(string)
+      public_ip_address_name        = optional(string)
     })))
     backend_address_pools = map(object({
       ip_addresses          = optional(list(string))

@@ -1,3 +1,11 @@
+resource "azurerm_public_ip" "this" {
+  for_each            = { for frontend_ip_configuration in local.flattened_frontend_ip_configurations : "${frontend_ip_configuration.frontend_ip_configuration_key}" => frontend_ip_configuration if frontend_ip_configuration.public_ip_address_name != null }
+  name                = each.value.public_ip_address_name
+  resource_group_name = local.resource_group_name
+  location            = var.location
+  allocation_method   = "Dynamic"
+}
+
 resource "azurerm_application_gateway" "this" {
   name                = "${var.app_gateway.name}-${var.env}"
   resource_group_name = local.resource_group_name
@@ -42,7 +50,7 @@ resource "azurerm_application_gateway" "this" {
       subnet_id                     = data.azurerm_subnet.frontend_subnets["${frontend_ip_configuration.key}"].id
       private_ip_address_allocation = frontend_ip_configuration.value.private_ip_address_allocation
       private_ip_address            = frontend_ip_configuration.value.private_ip_address
-      public_ip_address_id          = frontend_ip_configuration.value.public_ip_address_id
+      public_ip_address_id          = azurerm_public_ip.this[frontend_ip_configuration.key].id
     }
   }
 

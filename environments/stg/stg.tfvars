@@ -295,6 +295,7 @@ app_gateway = {
       subnet_name                   = "gateway"
       private_ip_address_allocation = "Static"
       private_ip_address            = "10.25.246.4"
+      public_ip_address_name        = "crime-portal-appgw-stg-pip"
     }
   }
   backend_address_pools = {

@@ -15,6 +15,7 @@ locals {
     for frontend_ip_configuration_key, frontend_ip_configuration in var.app_gateway.frontend_ip_configurations : {
       frontend_ip_configuration_key = frontend_ip_configuration_key
       subnet_name                   = frontend_ip_configuration.subnet_name
+      public_ip_address_name        = frontend_ip_configuration.public_ip_address_name
     }
   ])
   flattened_backend_vms = flatten([
