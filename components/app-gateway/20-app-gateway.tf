@@ -6,6 +6,7 @@ resource "azurerm_public_ip" "this" {
   location            = var.location
   allocation_method   = "Static"
   zones               = ["1", "2", "3"]
+  tags                = module.ctags.common_tags
 }
 
 resource "azurerm_application_gateway" "this" {
