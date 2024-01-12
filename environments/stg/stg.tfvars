@@ -350,7 +350,7 @@ app_gateway = {
     }
     test-listener = {
       frontend_ip_configuration_name = "crime-portal-private-stg"
-      frontend_port_name             = "http"
+      frontend_port_name             = "test"
       protocol                       = "Http"
     }
   }
