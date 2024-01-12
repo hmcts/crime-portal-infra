@@ -50,7 +50,7 @@ parameters:
         environment: 'stg'
         component: 'app-gateway'
         service_connection: 'DTS-HERITAGE-INTSVC-STG'
-        dependsOn: 'Precheck'
+        dependsOn: 'stg_vm'
       - deployment: 'stg_rbac'
         environment: 'stg'
         component: 'rbac'
