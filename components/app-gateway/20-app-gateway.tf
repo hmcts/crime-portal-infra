@@ -93,6 +93,7 @@ resource "azurerm_application_gateway" "this" {
       probe_name                          = backend_http_settings.value.probe_name
       host_name                           = backend_http_settings.value.host_name
       pick_host_name_from_backend_address = backend_http_settings.value.pick_host_name_from_backend_address
+      trusted_root_certificate_names      = backend_http_settings.value.trusted_root_certificate_names
     }
   }
 
@@ -144,6 +145,14 @@ resource "azurerm_application_gateway" "this" {
           header_value = "{var_add_x_forwarded_for_proxy}"
         }
       }
+    }
+  }
+
+  dynamic "trusted_root_certificate" {
+    for_each = var.app_gateway.trusted_root_certificates
+    content {
+      name = trusted_root_certificate.key
+      data = trusted_root_certificate.value
     }
   }
 }

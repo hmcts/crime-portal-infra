@@ -58,6 +58,7 @@ variable "app_gateway" {
       probe_name                          = optional(string)
       host_name                           = optional(string)
       pick_host_name_from_backend_address = optional(bool)
+      trusted_root_certificate_names      = optional(list(string))
     }))
     http_listeners = map(object({
       frontend_ip_configuration_name = string
@@ -72,6 +73,7 @@ variable "app_gateway" {
       backend_http_settings_name = optional(string)
       priority                   = optional(number, 20)
     }))
+    trusted_root_certificates = map(string)
   })
   description = "Values to use when deploy the app gateway(s)"
 }

@@ -299,6 +299,9 @@ app_gateway = {
     http = {
       port = 80
     }
+    test = {
+      port = 81
+    }
   }
   frontend_ip_configurations = {
     crime-portal-private-stg = {
@@ -319,6 +322,11 @@ app_gateway = {
     http = {
       host = "crimeportal.staging.apps.hmcts.net"
     }
+    https = {
+      host     = "lncs-crimeportal-notify-uat.lncs.hmcs"
+      protocol = "Https"
+      port     = 443
+    }
   }
   backend_http_settings = {
     crime-portal-behttp01-stg = {
@@ -327,11 +335,22 @@ app_gateway = {
       cookie_based_affinity = "Enabled"
       probe_name            = "http"
     }
+    crime-portal-behttps01-stg = {
+      port                           = 443
+      protocol                       = "Https"
+      probe_name                     = "https"
+      trusted_root_certificate_names = ["crime-portal-uat"]
+    }
   }
   http_listeners = {
     crime-portal-http-listener = {
       frontend_ip_configuration_name = "crime-portal-private-stg"
       frontend_port_name             = "Http"
+      protocol                       = "Http"
+    }
+    test-listener = {
+      frontend_ip_configuration_name = "crime-portal-private-stg"
+      frontend_port_name             = "http"
       protocol                       = "Http"
     }
   }
@@ -342,6 +361,15 @@ app_gateway = {
       backend_http_settings_name = "crime-portal-behttp01-stg"
       rule_type                  = "Basic"
     }
+    crime-portal-test-rule = {
+      http_listener_name         = "test-listener"
+      backend_address_pool_name  = "crime-portal-bap01-stg"
+      backend_http_settings_name = "crime-portal-behttps01-stg"
+      rule_type                  = "Basic"
+    }
+  }
+  trusted_root_certificates = {
+    crime-portal-uat = "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tDQpNSUlIQ0RDQ0JmQ2dBd0lCQWdJVEhBQUFNOXdmYUZ0TmQ4ZnVMd0FCQUFBejNEQU5CZ2txaGtpRzl3MEJBUXNGDQpBREJNTVJnd0ZnWUtDWkltaVpQeUxHUUJHUllJYVc1MFpYSnVZV3d4RnpBVkJnb0praWFKay9Jc1pBRVpGZ2RzDQpaWGh1YkdVeE1SY3dGUVlEVlFRREV3NUZWVU5TVTBGRlRsUkRRVEF3TVRBZUZ3MHlNekV3TVRreE1URTNNRGxhDQpGdzB5TkRFd01UZ3hNVEUzTURsYU1JR0hNUXN3Q1FZRFZRUUdFd0pIUWpFWE1CVUdBMVVFQ0JNT1IzSmxZWFJsDQpjaUJNYjI1a2IyNHhEekFOQmdOVkJBY1RCa3h2Ym1SdmJqRU1NQW9HQTFVRUNoTURRMGRKTVJBd0RnWURWUVFMDQpFd2RLZFhOMGFXTmxNUzR3TEFZRFZRUURFeVZzYm1OekxXTnlhVzFsY0c5eWRHRnNMVzV2ZEdsbWVTMTFZWFF1DQpiRzVqY3k1b2JXTnpNSUlCSWpBTkJna3Foa2lHOXcwQkFRRUZBQU9DQVE4QU1JSUJDZ0tDQVFFQXpzdnpaZ3pCDQpIYWY2bFo4M0htb0daVXRkLzdyRjJkM0tMNzN4UTNCWXluRS8wU09SZWcvQlJoemxDMGhvV1dkb1R4L2JteFR2DQpaYTZ0MkFDR3l4U2tmZjRGSkpWTWlFYnQ2MUg1czNZem05SFh3enRac3pHSVFzOWhHSVFSMStyN0lXZktZR3BODQplcmR2RmlFVEVtT1o1SEZaOUx4aDA5ZERDK0dmUTFrUjdmNlZrRjA4Z1JIRkRHbzlpaDBCc3FXeFhBRGppSmZrDQpvbW1rbUhGOXFySVN4aE8xM25SMHViMXpvK3dCMVFTbU9iUTJxczg5TFd2RUJhMDJjcGlocW5BcTN3elBPajExDQpPS2tjdGZvL3crNFlYd0VqOUtGZHFNQkxjQ2txcnNVb2hQbndmNUJVZVFlTFdHbDdaL29VbnFpQTBqUVJYemQ2DQp5SGNMWjFPYTJYWFkwUUlEQVFBQm80SURwVENDQTZFd0hRWURWUjBPQkJZRUZPM2RWbVd2VlRucGJTM2UzL1lNDQpQUDhZSHNsNU1EQUdBMVVkRVFRcE1DZUNKV3h1WTNNdFkzSnBiV1Z3YjNKMFlXd3RibTkwYVdaNUxYVmhkQzVzDQpibU56TG1odFkzTXdId1lEVlIwakJCZ3dGb0FVbThiNFZCS0FOb241SUdjWTBWM2hPUDRncWxrd2dnRWtCZ05WDQpIUjhFZ2dFYk1JSUJGekNDQVJPZ2dnRVBvSUlCQzRhQnhHeGtZWEE2THk4dlEwNDlSVlZEVWxOQlJVNVVRMEV3DQpNREVvTVNrc1EwNDlSVlZEVnpReE56RlRRMEV3TURFc1EwNDlRMFJRTEVOT1BWQjFZbXhwWXlVeU1FdGxlU1V5DQpNRk5sY25acFkyVnpMRU5PUFZObGNuWnBZMlZ6TEVOT1BVTnZibVpwWjNWeVlYUnBiMjRzUkVNOWJHVjRibXhsDQpNU3hFUXoxcGJuUmxjbTVoYkQ5alpYSjBhV1pwWTJGMFpWSmxkbTlqWVhScGIyNU1hWE4wUDJKaGMyVS9iMkpxDQpaV04wUTJ4aGMzTTlZMUpNUkdsemRISnBZblYwYVc5dVVHOXBiblNHUW1oMGRIQTZMeTl3YTJsamNteGhhV0V1DQpiR1Y0Ym14bE1TNXBiblJsY201aGJDOURaWEowUlc1eWIyeHNMMFZWUTFKVFFVVk9WRU5CTURBeEtERXBMbU55DQpiRENDQVdzR0NDc0dBUVVGQndFQkJJSUJYVENDQVZrd2diSUdDQ3NHQVFVRkJ6QUNob0dsYkdSaGNEb3ZMeTlEDQpUajFGVlVOU1UwRkZUbFJEUVRBd01TeERUajFCU1VFc1EwNDlVSFZpYkdsakpUSXdTMlY1SlRJd1UyVnlkbWxqDQpaWE1zUTA0OVUyVnlkbWxqWlhNc1EwNDlRMjl1Wm1sbmRYSmhkR2x2Yml4RVF6MXNaWGh1YkdVeExFUkRQV2x1DQpkR1Z5Ym1Gc1AyTkJRMlZ5ZEdsbWFXTmhkR1UvWW1GelpUOXZZbXBsWTNSRGJHRnpjejFqWlhKMGFXWnBZMkYwDQphVzl1UVhWMGFHOXlhWFI1TUc0R0NDc0dBUVVGQnpBQ2htSm9kSFJ3T2k4dmNHdHBZM0pzWVdsaExteGxlRzVzDQpaVEV1YVc1MFpYSnVZV3d2UTJWeWRFVnVjbTlzYkM5RlZVTlhOREUzTVZORFFUQXdNUzVzWlhodWJHVXhMbWx1DQpkR1Z5Ym1Gc1gwVlZRMUpUUVVWT1ZFTkJNREF4S0RFcExtTnlkREF5QmdnckJnRUZCUWN3QVlZbWFIUjBjRG92DQpMM0JyYVdOeWJHRnBZUzVzWlhodWJHVXhMbWx1ZEdWeWJtRnNMMjlqYzNBd0RnWURWUjBQQVFIL0JBUURBZ1dnDQpNRDRHQ1NzR0FRUUJnamNWQndReE1DOEdKeXNHQVFRQmdqY1ZDSVRWM0F1Q3laRlVoKzJaRDRldmdoQ0I5SkEvDQpnVktDNWJGU2gvaXZiUUlCWkFJQkJUQWRCZ05WSFNVRUZqQVVCZ2dyQmdFRkJRY0RBUVlJS3dZQkJRVUhBd0l3DQpKd1lKS3dZQkJBR0NOeFVLQkJvd0dEQUtCZ2dyQmdFRkJRY0RBVEFLQmdnckJnRUZCUWNEQWpBTkJna3Foa2lHDQo5dzBCQVFzRkFBT0NBUUVBVExlWFVMaVc4RDZraE5veTFYNUkrUHFWc0xWSksxNmdHZE5aaHlFbUJ6SDg0b2VRDQpySGdyVjhMc2hoS3NPdlRGYjBZcy9Sb08zeEpSNGtHN0JoUmxIMG05UDlHakdxVWV4SHNtenNoZkFvdFNNM0xpDQo5UUR3cWpJM0ZCcW9TQmVUTGJPb0t6d0NnOHh3S2ZrTyszYjBjN3RnUVJCWFdUS1oxdGE2ZGplSXh1RmlpVEtFDQpOK0k0RUxpcys1Mll0TlpseENFSG9mWXk1Vy92WjVlUU9QMTFMemRLY0VWMkFKZkNFQUV5SU81U3A4YUVoRXkyDQpsNjVCci9oZGozMGp6dXFWMXJEb1d2R0xHRWVzOVFRM01yUjR0TUYva21sWUxTNEhzbDdkd1VnNUNEY1p3T2ZyDQp5bmlQcmNlRlBmVVlvNUNoSEptcWt0aENuemdKZ0VtM3FVcEU3Zz09DQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tDQo="
   }
 }
 
