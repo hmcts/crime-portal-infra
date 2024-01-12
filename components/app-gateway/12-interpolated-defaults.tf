@@ -26,10 +26,10 @@ locals {
       }
     ]
   ])
-  trusted_root_certificate_data = flatten([
+  trusted_root_certificates = flatten([
     for trusted_cert_key, trusted_cert in var.app_gateway.trusted_root_certificates : {
       trusted_cert_key = trusted_cert_key
-      data             = filebase64("${path.module}/../../environments/${var.env}/${trusted_cert}")
+      secret_name      = trusted_cert
     }
   ])
 }
@@ -60,4 +60,10 @@ data "azurerm_virtual_machine" "backend_vms" {
   for_each            = { for virtual_machine_name in local.flattened_backend_vms : "${virtual_machine_name.virtual_machine_name}" => virtual_machine_name }
   name                = each.value.virtual_machine_name
   resource_group_name = local.resource_group_name
+}
+
+data "azurerm_key_vault_secret" "root_certificates" {
+  for_each     = { for trusted_cert in local.trusted_root_certificates : "${trusted_cert.trusted_cert_key}" => trusted_cert }
+  name         = each.value.secret_name
+  key_vault_id = "/subscriptions/${var.subscription_id}/resourceGroups/${local.resource_group_name}/providers/Microsoft.KeyVault/vaults/crime-portal-kv-${var.env}"
 }

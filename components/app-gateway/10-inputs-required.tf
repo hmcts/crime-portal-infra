@@ -13,6 +13,11 @@ variable "product" {
   description = "The name of the prodcut this infrastructure supports."
 }
 
+variable "subscription_id" {
+  type        = string
+  description = "The subscription id to deploy resources to."
+}
+
 variable "app_gateway" {
   type = object({
     name               = string

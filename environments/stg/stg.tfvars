@@ -369,7 +369,7 @@ app_gateway = {
     }
   }
   trusted_root_certificates = {
-    crime-portal-uat = "crime-portal-uat.cer"
+    crime-portal-uat = "crime-portal-root-certificate"
   }
 }
 
