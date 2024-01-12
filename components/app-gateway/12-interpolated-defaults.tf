@@ -26,6 +26,12 @@ locals {
       }
     ]
   ])
+  trusted_root_certificate_data = flatten([
+    for trusted_cert_key, trusted_cert in var.app_gateway.trusted_root_certificates : {
+      trusted_cert_key = trusted_cert_key
+      data             = filebase64("${path.module}/../../environments/${var.env}/${trusted_cert}")
+    }
+  ])
 }
 
 module "ctags" {
