@@ -70,6 +70,7 @@ variable "app_gateway" {
       frontend_port_name             = string
       protocol                       = string
       host_name                      = optional(string)
+      ssl_certificate_name           = optional(string)
     }))
     request_routing_rules = map(object({
       rule_type                  = string

@@ -299,8 +299,8 @@ app_gateway = {
     http = {
       port = 80
     }
-    test = {
-      port = 81
+    https = {
+      port = 443
     }
   }
   frontend_ip_configurations = {
@@ -348,10 +348,11 @@ app_gateway = {
       frontend_port_name             = "Http"
       protocol                       = "Http"
     }
-    test-listener = {
+    crime-portal-https-listener = {
       frontend_ip_configuration_name = "crime-portal-private-stg"
-      frontend_port_name             = "test"
-      protocol                       = "Http"
+      frontend_port_name             = "https"
+      protocol                       = "Https"
+      ssl_certificate_name           = "crime-portal-uat-ssl-cert"
     }
   }
   request_routing_rules = {
@@ -372,6 +373,9 @@ app_gateway = {
   }
   trusted_root_certificates = {
     crime-portal-uat = "crime-portal-root-certificate"
+  }
+  ssl_certificates = {
+    crime-portal-uat-ssl-cert = "crime-portal-ssl-cert"
   }
 }
 
