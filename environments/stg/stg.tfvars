@@ -360,12 +360,14 @@ app_gateway = {
       backend_address_pool_name  = "crime-portal-bap01-stg"
       backend_http_settings_name = "crime-portal-behttp01-stg"
       rule_type                  = "Basic"
+      priority                   = 20
     }
     crime-portal-test-rule = {
       http_listener_name         = "test-listener"
       backend_address_pool_name  = "crime-portal-bap01-stg"
       backend_http_settings_name = "crime-portal-behttps01-stg"
       rule_type                  = "Basic"
+      priority                   = 21
     }
   }
   trusted_root_certificates = {
