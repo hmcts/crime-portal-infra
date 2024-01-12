@@ -340,6 +340,7 @@ app_gateway = {
       protocol                       = "Https"
       probe_name                     = "https"
       trusted_root_certificate_names = ["crime-portal-uat"]
+      host_name                      = "lncs-crimeportal-notify-uat.lncs.hmcs"
     }
   }
   http_listeners = {
