@@ -13,6 +13,7 @@ resource "azurerm_user_assigned_identity" "this" {
   resource_group_name = local.resource_group_name
   location            = var.location
   name                = "${var.app_gateway.name}-${var.env}-identity"
+  tags                = module.ctags.common_tags
 }
 
 resource "azurerm_key_vault_access_policy" "appgw" {
