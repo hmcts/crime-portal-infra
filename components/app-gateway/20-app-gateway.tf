@@ -149,10 +149,10 @@ resource "azurerm_application_gateway" "this" {
   }
 
   dynamic "trusted_root_certificate" {
-    for_each = var.app_gateway.trusted_root_certificates
+    for_each = { for cert_data in local.trusted_root_certificate_data : cert_data.trusted_cert_key => cert_data }
     content {
       name = trusted_root_certificate.key
-      data = trusted_root_certificate.value
+      data = trusted_root_certificate.value.data
     }
   }
 }
