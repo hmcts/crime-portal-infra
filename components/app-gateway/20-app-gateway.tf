@@ -18,7 +18,7 @@ resource "azurerm_user_assigned_identity" "this" {
 resource "azurerm_key_vault_access_policy" "appgw" {
   key_vault_id = "/subscriptions/${var.subscription_id}/resourceGroups/${local.resource_group_name}/providers/Microsoft.KeyVault/vaults/crime-portal-kv-${var.env}"
   tenant_id    = data.azurerm_client_config.current.tenant_id
-  object_id    = azurerm_user_assigned_identity.this.id
+  object_id    = azurerm_user_assigned_identity.this.principal_id
 
   secret_permissions = [
     "Get"
