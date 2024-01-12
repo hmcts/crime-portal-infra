@@ -9,6 +9,22 @@ resource "azurerm_public_ip" "this" {
   tags                = module.ctags.common_tags
 }
 
+resource "azurerm_user_assigned_identity" "this" {
+  resource_group_name = local.resource_group_name
+  location            = var.location
+  name                = "${var.app_gateway.name}-${var.env}-identity"
+}
+
+resource "azurerm_key_vault_access_policy" "appgw" {
+  key_vault_id = "/subscriptions/${var.subscription_id}/resourceGroups/${local.resource_group_name}/providers/Microsoft.KeyVault/vaults/crime-portal-kv-${var.env}"
+  tenant_id    = data.azurerm_client_config.current.tenant_id
+  object_id    = azurerm_user_assigned_identity.this.id
+
+  secret_permissions = [
+    "Get"
+  ]
+}
+
 resource "azurerm_application_gateway" "this" {
   name                = "${var.app_gateway.name}-${var.env}"
   resource_group_name = local.resource_group_name
@@ -105,6 +121,7 @@ resource "azurerm_application_gateway" "this" {
       frontend_port_name             = http_listener.value.frontend_port_name
       protocol                       = http_listener.value.protocol
       host_name                      = http_listener.value.host_name
+      ssl_certificate_name           = http_listener.value.ssl_certificate_name
     }
   }
 
@@ -151,8 +168,23 @@ resource "azurerm_application_gateway" "this" {
   dynamic "trusted_root_certificate" {
     for_each = { for trusted_cert in local.trusted_root_certificates : trusted_cert.trusted_cert_key => trusted_cert }
     content {
-      name = trusted_root_certificate.key
-      data = data.azurerm_key_vault_secret.root_certificates[trusted_root_certificate.key].value
+      name                = trusted_root_certificate.key
+      key_vault_secret_id = data.azurerm_key_vault_secret.root_certificates[trusted_root_certificate.key].id
     }
+  }
+
+  dynamic "ssl_certificate" {
+    for_each = { for ssl_cert in local.ssl_certificates : ssl_cert.ssl_cert_key => ssl_cert }
+    content {
+      name                = ssl_certificate.key
+      key_vault_secret_id = data.azurerm_key_vault_secret.ssl_certificates[ssl_certificate.key].id
+    }
+  }
+
+  identity {
+    type = "UserAssigned"
+    identity_ids = [
+      azurerm_user_assigned_identity.this.id
+    ]
   }
 }

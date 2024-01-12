@@ -70,6 +70,7 @@ variable "app_gateway" {
       frontend_port_name             = string
       protocol                       = string
       host_name                      = optional(string)
+      ssl_certificate_name           = optional(string)
     }))
     request_routing_rules = map(object({
       rule_type                  = string
@@ -78,7 +79,8 @@ variable "app_gateway" {
       backend_http_settings_name = optional(string)
       priority                   = optional(number, 20)
     }))
-    trusted_root_certificates = map(string)
+    trusted_root_certificates = optional(map(string))
+    ssl_certificates          = optional(map(string))
   })
   description = "Values to use when deploy the app gateway(s)"
 }
