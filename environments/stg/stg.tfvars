@@ -320,12 +320,12 @@ app_gateway = {
   }
   probes = {
     http = {
-      host = "crimeportal.staging.apps.hmcts.net"
+      pick_host_name_from_backend_http_settings = true
     }
     https = {
-      host     = "lncs-crimeportal-notify-uat.lncs.hmcs"
-      protocol = "Https"
-      port     = 443
+      pick_host_name_from_backend_http_settings = true
+      protocol                                  = "Https"
+      port                                      = 443
     }
   }
   backend_http_settings = {
@@ -334,6 +334,7 @@ app_gateway = {
       protocol              = "Http"
       cookie_based_affinity = "Enabled"
       probe_name            = "http"
+      host_name             = "crimeportal.staging.apps.hmcts.net"
     }
     crime-portal-behttps01-stg = {
       port                           = 443

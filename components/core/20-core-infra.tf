@@ -1,5 +1,5 @@
 module "core-infra" {
-  source      = "git::https://github.com/hmcts/terraform-module-dlrm-core-infra.git?ref=main"
+  source      = "git::https://github.com/hmcts/terraform-module-dlrm-core-infra.git?ref=feat%2Fupdated-key-vault"
   env         = var.env
   project     = var.product
   common_tags = module.ctags.common_tags
