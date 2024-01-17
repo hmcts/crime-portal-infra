@@ -320,12 +320,12 @@ app_gateway = {
   }
   probes = {
     http = {
-      host = "crimeportal.staging.apps.hmcts.net"
+      pick_host_name_from_backend_http_settings = true
     }
     https = {
-      host     = "lncs-crimeportal-notify-uat.lncs.hmcs"
-      protocol = "Https"
-      port     = 443
+      pick_host_name_from_backend_http_settings = true
+      protocol                                  = "Https"
+      port                                      = 443
     }
   }
   backend_http_settings = {
@@ -334,6 +334,7 @@ app_gateway = {
       protocol              = "Http"
       cookie_based_affinity = "Enabled"
       probe_name            = "http"
+      host_name             = "crimeportal.staging.apps.hmcts.net"
     }
     crime-portal-behttps01-stg = {
       port                           = 443
@@ -377,58 +378,5 @@ app_gateway = {
   }
   ssl_certificates = {
     crime-portal-uat-ssl-cert = "crime-portal-ssl-cert"
-  }
-}
-
-load_balancer = {
-  name = "crime-portal-lb"
-  sku  = "Standard"
-  frontend_ip_configurations = {
-    crime-portal-feip01-stg = {
-      subnet_name = "lb"
-    },
-    crime-portal-feip02-stg = {
-      subnet_name = "lb"
-    }
-  }
-  backend_address_pools = {
-    crime-portal-bap01-stg = {
-      virtual_machine_names = ["crime-portal-frontend-vm01-stg", "crime-portal-frontend-vm02-stg"]
-    },
-    crime-portal-bap02-stg = {
-      virtual_machine_names = ["crime-portal-frontend-vm01-stg", "crime-portal-frontend-vm02-stg"]
-    }
-  }
-  probes = {
-    crime-portal-probe01-stg = {
-      protocol     = "Http"
-      request_path = "/"
-      port         = 80
-    },
-    crime-portal-probe02-stg = {
-      protocol     = "Https"
-      request_path = "/"
-      port         = 443
-    }
-  }
-  rules = {
-    crime-portal-rule01-stg = {
-      protocol                       = "Tcp"
-      frontend_port                  = 80
-      backend_port                   = 80
-      frontend_ip_configuration_name = "crime-portal-feip01-stg"
-      backend_address_pool_names     = ["crime-portal-bap01-stg"]
-      probe_name                     = "crime-portal-probe01-stg"
-      load_distribution              = "SourceIP"
-    },
-    crime-portal-rule02-stg = {
-      protocol                       = "Tcp"
-      frontend_port                  = 443
-      backend_port                   = 443
-      frontend_ip_configuration_name = "crime-portal-feip02-stg"
-      backend_address_pool_names     = ["crime-portal-bap02-stg"]
-      probe_name                     = "crime-portal-probe02-stg"
-      load_distribution              = "SourceIP"
-    }
   }
 }

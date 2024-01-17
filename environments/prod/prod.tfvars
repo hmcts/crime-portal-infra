@@ -287,55 +287,96 @@ frontend_users = {
 
 subscription_id = "17390ec1-5a5e-4a20-afb3-38d8d726ae45"
 
-load_balancer = {
-  name = "crime-portal-lb"
-  sku  = "Standard"
+app_gateway = {
+  name               = "crime-portal-appgw"
+  availability_zones = ["1", "2"]
+  gateway_ip_configurations = {
+    crime-portal-gwip01-prod = {
+      subnet_name = "gateway"
+    }
+  }
+  frontend_ports = {
+    http = {
+      port = 80
+    }
+    https = {
+      port = 443
+    }
+  }
   frontend_ip_configurations = {
-    crime-portal-feip01-prod = {
-      subnet_name = "lb"
-    },
-    crime-portal-feip02-prod = {
-      subnet_name = "lb"
+    crime-portal-private-prod = {
+      subnet_name                   = "gateway"
+      private_ip_address_allocation = "Static"
+      private_ip_address            = "10.24.246.4"
+    }
+    crime-portal-public-prod = {
+      public_ip_address_name = "crime-portal-appgw-prod-pip"
     }
   }
   backend_address_pools = {
     crime-portal-bap01-prod = {
       virtual_machine_names = ["crime-portal-frontend-vm01-prod", "crime-portal-frontend-vm02-prod"]
-    },
-    crime-portal-bap02-prod = {
-      virtual_machine_names = ["crime-portal-frontend-vm01-prod", "crime-portal-frontend-vm02-prod"]
-    },
-  }
-  probes = {
-    crime-portal-probe01-prod = {
-      protocol     = "Http"
-      request_path = "/"
-      port         = 80
-    },
-    crime-portal-probe02-prod = {
-      protocol     = "Https"
-      request_path = "/"
-      port         = 443
     }
   }
-  rules = {
-    crime-portal-rule01-prod = {
-      protocol                       = "Tcp"
-      frontend_port                  = 80
-      backend_port                   = 80
-      frontend_ip_configuration_name = "crime-portal-feip01-prod"
-      backend_address_pool_names     = ["crime-portal-bap01-prod"]
-      probe_name                     = "crime-portal-probe01-prod"
-      load_distribution              = "SourceIP"
-    },
-    crime-portal-rule02-prod = {
-      protocol                       = "Tcp"
-      frontend_port                  = 443
-      backend_port                   = 443
-      frontend_ip_configuration_name = "crime-portal-feip02-prod"
-      backend_address_pool_names     = ["crime-portal-bap02-prod"]
-      probe_name                     = "crime-portal-probe02-prod"
-      load_distribution              = "SourceIP"
-    },
+  probes = {
+    http = {
+      pick_host_name_from_backend_http_settings = true
+    }
+    #https = {
+    #  pick_host_name_from_backend_http_settings = true
+    #  protocol                                  = "Https"
+    #  port                                      = 443
+    #}
   }
+  backend_http_settings = {
+    crime-portal-behttp01-prod = {
+      port                  = 80
+      protocol              = "Http"
+      cookie_based_affinity = "Enabled"
+      probe_name            = "http"
+      host_name             = "crimeportal.apps.hmcts.net"
+    }
+    #crime-portal-behttps01-prod = {
+    #  port                           = 443
+    #  protocol                       = "Https"
+    #  probe_name                     = "https"
+    #  trusted_root_certificate_names = ["crime-portal-uat"]
+    #  host_name                      = "lncs-crimeportal-notify-uat.lncs.hmcs"
+    #}
+  }
+  http_listeners = {
+    crime-portal-http-listener = {
+      frontend_ip_configuration_name = "crime-portal-private-stg"
+      frontend_port_name             = "Http"
+      protocol                       = "Http"
+    }
+    #crime-portal-https-listener = {
+    #  frontend_ip_configuration_name = "crime-portal-private-stg"
+    #  frontend_port_name             = "https"
+    #  protocol                       = "Https"
+    #  ssl_certificate_name           = "crime-portal-uat-ssl-cert"
+    #}
+  }
+  request_routing_rules = {
+    crime-portal-http-rule = {
+      http_listener_name         = "crime-portal-http-listener"
+      backend_address_pool_name  = "crime-portal-bap01-stg"
+      backend_http_settings_name = "crime-portal-behttp01-stg"
+      rule_type                  = "Basic"
+      priority                   = 20
+    }
+    #crime-portal-https-rule = {
+    #  http_listener_name         = "crime-portal-https-listener"
+    #  backend_address_pool_name  = "crime-portal-bap01-stg"
+    #  backend_http_settings_name = "crime-portal-behttps01-stg"
+    #  rule_type                  = "Basic"
+    #  priority                   = 21
+    #}
+  }
+  #trusted_root_certificates = {
+  #  crime-portal-uat = "crime-portal-root-certificate"
+  #}
+  #ssl_certificates = {
+  #  crime-portal-uat-ssl-cert = "crime-portal-ssl-cert"
+  #}
 }
