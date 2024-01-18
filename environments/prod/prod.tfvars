@@ -346,12 +346,12 @@ app_gateway = {
   }
   http_listeners = {
     crime-portal-http-listener = {
-      frontend_ip_configuration_name = "crime-portal-private-stg"
+      frontend_ip_configuration_name = "crime-portal-private-prod"
       frontend_port_name             = "Http"
       protocol                       = "Http"
     }
     #crime-portal-https-listener = {
-    #  frontend_ip_configuration_name = "crime-portal-private-stg"
+    #  frontend_ip_configuration_name = "crime-portal-private-prod"
     #  frontend_port_name             = "https"
     #  protocol                       = "Https"
     #  ssl_certificate_name           = "crime-portal-uat-ssl-cert"
@@ -367,8 +367,8 @@ app_gateway = {
     }
     #crime-portal-https-rule = {
     #  http_listener_name         = "crime-portal-https-listener"
-    #  backend_address_pool_name  = "crime-portal-bap01-stg"
-    #  backend_http_settings_name = "crime-portal-behttps01-stg"
+    #  backend_address_pool_name  = "crime-portal-bap01-prod"
+    #  backend_http_settings_name = "crime-portal-behttps01-prod"
     #  rule_type                  = "Basic"
     #  priority                   = 21
     #}
