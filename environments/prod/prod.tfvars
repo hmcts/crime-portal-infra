@@ -360,8 +360,8 @@ app_gateway = {
   request_routing_rules = {
     crime-portal-http-rule = {
       http_listener_name         = "crime-portal-http-listener"
-      backend_address_pool_name  = "crime-portal-bap01-stg"
-      backend_http_settings_name = "crime-portal-behttp01-stg"
+      backend_address_pool_name  = "crime-portal-bap01-prod"
+      backend_http_settings_name = "crime-portal-behttp01-prod"
       rule_type                  = "Basic"
       priority                   = 20
     }
