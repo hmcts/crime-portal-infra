@@ -239,10 +239,12 @@ frontend_vms = {
   crime-portal-frontend-vm01-stg = {
     availability_zone = 1
     subnet_name       = "frontend"
+    size              = "Standard_D4ds_v5"
   }
   crime-portal-frontend-vm02-stg = {
     availability_zone = 2
     subnet_name       = "frontend"
+    size              = "Standard_D4ds_v5"
   }
 }
 

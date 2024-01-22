@@ -19,7 +19,7 @@ module "virtual-machines" {
   vm_publisher_name       = "canonical"
   vm_offer                = "0001-com-ubuntu-server-jammy"
   vm_sku                  = "22_04-lts-gen2"
-  vm_size                 = "Standard_D2ds_v5"
+  vm_size                 = each.value.size
   vm_version              = "latest"
   vm_private_ip           = each.value.private_ip != null ? each.value.private_ip : cidrhost(data.azurerm_subnet.subnets[each.key].address_prefixes[0], index(keys(local.virtual_machines), each.key) + local.azure_reserved_ip_address_offset)
   systemassigned_identity = true

@@ -15,18 +15,20 @@ variable "product" {
 
 variable "frontend_vms" {
   type = map(object({
-    availability_zone = string,
-    subnet_name       = string,
+    availability_zone = string
+    subnet_name       = string
     private_ip        = optional(string)
+    size              = optional(string, "Standard_D2ds_v5")
   }))
   description = "The frontend VMs to deploy."
 }
 
 variable "ldap_vms" {
   type = map(object({
-    availability_zone = string,
-    subnet_name       = string,
+    availability_zone = string
+    subnet_name       = string
     private_ip        = optional(string)
+    size              = optional(string, "Standard_D2ds_v5")
   }))
   description = "The LDAP VMs to deploy."
 }
