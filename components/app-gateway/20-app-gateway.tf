@@ -175,7 +175,7 @@ resource "azurerm_application_gateway" "this" {
   }
 
   dynamic "ssl_certificate" {
-    for_each = { for ssl_cert in local.ssl_certificates : ssl_cert.ssl_cert_key => ssl_cert }
+    for_each = var.app_gateway.ssl_certificates
     content {
       name                = ssl_certificate.key
       key_vault_secret_id = data.azurerm_key_vault_secret.ssl_certificates[ssl_certificate.key].id
