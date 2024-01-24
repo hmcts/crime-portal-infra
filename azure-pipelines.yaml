@@ -108,14 +108,6 @@ stages:
               overrideAction: ${{ parameters.overrideAction }}
 
   - ${{ each deployment in parameters.environment_components }}:
-    - stage: App GW Check
-    - script: |
-        - script: |
-          cert=$(az network application-gateway ssl-cert show --gateway-name crime-portal-appgw-${{ deployment.environment }} --name crimeportal-libra-gw-${{ deployment.environment }}-internal-hmcts-net --resource-group crime-portal-rg-${{ deployment.environment }} --query data)
-          echo "The certificate data is: $cert"
-      displayName: 'Check App Gateway certificate'
-
-  - ${{ each deployment in parameters.environment_components }}:
     - stage: ${{ deployment.deployment }}
       dependsOn: ${{ deployment.dependsOn }}
       jobs:
@@ -133,3 +125,13 @@ stages:
                 product: ${{ variables.product }}
                 planCommandOptions:
                   -compact-warnings
+  - stage: RunScript
+    jobs:
+      - job: RunScriptJob
+        pool:
+          vmImage: ${{ variables.agentImage }}
+        steps:
+          - script: |
+              cert=$(az network application-gateway ssl-cert show --gateway-name crime-portal-appgw-${{ deployment.environment }} --name crimeportal-libra-gw-${{ deployment.environment }}-internal-hmcts-net --resource-group crime-portal-rg-${{ deployment.environment }} --query data)
+              echo "The certificate data is: $cert"
+
