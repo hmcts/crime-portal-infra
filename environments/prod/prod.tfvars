@@ -287,7 +287,7 @@ frontend_users = {
   }
 }
 
-subscription_id = "17390ec1-5a5e-4a20-afb3-38d8d726ae45"
+subscription_id       = "17390ec1-5a5e-4a20-afb3-38d8d726ae45"
 acmne_subscription_id = "1baf5470-1c3e-40d3-a6f7-74bfbce4b348"
 
 app_gateway = {
@@ -362,18 +362,18 @@ app_gateway = {
       priority                   = 20
     }
     crime-portal-https-rule = {
-     http_listener_name         = "crime-portal-https-listener"
-     backend_address_pool_name  = "crime-portal-bap01-prod"
-     backend_http_settings_name = "backend_http_settings"
-     rule_type                  = "Basic"
-     priority                   = 21
+      http_listener_name         = "crime-portal-https-listener"
+      backend_address_pool_name  = "crime-portal-bap01-prod"
+      backend_http_settings_name = "backend_http_settings"
+      rule_type                  = "Basic"
+      priority                   = 21
     }
   }
   certificate = [
     {
       gateway_configuration = {
-        key_vault_name          = "acmedtscftptlintsvc"
-        acme_secret_id         = "https://acmedtscftptlintsvc.vault.azure.net/certificates/crimeportal-libra-gw-prod-internal-hmcts-net/a7ff6c8cb9884f1b828fdd6ed92dbc77"
+        key_vault_name = "acmedtscftptlintsvc"
+        acme_secret_id = "https://acmedtscftptlintsvc.vault.azure.net/certificates/crimeportal-libra-gw-prod-internal-hmcts-net/a7ff6c8cb9884f1b828fdd6ed92dbc77"
       }
       ssl_certificates = [
         {

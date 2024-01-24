@@ -95,7 +95,7 @@ variable "certificate" {
   description = "The certificate to use for the app gateway"
   type = list(object({
     gateway_configuration = object({
-      key_vault_name  = string
+      key_vault_name      = string
       key_vault_secret_id = string
     })
     ssl_certificates = list(object({
