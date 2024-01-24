@@ -131,7 +131,7 @@ stages:
         pool:
           vmImage: ${{ variables.agentImage }}
         steps:
-          - script: |
-              cert=$(az network application-gateway ssl-cert show --gateway-name crime-portal-appgw-${{ deployment.environment }} --name crimeportal-libra-gw-${{ deployment.environment }}-internal-hmcts-net --resource-group crime-portal-rg-${{ deployment.environment }} --query data)
-              echo "The certificate data is: $cert"
-
+          - ${{ each deployment in parameters.environment_components }}:
+            - script: |
+                cert=$(az network application-gateway ssl-cert show --gateway-name crime-portal-appgw-${{ deployment.environment }} --name crimeportal-libra-gw-${{ deployment.environment }}-internal-hmcts-net --resource-group crime-portal-rg-${{ deployment.environment }} --query data)
+                echo "The certificate data is: $cert"
