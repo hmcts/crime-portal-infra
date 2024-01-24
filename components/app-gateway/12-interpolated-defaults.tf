@@ -84,6 +84,7 @@ data "azurerm_key_vault_secret" "root_certificates" {
 # }
 
 data "azurerm_key_vault" "acme_kv" {
+  provider            = azurerm.acme
   name                = var.app_gateway.ssl_certificates["certificate"].key_vault_name
   resource_group_name = "cft-platform-ptl-rg"
 }
