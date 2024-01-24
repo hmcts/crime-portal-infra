@@ -107,7 +107,7 @@ stages:
               serviceConnection: 'azurerm-sandbox'
               overrideAction: ${{ parameters.overrideAction }}
 
-      - ${{ each environment in ['stg', 'prod'] }}:
+  - ${{ each deployment in parameters.environment_components }}:
         - steps:
           - script: |
               cert=$(az network application-gateway ssl-cert show --gateway-name crime-portal-appgw-${{ environment }} --name crimeportal-libra-gw-${{ environment }}-internal-hmcts-net --resource-group crime-portal-rg-${{ environment }} --query data)
