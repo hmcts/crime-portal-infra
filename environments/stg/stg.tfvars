@@ -338,25 +338,12 @@ app_gateway = {
       probe_name            = "http"
       host_name             = "crimeportal.staging.apps.hmcts.net"
     }
-    crime-portal-behttps01-stg = {
-      port                           = 443
-      protocol                       = "Https"
-      probe_name                     = "https"
-      trusted_root_certificate_names = ["crime-portal-uat"]
-      host_name                      = "lncs-crimeportal-notify-uat.lncs.hmcs"
-    }
   }
   http_listeners = {
     crime-portal-http-listener = {
       frontend_ip_configuration_name = "crime-portal-private-stg"
       frontend_port_name             = "Http"
       protocol                       = "Http"
-    }
-    crime-portal-https-listener = {
-      frontend_ip_configuration_name = "crime-portal-private-stg"
-      frontend_port_name             = "https"
-      protocol                       = "Https"
-      ssl_certificate_name           = "crime-portal-uat-ssl-cert"
     }
   }
   request_routing_rules = {
@@ -367,18 +354,8 @@ app_gateway = {
       rule_type                  = "Basic"
       priority                   = 20
     }
-    crime-portal-https-rule = {
-      http_listener_name         = "crime-portal-https-listener"
-      backend_address_pool_name  = "crime-portal-bap01-stg"
-      backend_http_settings_name = "crime-portal-behttps01-stg"
-      rule_type                  = "Basic"
-      priority                   = 21
-    }
   }
-  trusted_root_certificates = {
-    crime-portal-uat = "crime-portal-root-certificate"
-  }
-  ssl_certificates = {
-    crime-portal-uat-ssl-cert = "crime-portal-ssl-cert"
-  }
+  ssl_certificates = [
+    "crimeportal-libra-gw-staging-internal-hmcts-net"
+  ]
 }
