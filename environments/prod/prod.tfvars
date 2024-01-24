@@ -373,7 +373,7 @@ app_gateway = {
     {
       gateway_configuration = {
         key_vault_name = "acmedtscftptlintsvc"
-        acme_secret_id = "https://acmedtscftptlintsvc.vault.azure.net/certificates/crimeportal-libra-gw-prod-internal-hmcts-net/a7ff6c8cb9884f1b828fdd6ed92dbc77"
+        key_vault_secret_id = "https://acmedtscftptlintsvc.vault.azure.net/certificates/crimeportal-libra-gw-prod-internal-hmcts-net/a7ff6c8cb9884f1b828fdd6ed92dbc77"
       }
       ssl_certificates = [
         {
@@ -383,4 +383,3 @@ app_gateway = {
     }
   ]
 }
-
