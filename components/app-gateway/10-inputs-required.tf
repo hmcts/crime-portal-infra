@@ -79,7 +79,7 @@ variable "app_gateway" {
       backend_http_settings_name = optional(string)
       priority                   = optional(number, 20)
     }))
-    ssl_certificates          = optional(list(string), [])
+    ssl_certificates = optional(list(string), [])
   })
   description = "Values to use when deploy the app gateway(s)"
 }
