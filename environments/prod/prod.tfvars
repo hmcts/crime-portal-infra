@@ -287,7 +287,7 @@ frontend_users = {
   }
 }
 
-subscription_id       = "17390ec1-5a5e-4a20-afb3-38d8d726ae45"
+subscription_id      = "17390ec1-5a5e-4a20-afb3-38d8d726ae45"
 acme_subscription_id = "1baf5470-1c3e-40d3-a6f7-74bfbce4b348"
 
 app_gateway = {
@@ -369,17 +369,11 @@ app_gateway = {
       priority                   = 21
     }
   }
-  certificate = [
-    {
-      gateway_configuration = {
-        key_vault_name = "acmedtscftptlintsvc"
-        key_vault_secret_id = "https://acmedtscftptlintsvc.vault.azure.net/certificates/crimeportal-libra-gw-prod-internal-hmcts-net/a7ff6c8cb9884f1b828fdd6ed92dbc77"
-      }
-      ssl_certificates = [
-        {
-          certificate_name = "crimeportal-libra-gw-prod-internal-hmcts-net"
-        }
-      ]
+  ssl_certificates = {
+    certificate = {
+      certificate_name  = "crimeportal-libra-gw-prod-internal-hmcts-net"
+      key_vault_name    = "acmedtscftptlintsvc"
+      key_vault_cert_id = "https://acmedtscftptlintsvc.vault.azure.net/certificates/crimeportal-libra-gw-prod-internal-hmcts-net/a7ff6c8cb9884f1b828fdd6ed92dbc77"
     }
-  ]
+  }
 }
