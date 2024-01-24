@@ -18,7 +18,7 @@ variable "subscription_id" {
   description = "The subscription id to deploy resources to."
 }
 
-variable "acmne_subscription_id" {
+variable "acme_subscription_id" {
   type        = string
   description = "The subscription id to deploy resources to."
 }
