@@ -174,12 +174,9 @@ resource "azurerm_application_gateway" "this" {
     }
   }
 
-  dynamic "ssl_certificate" {
-    for_each = { for ssl_cert in local.ssl_certificates : ssl_cert.ssl_cert_key => ssl_cert }
-    content {
-      name                = ssl_certificate.key
-      key_vault_secret_id = data.azurerm_key_vault_secret.ssl_certificates[ssl_certificate.key].id
-    }
+  ssl_certificate {
+    name                = var.certificate.ssl_certificates.certificate_name
+    key_vault_secret_id = var.certificate.gateway_configuration.key_vault_secret_id
   }
 
   identity {
@@ -189,3 +186,4 @@ resource "azurerm_application_gateway" "this" {
     ]
   }
 }
+

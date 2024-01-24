@@ -288,6 +288,7 @@ frontend_users = {
 }
 
 subscription_id = "17390ec1-5a5e-4a20-afb3-38d8d726ae45"
+acmne_subscription_id = "1baf5470-1c3e-40d3-a6f7-74bfbce4b348"
 
 app_gateway = {
   name               = "crime-portal-appgw"
@@ -324,11 +325,11 @@ app_gateway = {
     http = {
       pick_host_name_from_backend_http_settings = true
     }
-    #https = {
-    #  pick_host_name_from_backend_http_settings = true
-    #  protocol                                  = "Https"
-    #  port                                      = 443
-    #}
+    https = {
+      pick_host_name_from_backend_http_settings = true
+      protocol                                  = "Https"
+      port                                      = 443
+    }
   }
   backend_http_settings = {
     crime-portal-behttp01-prod = {
@@ -338,13 +339,6 @@ app_gateway = {
       probe_name            = "http"
       host_name             = "crimeportal.apps.hmcts.net"
     }
-    #crime-portal-behttps01-prod = {
-    #  port                           = 443
-    #  protocol                       = "Https"
-    #  probe_name                     = "https"
-    #  trusted_root_certificate_names = ["crime-portal-uat"]
-    #  host_name                      = "lncs-crimeportal-notify-uat.lncs.hmcs"
-    #}
   }
   http_listeners = {
     crime-portal-http-listener = {
@@ -352,12 +346,12 @@ app_gateway = {
       frontend_port_name             = "Http"
       protocol                       = "Http"
     }
-    #crime-portal-https-listener = {
-    #  frontend_ip_configuration_name = "crime-portal-private-prod"
-    #  frontend_port_name             = "https"
-    #  protocol                       = "Https"
-    #  ssl_certificate_name           = "crime-portal-uat-ssl-cert"
-    #}
+    crime-portal-https-listener = {
+      frontend_ip_configuration_name = "crime-portal-private-prod"
+      frontend_port_name             = "https"
+      protocol                       = "Https"
+      ssl_certificate_name           = "crimeportal-libra-gw-prod-internal-hmcts-net"
+    }
   }
   request_routing_rules = {
     crime-portal-http-rule = {
@@ -367,18 +361,26 @@ app_gateway = {
       rule_type                  = "Basic"
       priority                   = 20
     }
-    #crime-portal-https-rule = {
-    #  http_listener_name         = "crime-portal-https-listener"
-    #  backend_address_pool_name  = "crime-portal-bap01-prod"
-    #  backend_http_settings_name = "crime-portal-behttps01-prod"
-    #  rule_type                  = "Basic"
-    #  priority                   = 21
-    #}
+    crime-portal-https-rule = {
+     http_listener_name         = "crime-portal-https-listener"
+     backend_address_pool_name  = "crime-portal-bap01-prod"
+     backend_http_settings_name = "backend_http_settings"
+     rule_type                  = "Basic"
+     priority                   = 21
+    }
   }
-  #trusted_root_certificates = {
-  #  crime-portal-uat = "crime-portal-root-certificate"
-  #}
-  #ssl_certificates = {
-  #  crime-portal-uat-ssl-cert = "crime-portal-ssl-cert"
-  #}
+  certificate = [
+    {
+      gateway_configuration = {
+        key_vault_name          = "acmedtscftptlintsvc"
+        acme_secret_id         = "https://acmedtscftptlintsvc.vault.azure.net/certificates/crimeportal-libra-gw-prod-internal-hmcts-net/a7ff6c8cb9884f1b828fdd6ed92dbc77"
+      }
+      ssl_certificates = [
+        {
+          certificate_name = "crimeportal-libra-gw-prod-internal-hmcts-net"
+        }
+      ]
+    }
+  ]
 }
+
