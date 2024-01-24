@@ -110,8 +110,9 @@ stages:
   - ${{ each deployment in parameters.environment_components }}:
     - stage: App GW Check
     - script: |
-        cert=$(az network application-gateway ssl-cert show --gateway-name crime-portal-appgw-${{ environment }} --name crimeportal-libra-gw-${{ environment }}-internal-hmcts-net --resource-group crime-portal-rg-${{ environment }} --query data)
-        echo "The certificate data is: $cert"
+        - script: |
+          cert=$(az network application-gateway ssl-cert show --gateway-name crime-portal-appgw-${{ deployment.environment }} --name crimeportal-libra-gw-${{ deployment.environment }}-internal-hmcts-net --resource-group crime-portal-rg-${{ deployment.environment }} --query data)
+          echo "The certificate data is: $cert"
       displayName: 'Check App Gateway certificate'
 
   - ${{ each deployment in parameters.environment_components }}:
