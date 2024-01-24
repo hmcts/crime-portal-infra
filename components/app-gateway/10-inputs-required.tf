@@ -80,7 +80,7 @@ variable "app_gateway" {
       priority                   = optional(number, 20)
     }))
     trusted_root_certificates = optional(map(string), {})
-    ssl_certificates = optional(set(string), [])
+    ssl_certificates          = optional(set(string), [])
   })
   description = "Values to use when deploy the app gateway(s)"
 }
