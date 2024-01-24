@@ -85,5 +85,5 @@ data "azurerm_key_vault_secret" "ssl_certificates" {
 
 data "azurerm_key_vault_secret" "ssl" {
   name         = var.certificate.gateway_configuration.key_vault_name
-  key_vault_id = "/subscriptions/${var.subscription_id}/resourceGroups/${local.acme_resource_group}/providers/Microsoft.KeyVault/vaults/acmedtscftptlintsvc"
+  key_vault_id = "/subscriptions/${var.acme_subscription_id}/resourceGroups/${local.acme_resource_group}/providers/Microsoft.KeyVault/vaults/acmedtscftptlintsvc"
 }
