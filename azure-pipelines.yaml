@@ -7,6 +7,14 @@ trigger:
 pr:
   - main
 
+schedules:
+  - cron: "0 20 * * *"
+    displayName: Daily midnight build
+    branches:
+      include:
+        - main
+    always: "true"
+
 resources:
   repositories:
     - repository: cnp-azuredevops-libraries
@@ -26,39 +34,39 @@ parameters:
   - name: environment_components
     type: object
     default:
-      # - deployment: 'stg_core'
-      #   environment: 'stg'
-      #   component: 'core'
-      #   service_connection: 'DTS-HERITAGE-INTSVC-STG'
-      #   dependsOn: 'Precheck'
-      # - deployment: 'stg_backend_database'
-      #   environment: 'stg'
-      #   component: 'database'
-      #   service_connection: 'DTS-HERITAGE-INTSVC-STG'
-      #   dependsOn: 'stg_core'
-      # - deployment: 'stg_vm'
-      #   environment: 'stg'
-      #   component: 'vm'
-      #   service_connection: 'DTS-HERITAGE-INTSVC-STG'
-      #   dependsOn: 'stg_core'
-      # - deployment: 'stg_appgw'
-      #   environment: 'stg'
-      #   component: 'app-gateway'
-      #   service_connection: 'DTS-HERITAGE-INTSVC-STG'
-      #   dependsOn: 'stg_vm'
-      # - deployment: 'stg_rbac'
-      #   environment: 'stg'
-      #   component: 'rbac'
-      #   service_connection: 'ops-approval-gate-stg-envs'
-      #   dependsOn: 'stg_vm'
+      - deployment: 'stg_core'
+        environment: 'stg'
+        component: 'core'
+        service_connection: 'DTS-HERITAGE-INTSVC-STG'
+        dependsOn: 'Precheck'
+      - deployment: 'stg_backend_database'
+        environment: 'stg'
+        component: 'database'
+        service_connection: 'DTS-HERITAGE-INTSVC-STG'
+        dependsOn: 'stg_core'
+      - deployment: 'stg_vm'
+        environment: 'stg'
+        component: 'vm'
+        service_connection: 'DTS-HERITAGE-INTSVC-STG'
+        dependsOn: 'stg_core'
+      - deployment: 'stg_appgw'
+        environment: 'stg'
+        component: 'app-gateway'
+        service_connection: 'DTS-HERITAGE-INTSVC-STG'
+        dependsOn: 'stg_vm'
+      - deployment: 'stg_rbac'
+        environment: 'stg'
+        component: 'rbac'
+        service_connection: 'ops-approval-gate-stg-envs'
+        dependsOn: 'stg_vm'
       - deployment: 'prod_core'
         environment: 'prod'
         component: 'core'
         service_connection: 'DTS-HERITAGE-INTSVC-PROD'
         dependsOn: 
-          # - 'stg_appgw'
-          # - 'stg_rbac'
-          # - 'stg_backend_database'
+          - 'stg_appgw'
+          - 'stg_rbac'
+          - 'stg_backend_database'
       - deployment: 'prod_backend_database'
         environment: 'prod'
         component: 'database'
@@ -97,7 +105,7 @@ stages:
   - stage: Precheck
     jobs:
       - job: TerraformPrecheck
-        pool: 
+        pool:
           vmImage: ${{ variables.agentImage }}
         steps:
           - template: steps/terraform-precheck.yaml@cnp-azuredevops-libraries
@@ -125,13 +133,4 @@ stages:
                 product: ${{ variables.product }}
                 planCommandOptions:
                   -compact-warnings
-  - stage: RunScript
-    jobs:
-      - job: RunScriptJob
-        pool:
-          vmImage: ${{ variables.agentImage }}
-        steps:
-          - ${{ each deployment in parameters.environment_components }}:
-            - script: |
-                cert=$(az network application-gateway ssl-cert show --gateway-name crime-portal-appgw-${{ deployment.environment }} --name crimeportal-libra-gw-${{ deployment.environment }}-internal-hmcts-net --resource-group crime-portal-rg-${{ deployment.environment }} --query data)
-                echo "The certificate data is: $cert"
+
