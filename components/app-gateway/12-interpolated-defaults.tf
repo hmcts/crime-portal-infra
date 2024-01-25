@@ -86,5 +86,7 @@ data "azurerm_key_vault" "acme_kv" {
 
 data "azurerm_key_vault_certificate" "certificate" {
   name         = var.app_gateway.ssl_certificates["certificate"].certificate_name
-  key_vault_id = "/subscriptions/${var.acme_subscription_id}/resourceGroups/${local.acme_resource_group}/providers/Microsoft.KeyVault/vaults/acmedtscftptlintsvc"
+  key_vault_id = data.azurerm_key_vault.acme_kv.id
 }
+
+
