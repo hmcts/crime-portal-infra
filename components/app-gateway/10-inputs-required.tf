@@ -87,8 +87,8 @@ variable "app_gateway" {
     }))
     trusted_root_certificates = optional(map(string), {})
     ssl_certificates = optional(map(object({
-      certificate_name  = string
-      key_vault_name    = string
+      certificate_name = string
+      key_vault_name   = string
     })), {})
   })
   description = "Values to use when deploy the app gateway(s)"

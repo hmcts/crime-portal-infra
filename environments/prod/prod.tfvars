@@ -371,8 +371,8 @@ app_gateway = {
   }
   ssl_certificates = {
     certificate = {
-      certificate_name  = "crimeportal-libra-gw-prod-internal-hmcts-net"
-      key_vault_name    = "acmedtscftptlintsvc"
+      certificate_name = "crimeportal-libra-gw-prod-internal-hmcts-net"
+      key_vault_name   = "acmedtscftptlintsvc"
     }
   }
 }
