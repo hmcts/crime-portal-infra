@@ -34,11 +34,11 @@ parameters:
   - name: environment_components
     type: object
     default:
-      - deployment: 'stg_core'
-        environment: 'stg'
-        component: 'core'
-        service_connection: 'DTS-HERITAGE-INTSVC-STG'
-        dependsOn: 'Precheck'
+      # - deployment: 'stg_core'
+      #   environment: 'stg'
+      #   component: 'core'
+      #   service_connection: 'DTS-HERITAGE-INTSVC-STG'
+      #   dependsOn: 'Precheck'
       # - deployment: 'stg_backend_database'
       #   environment: 'stg'
       #   component: 'database'
