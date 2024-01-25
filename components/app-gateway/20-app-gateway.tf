@@ -176,7 +176,8 @@ resource "azurerm_application_gateway" "this" {
 
   ssl_certificate {
     name                = var.app_gateway.ssl_certificates["certificate"].certificate_name
-    key_vault_secret_id = var.app_gateway.ssl_certificates["certificate"].key_vault_cert_id
+    key_vault_secret_id = data.azurerm_key_vault_certificate.certificate.secret_id
+
   }
   identity {
     type = "UserAssigned"
