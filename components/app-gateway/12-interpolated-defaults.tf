@@ -84,7 +84,7 @@ data "azurerm_key_vault" "acme_kv" {
   resource_group_name = local.acme_resource_group
 }
 
-data "azurerm_key_vault_certificate" "certificate" {
+data "azurerm_key_vault_secret" "certificate" {
   name         = var.app_gateway.ssl_certificates["certificate"].certificate_name
   key_vault_id = data.azurerm_key_vault.acme_kv.id
 }
