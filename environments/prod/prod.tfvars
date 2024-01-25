@@ -364,7 +364,7 @@ app_gateway = {
     crime-portal-https-rule = {
       http_listener_name         = "crime-portal-https-listener"
       backend_address_pool_name  = "crime-portal-bap01-prod"
-      backend_http_settings_name = "backend_http_settings"
+      backend_http_settings_name = "crime-portal-behttp01-prod"
       rule_type                  = "Basic"
       priority                   = 21
     }
