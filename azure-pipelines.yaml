@@ -7,6 +7,14 @@ trigger:
 pr:
   - main
 
+schedules:
+  - cron: "0 20 * * *"
+    displayName: Daily midnight build
+    branches:
+      include:
+        - main
+    always: "true"
+
 resources:
   repositories:
     - repository: cnp-azuredevops-libraries
@@ -96,8 +104,8 @@ variables:
 stages:
   - stage: Precheck
     jobs:
-      - job:
-        pool: 
+      - job: TerraformPrecheck
+        pool:
           vmImage: ${{ variables.agentImage }}
         steps:
           - template: steps/terraform-precheck.yaml@cnp-azuredevops-libraries
@@ -125,3 +133,4 @@ stages:
                 product: ${{ variables.product }}
                 planCommandOptions:
                   -compact-warnings
+

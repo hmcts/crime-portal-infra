@@ -18,6 +18,12 @@ variable "subscription_id" {
   description = "The subscription id to deploy resources to."
 }
 
+variable "acme_subscription_id" {
+  type        = string
+  description = "The subscription id to deploy resources to."
+}
+
+
 variable "app_gateway" {
   type = object({
     name               = string
@@ -80,7 +86,11 @@ variable "app_gateway" {
       priority                   = optional(number, 20)
     }))
     trusted_root_certificates = optional(map(string), {})
-    ssl_certificates          = optional(map(string), {})
+    ssl_certificates = optional(map(object({
+      certificate_name  = string
+      key_vault_name    = string
+      key_vault_cert_id = string
+    })), {})
   })
   description = "Values to use when deploy the app gateway(s)"
 }
