@@ -289,6 +289,7 @@ frontend_users = {
 
 subscription_id      = "17390ec1-5a5e-4a20-afb3-38d8d726ae45"
 acme_subscription_id = "1baf5470-1c3e-40d3-a6f7-74bfbce4b348"
+acme_resource_group  = "cft-platform-ptl-rg"
 
 app_gateway = {
   name               = "crime-portal-appgw"

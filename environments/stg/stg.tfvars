@@ -287,7 +287,9 @@ frontend_users = {
   }
 }
 
-subscription_id = "ae75b9fb-7d34-4112-82ff-64bd3855ce27"
+subscription_id      = "ae75b9fb-7d34-4112-82ff-64bd3855ce27"
+acme_subscription_id = "1baf5470-1c3e-40d3-a6f7-74bfbce4b348"
+acme_resource_group  = "cft-platform-ptl-rg"
 
 app_gateway = {
   name               = "crime-portal-appgw"
@@ -356,7 +358,7 @@ app_gateway = {
       frontend_ip_configuration_name = "crime-portal-private-stg"
       frontend_port_name             = "https"
       protocol                       = "Https"
-      ssl_certificate_name           = "crime-portal-uat-ssl-cert"
+      ssl_certificate_name           = "crimeportal-libra-gw-staging-internal-hmcts-net"
     }
   }
   request_routing_rules = {
@@ -370,9 +372,15 @@ app_gateway = {
     crime-portal-https-rule = {
       http_listener_name         = "crime-portal-https-listener"
       backend_address_pool_name  = "crime-portal-bap01-stg"
-      backend_http_settings_name = "crime-portal-behttps01-stg"
+      backend_http_settings_name = "backend_http_settings"
       rule_type                  = "Basic"
       priority                   = 21
+    }
+  }
+  ssl_certificates = {
+    certificate = {
+      certificate_name  = "crimeportal-libra-gw-stg-internal-hmcts-net"
+      key_vault_name    = "acmedtscftptlintsvc"
     }
   }
   trusted_root_certificates = {
