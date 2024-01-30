@@ -4,7 +4,6 @@ locals {
     "prod" = "prod"
   }
   resource_group_name   = "crime-portal-rg-${var.env}"
-  acme_resource_group   = "cft-platform-ptl-rg"
   x_fwded_proto_ruleset = "x_fwded_proto"
   flattened_gateway_ip_configurations = flatten([
     for gateway_ip_config_key, gateway_ip_config in var.app_gateway.gateway_ip_configurations : {
@@ -77,13 +76,11 @@ data "azurerm_key_vault_secret" "root_certificates" {
   key_vault_id = "/subscriptions/${var.subscription_id}/resourceGroups/${local.resource_group_name}/providers/Microsoft.KeyVault/vaults/crime-portal-kv-${var.env}"
 }
 
-
 data "azurerm_key_vault" "acme_kv" {
   provider            = azurerm.acme
   name                = var.app_gateway.ssl_certificates["certificate"].key_vault_name
-  resource_group_name = local.acme_resource_group
+  resource_group_name = var.acme_resource_group
 }
-
 
 data "azurerm_key_vault_certificate" "certificate" {
   name         = var.app_gateway.ssl_certificates["certificate"].certificate_name

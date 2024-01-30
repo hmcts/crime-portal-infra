@@ -20,7 +20,12 @@ variable "subscription_id" {
 
 variable "acme_subscription_id" {
   type        = string
-  description = "The subscription id to deploy resources to."
+  description = "The subscription where the ACME certificates are located."
+}
+
+variable "acme_resource_group" {
+  type        = string
+  description = "The resource group where the ACME certificates are located."
 }
 
 
