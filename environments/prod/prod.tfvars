@@ -371,9 +371,13 @@ app_gateway = {
     }
   }
   ssl_certificates = {
-    certificate = {
+    lets_encrypt = {
       certificate_name = "crimeportal-libra-gw-prod-internal-hmcts-net"
-      key_vault_name   = "acmedtscftptlintsvc"
+      key_vault_id     = "/subscriptions/1baf5470-1c3e-40d3-a6f7-74bfbce4b348/resourceGroups/cft-platform-ptl-rg/providers/Microsoft.KeyVault/vaults/acmedtscftptlintsvc"
+    }
+    lncs = {
+      certificate_name = "crime-portal-live-lncs"
+      key_vault_id     = "/subscriptions/17390ec1-5a5e-4a20-afb3-38d8d726ae45/resourceGroups/crime-portal-rg-prod/providers/Microsoft.KeyVault/vaults/crime-portal-kv-prod"
     }
   }
 }

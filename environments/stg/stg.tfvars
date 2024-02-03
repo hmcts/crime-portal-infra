@@ -377,16 +377,13 @@ app_gateway = {
       priority                   = 21
     }
   }
-  ssl_certificates = {
-    certificate = {
-      certificate_name  = "crimeportal-libra-gw-stg-internal-hmcts-net"
-      key_vault_name    = "acmedtscftptlintsvc"
-    }
-  }
   trusted_root_certificates = {
     crime-portal-uat = "crime-portal-root-certificate"
   }
   ssl_certificates = {
-    crime-portal-uat-ssl-cert = "crime-portal-ssl-cert"
+    lets_encrypt = {
+      certificate_name = "crimeportal-libra-gw-staging-internal-hmcts-net"
+      key_vault_id     = "/subscriptions/1baf5470-1c3e-40d3-a6f7-74bfbce4b348/resourceGroups/cft-platform-ptl-rg/providers/Microsoft.KeyVault/vaults/acmedtscftptlintsvc"
+    }
   }
 }
