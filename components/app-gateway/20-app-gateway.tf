@@ -139,6 +139,19 @@ resource "azurerm_application_gateway" "this" {
     }
   }
 
+  rewrite_rule_set {
+    name = "crime-portal-rewrites"
+    rewrite_rule {
+      name          = "crime-portal-location-rewrite"
+      rule_sequence = 100
+
+      response_header_configuration {
+        header_name  = "Location"
+        header_value = var.public_endpoint
+      }
+    }
+  }
+
   dynamic "rewrite_rule_set" {
     for_each = var.app_gateway.sku_name == "Standard_v2" || var.app_gateway.sku_name == "WAF_v2" ? [1] : []
     content {
@@ -174,11 +187,14 @@ resource "azurerm_application_gateway" "this" {
     }
   }
 
-  ssl_certificate {
-    name                = data.azurerm_key_vault_certificate.certificate.name
-    key_vault_secret_id = data.azurerm_key_vault_certificate.certificate.secret_id
-
+  dynamic "ssl_certificate" {
+    for_each = { for ssl_cert in local.ssl_certificates : ssl_cert.ssl_cert_key => ssl_cert }
+    content {
+      name                = ssl_certificate.key
+      key_vault_secret_id = data.azurerm_key_vault_certificate.certificate[ssl_certificate.key].secret_id
+    }
   }
+
   identity {
     type = "UserAssigned"
     identity_ids = [

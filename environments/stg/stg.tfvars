@@ -287,9 +287,8 @@ frontend_users = {
   }
 }
 
-subscription_id      = "ae75b9fb-7d34-4112-82ff-64bd3855ce27"
-acme_subscription_id = "1baf5470-1c3e-40d3-a6f7-74bfbce4b348"
-acme_resource_group  = "cft-platform-ptl-rg"
+subscription_id = "ae75b9fb-7d34-4112-82ff-64bd3855ce27"
+public_endpoint = "https://crimeportal.staging.apps.hmcts.net"
 
 app_gateway = {
   name               = "crime-portal-appgw"
@@ -326,11 +325,6 @@ app_gateway = {
     http = {
       pick_host_name_from_backend_http_settings = true
     }
-    https = {
-      pick_host_name_from_backend_http_settings = true
-      protocol                                  = "Https"
-      port                                      = 443
-    }
   }
   backend_http_settings = {
     crime-portal-behttp01-stg = {
@@ -339,13 +333,6 @@ app_gateway = {
       cookie_based_affinity = "Enabled"
       probe_name            = "http"
       host_name             = "crimeportal.staging.apps.hmcts.net"
-    }
-    crime-portal-behttps01-stg = {
-      port                           = 443
-      protocol                       = "Https"
-      probe_name                     = "https"
-      trusted_root_certificate_names = ["crime-portal-uat"]
-      host_name                      = "lncs-crimeportal-notify-uat.lncs.hmcs"
     }
   }
   http_listeners = {
@@ -358,7 +345,7 @@ app_gateway = {
       frontend_ip_configuration_name = "crime-portal-private-stg"
       frontend_port_name             = "https"
       protocol                       = "Https"
-      ssl_certificate_name           = "crimeportal-libra-gw-staging-internal-hmcts-net"
+      ssl_certificate_name           = "lets_encrypt"
     }
   }
   request_routing_rules = {
@@ -377,16 +364,13 @@ app_gateway = {
       priority                   = 21
     }
   }
-  ssl_certificates = {
-    certificate = {
-      certificate_name  = "crimeportal-libra-gw-stg-internal-hmcts-net"
-      key_vault_name    = "acmedtscftptlintsvc"
-    }
-  }
   trusted_root_certificates = {
     crime-portal-uat = "crime-portal-root-certificate"
   }
   ssl_certificates = {
-    crime-portal-uat-ssl-cert = "crime-portal-ssl-cert"
+    lets_encrypt = {
+      certificate_name = "crimeportal-libra-gw-staging-internal-hmcts-net"
+      key_vault_id     = "/subscriptions/1baf5470-1c3e-40d3-a6f7-74bfbce4b348/resourceGroups/cft-platform-ptl-rg/providers/Microsoft.KeyVault/vaults/acmedtscftptlintsvc"
+    }
   }
 }

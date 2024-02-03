@@ -35,7 +35,8 @@ locals {
   ssl_certificates = flatten([
     for ssl_cert_key, ssl_cert in var.app_gateway.ssl_certificates : {
       ssl_cert_key  = ssl_cert_key
-      ssl_cert_name = ssl_cert
+      ssl_cert_name = ssl_cert.certificate_name
+      key_vault_id  = ssl_cert.key_vault_id
     }
   ])
 }
@@ -76,13 +77,8 @@ data "azurerm_key_vault_secret" "root_certificates" {
   key_vault_id = "/subscriptions/${var.subscription_id}/resourceGroups/${local.resource_group_name}/providers/Microsoft.KeyVault/vaults/crime-portal-kv-${var.env}"
 }
 
-data "azurerm_key_vault" "acme_kv" {
-  provider            = azurerm.acme
-  name                = var.app_gateway.ssl_certificates["certificate"].key_vault_name
-  resource_group_name = var.acme_resource_group
-}
-
 data "azurerm_key_vault_certificate" "certificate" {
-  name         = var.app_gateway.ssl_certificates["certificate"].certificate_name
-  key_vault_id = data.azurerm_key_vault.acme_kv.id
+  for_each     = { for ssl_cert in local.ssl_certificates : "${ssl_cert.ssl_cert_key}" => ssl_cert }
+  name         = each.value.ssl_cert_name
+  key_vault_id = each.value.key_vault_id
 }
