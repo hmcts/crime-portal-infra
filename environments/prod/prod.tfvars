@@ -333,6 +333,7 @@ app_gateway = {
       cookie_based_affinity = "Enabled"
       probe_name            = "http"
       host_name             = "crimeportal.apps.hmcts.net"
+      request_timeout       = 60
     }
     crime-portal-behttp02-prod = {
       port                  = 80
@@ -340,6 +341,7 @@ app_gateway = {
       cookie_based_affinity = "Enabled"
       probe_name            = "http"
       host_name             = "lncs-crimeportal-notify.lncs.hmcs"
+      request_timeout       = 60
     }
   }
   http_listeners = {

@@ -333,6 +333,7 @@ app_gateway = {
       cookie_based_affinity = "Enabled"
       probe_name            = "http"
       host_name             = "crimeportal.staging.apps.hmcts.net"
+      request_timeout       = 60
     }
   }
   http_listeners = {
