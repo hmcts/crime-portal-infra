@@ -139,6 +139,19 @@ resource "azurerm_application_gateway" "this" {
     }
   }
 
+  rewrite_rule_set {
+    name = "crime-portal-rewrites"
+    rewrite_rule {
+      name          = "crime-portal-location-rewrite"
+      rule_sequence = 100
+
+      response_header_configuration {
+        header_name  = "Location"
+        header_value = var.public_endpoint
+      }
+    }
+  }
+
   dynamic "rewrite_rule_set" {
     for_each = var.app_gateway.sku_name == "Standard_v2" || var.app_gateway.sku_name == "WAF_v2" ? [1] : []
     content {

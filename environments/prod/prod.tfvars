@@ -287,9 +287,8 @@ frontend_users = {
   }
 }
 
-subscription_id      = "17390ec1-5a5e-4a20-afb3-38d8d726ae45"
-acme_subscription_id = "1baf5470-1c3e-40d3-a6f7-74bfbce4b348"
-acme_resource_group  = "cft-platform-ptl-rg"
+subscription_id = "17390ec1-5a5e-4a20-afb3-38d8d726ae45"
+public_endpoint = "https://crimeportal.apps.hmcts.net"
 
 app_gateway = {
   name               = "crime-portal-appgw"
@@ -326,11 +325,6 @@ app_gateway = {
     http = {
       pick_host_name_from_backend_http_settings = true
     }
-    https = {
-      pick_host_name_from_backend_http_settings = true
-      protocol                                  = "Https"
-      port                                      = 443
-    }
   }
   backend_http_settings = {
     crime-portal-behttp01-prod = {
@@ -351,7 +345,7 @@ app_gateway = {
       frontend_ip_configuration_name = "crime-portal-private-prod"
       frontend_port_name             = "https"
       protocol                       = "Https"
-      ssl_certificate_name           = "crimeportal-libra-gw-prod-internal-hmcts-net"
+      ssl_certificate_name           = "lets_encrypt"
     }
   }
   request_routing_rules = {

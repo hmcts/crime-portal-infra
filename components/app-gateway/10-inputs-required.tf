@@ -18,16 +18,10 @@ variable "subscription_id" {
   description = "The subscription id to deploy resources to."
 }
 
-variable "acme_subscription_id" {
+variable "public_endpoint" {
   type        = string
-  description = "The subscription where the ACME certificates are located."
+  description = "The public endpoint users will use to access the application."
 }
-
-variable "acme_resource_group" {
-  type        = string
-  description = "The resource group where the ACME certificates are located."
-}
-
 
 variable "app_gateway" {
   type = object({

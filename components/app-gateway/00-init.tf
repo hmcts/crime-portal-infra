@@ -14,9 +14,3 @@ terraform {
 provider "azurerm" {
   features {}
 }
-
-provider "azurerm" {
-  alias           = "acme"
-  subscription_id = var.acme_subscription_id
-  features {}
-}
