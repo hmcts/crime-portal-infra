@@ -135,7 +135,7 @@ resource "azurerm_application_gateway" "this" {
       backend_address_pool_name  = request_routing_rule.value.backend_address_pool_name
       backend_http_settings_name = request_routing_rule.value.backend_http_settings_name
       priority                   = request_routing_rule.value.priority
-      rewrite_rule_set_name      = var.app_gateway.sku_name == "Standard_v2" || var.app_gateway.sku_name == "WAF_v2" ? local.x_fwded_proto_ruleset : null
+      rewrite_rule_set_name      = "crime-portal-rewrites"
     }
   }
 
@@ -150,31 +150,23 @@ resource "azurerm_application_gateway" "this" {
         header_value = var.public_endpoint
       }
     }
-  }
+    rewrite_rule {
+      name          = "x_fwded_proto"
+      rule_sequence = 100
 
-  dynamic "rewrite_rule_set" {
-    for_each = var.app_gateway.sku_name == "Standard_v2" || var.app_gateway.sku_name == "WAF_v2" ? [1] : []
-    content {
-      name = local.x_fwded_proto_ruleset
+      request_header_configuration {
+        header_name  = "X-Forwarded-Proto"
+        header_value = "https"
+      }
 
-      rewrite_rule {
-        name          = local.x_fwded_proto_ruleset
-        rule_sequence = 100
+      request_header_configuration {
+        header_name  = "X-Forwarded-Port"
+        header_value = "443"
+      }
 
-        request_header_configuration {
-          header_name  = "X-Forwarded-Proto"
-          header_value = "https"
-        }
-
-        request_header_configuration {
-          header_name  = "X-Forwarded-Port"
-          header_value = "443"
-        }
-
-        request_header_configuration {
-          header_name  = "X-Forwarded-For"
-          header_value = "{var_add_x_forwarded_for_proxy}"
-        }
+      request_header_configuration {
+        header_name  = "X-Forwarded-For"
+        header_value = "{var_add_x_forwarded_for_proxy}"
       }
     }
   }

@@ -4,7 +4,6 @@ locals {
     "prod" = "prod"
   }
   resource_group_name   = "crime-portal-rg-${var.env}"
-  x_fwded_proto_ruleset = "x_fwded_proto"
   flattened_gateway_ip_configurations = flatten([
     for gateway_ip_config_key, gateway_ip_config in var.app_gateway.gateway_ip_configurations : {
       gateway_ip_config_key = gateway_ip_config_key
