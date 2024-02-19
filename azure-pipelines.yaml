@@ -8,7 +8,7 @@ pr:
   - main
 
 schedules:
-  - cron: "0 18 * * *"
+  - cron: "0 18 * * 1-5"
     displayName: Daily 6pm build
     branches:
       include:
