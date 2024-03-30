@@ -340,7 +340,7 @@ app_gateway = {
       protocol              = "Http"
       cookie_based_affinity = "Enabled"
       probe_name            = "http"
-      host_name             = "lncs-crimeportal-notify.lncs.hmcs"
+      host_name             = "crimeportal.apps.hmcts.net"
       request_timeout       = 60
     }
   }
@@ -354,7 +354,7 @@ app_gateway = {
       frontend_ip_configuration_name = "crime-portal-private-prod"
       frontend_port_name             = "https"
       protocol                       = "Https"
-      ssl_certificate_name           = "lncs"
+      ssl_certificate_name           = "lets_encrypt"
     }
   }
   request_routing_rules = {
