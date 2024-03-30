@@ -335,14 +335,6 @@ app_gateway = {
       host_name             = "crimeportal.apps.hmcts.net"
       request_timeout       = 60
     }
-    crime-portal-behttp02-prod = {
-      port                  = 80
-      protocol              = "Http"
-      cookie_based_affinity = "Enabled"
-      probe_name            = "http"
-      host_name             = "lncs-crimeportal-notify.lncs.hmcs"
-      request_timeout       = 60
-    }
   }
   http_listeners = {
     crime-portal-http-listener = {
@@ -354,7 +346,7 @@ app_gateway = {
       frontend_ip_configuration_name = "crime-portal-private-prod"
       frontend_port_name             = "https"
       protocol                       = "Https"
-      ssl_certificate_name           = "lncs"
+      ssl_certificate_name           = "lets_encrypt"
     }
   }
   request_routing_rules = {
@@ -368,7 +360,7 @@ app_gateway = {
     crime-portal-https-rule = {
       http_listener_name         = "crime-portal-https-listener"
       backend_address_pool_name  = "crime-portal-bap01-prod"
-      backend_http_settings_name = "crime-portal-behttp02-prod"
+      backend_http_settings_name = "crime-portal-behttp01-prod"
       rule_type                  = "Basic"
       priority                   = 21
     }
