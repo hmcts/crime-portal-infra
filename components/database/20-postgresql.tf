@@ -42,3 +42,15 @@ resource "azurerm_postgresql_flexible_server_active_directory_administrator" "db
 
   depends_on = [module.postgresql]
 }
+
+resource "azurerm_key_vault_secret" "postgresql_password" {
+  value        = module.postgresql.password
+  key_vault_id = data.azurerm_key_vault.key_vault.id
+  name         = "crime-portal-postgresql-${var.env}-password"
+}
+
+resource "azurerm_key_vault_secret" "postgresql_username" {
+  value        = module.postgresql.username
+  key_vault_id = data.azurerm_key_vault.key_vault.id
+  name         = "crime-portal-postgresql-${var.env}-username"
+}

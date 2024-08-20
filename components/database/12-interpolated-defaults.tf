@@ -27,3 +27,8 @@ data "azuread_group" "db_admin" {
   display_name     = local.is_prod ? "DTS Crime Portal DB Admin (env:production)" : "DTS Crime Portal DB Admin (env:staging)"
   security_enabled = true
 }
+
+data "azurerm_key_vault" "key_vault" {
+  name                = "crime-portal-kv-${var.env}"
+  resource_group_name = local.resource_group_name
+}
