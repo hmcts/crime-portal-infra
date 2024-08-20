@@ -32,6 +32,10 @@ route_tables = {
         next_hop_type          = "VirtualAppliance"
         next_hop_in_ip_address = "10.11.8.36"
       }
+      aad_internet = {
+        address_prefix = "AzureActiveDirectory"
+        next_hop_type  = "Internet"
+      }
     }
   }
   rt-gateway = {
