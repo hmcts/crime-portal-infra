@@ -29,8 +29,13 @@ module "virtual-machines" {
   install_splunk_uf          = true
   nessus_install             = true
 
+  run_command_sa_key         = data.azurerm_storage_account.xdr_storage.primary_access_key
+  run_command                = try(each.value.install_xdr_agent, false)
+  run_xdr_collector          = try(each.value.install_xdr_agent, false)
+  run_xdr_agent              = try(each.value.install_xdr_agent, false)
+
   custom_script_extension_name = "HMCTSVMBootstrap"
-  tags                         = module.ctags.common_tags
+  tags                         = local.tags
 }
 
 resource "azurerm_backup_protected_vm" "vm" {
@@ -49,7 +54,7 @@ resource "azurerm_virtual_machine_extension" "AADSSHLoginForLinux" {
   type                       = "AADSSHLoginForLinux"
   type_handler_version       = "1.0"
   auto_upgrade_minor_version = true
-  tags                       = module.ctags.common_tags
+  tags                       = local.tags
 }
 
 resource "azurerm_virtual_machine_extension" "install_docker" {
@@ -67,5 +72,5 @@ resource "azurerm_virtual_machine_extension" "install_docker" {
   }
   PROTECTED_SETTINGS
 
-  tags = module.ctags.common_tags
+  tags = local.tags
 }
