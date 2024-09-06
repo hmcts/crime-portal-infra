@@ -35,7 +35,7 @@ module "virtual-machines" {
   run_xdr_agent      = try(each.value.install_xdr_agent, false)
 
   custom_script_extension_name = "HMCTSVMBootstrap"
-  tags                         = local.tags
+  tags                         = module.ctags.common_tags
 }
 
 resource "azurerm_backup_protected_vm" "vm" {
