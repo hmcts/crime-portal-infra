@@ -54,7 +54,7 @@ resource "azurerm_virtual_machine_extension" "AADSSHLoginForLinux" {
   type                       = "AADSSHLoginForLinux"
   type_handler_version       = "1.0"
   auto_upgrade_minor_version = true
-  tags                       = local.tags
+  tags                       = module.ctags.common_tags
 }
 
 resource "azurerm_virtual_machine_extension" "install_docker" {
@@ -72,5 +72,5 @@ resource "azurerm_virtual_machine_extension" "install_docker" {
   }
   PROTECTED_SETTINGS
 
-  tags = local.tags
+  tags = module.ctags.common_tags
 }

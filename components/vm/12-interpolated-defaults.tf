@@ -7,11 +7,6 @@ locals {
   virtual_machines                 = merge(var.frontend_vms, var.ldap_vms)
   azure_reserved_ip_address_offset = 4
 
-  extra_tags = {
-    activityName = "crime-portal"
-  }
-
-  tags = merge(local.extra_tags, module.ctags.common_tags)
 }
 
 module "ctags" {
