@@ -29,10 +29,10 @@ module "virtual-machines" {
   install_splunk_uf          = true
   nessus_install             = true
 
-  run_command_sa_key         = data.azurerm_storage_account.xdr_storage.primary_access_key
-  run_command                = try(each.value.install_xdr_agent, false)
-  run_xdr_collector          = try(each.value.install_xdr_agent, false)
-  run_xdr_agent              = try(each.value.install_xdr_agent, false)
+  run_command_sa_key = data.azurerm_storage_account.xdr_storage.primary_access_key
+  run_command        = try(each.value.install_xdr_agent, false)
+  run_xdr_collector  = try(each.value.install_xdr_agent, false)
+  run_xdr_agent      = try(each.value.install_xdr_agent, false)
 
   custom_script_extension_name = "HMCTSVMBootstrap"
   tags                         = local.tags
