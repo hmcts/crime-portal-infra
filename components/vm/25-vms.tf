@@ -30,9 +30,9 @@ module "virtual-machines" {
   nessus_install             = true
 
   run_command_sa_key = data.azurerm_storage_account.xdr_storage.primary_access_key
-  run_command        = try(each.value.install_xdr_agent, false)
-  run_xdr_collector  = try(each.value.install_xdr_agent, false)
-  run_xdr_agent      = try(each.value.install_xdr_agent, false)
+  run_command        = (each.value.install_xdr_agent || each.value.install_xdr_collector) ? true : false
+  run_xdr_collector  = each.value.install_xdr_collector
+  run_xdr_agent      = each.value.install_xdr_agent
 
   custom_script_extension_name = "HMCTSVMBootstrap"
   tags                         = module.ctags.common_tags
