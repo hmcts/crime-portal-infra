@@ -6,7 +6,7 @@ module "virtual-machines" {
   }
 
   for_each                = local.virtual_machines
-  source                  = "github.com/hmcts/terraform-module-virtual-machine.git"
+  source                  = "github.com/hmcts/terraform-module-virtual-machine.git?ref=marty%2clamav-xdr-merge"
   vm_type                 = "linux"
   vm_name                 = each.key
   env                     = var.env == "stg" ? "nonprod" : var.env
