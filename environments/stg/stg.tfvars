@@ -379,3 +379,5 @@ app_gateway = {
     }
   }
 }
+
+install_azure_monitor = true
