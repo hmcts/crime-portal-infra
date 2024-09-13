@@ -3,10 +3,11 @@ module "virtual-machines" {
     azurerm     = azurerm
     azurerm.cnp = azurerm.cnp
     azurerm.soc = azurerm.soc
+    azurerm.dcr = azurerm.dcr
   }
 
   for_each                = local.virtual_machines
-  source                  = "github.com/hmcts/terraform-module-virtual-machine.git?ref=feat%2Finstall-clamav-update-splunk"
+  source                  = "github.com/hmcts/terraform-module-virtual-machine.git?ref=ama-extension"
   vm_type                 = "linux"
   vm_name                 = each.key
   env                     = var.env == "stg" ? "nonprod" : var.env
@@ -24,7 +25,7 @@ module "virtual-machines" {
   vm_private_ip           = each.value.private_ip != null ? each.value.private_ip : cidrhost(data.azurerm_subnet.subnets[each.key].address_prefixes[0], index(keys(local.virtual_machines), each.key) + local.azure_reserved_ip_address_offset)
   systemassigned_identity = true
 
-  install_azure_monitor      = true
+  install_azure_monitor      = var.install_azure_monitor
   install_dynatrace_oneagent = true
   install_splunk_uf          = true
   nessus_install             = true
