@@ -6,6 +6,7 @@ locals {
   resource_group_name              = "crime-portal-rg-${var.env}"
   virtual_machines                 = merge(var.frontend_vms, var.ldap_vms)
   azure_reserved_ip_address_offset = 4
+
 }
 
 module "ctags" {
@@ -32,4 +33,10 @@ data "azurerm_backup_policy_vm" "policy" {
   name                = "crime-portal-daily-bp-${var.env}"
   recovery_vault_name = "crime-portal-rsv-${var.env}"
   resource_group_name = local.resource_group_name
+}
+
+data "azurerm_storage_account" "xdr_storage" {
+  provider            = azurerm.DTS-CFTPTL-INTSVC
+  name                = "cftptlintsvc"
+  resource_group_name = "core-infra-intsvc-rg"
 }

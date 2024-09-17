@@ -26,6 +26,13 @@ provider "azurerm" {
   features {}
   subscription_id = var.cnp_vault_sub
 }
+
+provider "azurerm" {
+  features {}
+  subscription_id = "1baf5470-1c3e-40d3-a6f7-74bfbce4b348"
+  alias           = "DTS-CFTPTL-INTSVC"
+}
+
 provider "azurerm" {
   alias = "dcr"
   features {}

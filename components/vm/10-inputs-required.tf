@@ -15,20 +15,24 @@ variable "product" {
 
 variable "frontend_vms" {
   type = map(object({
-    availability_zone = string
-    subnet_name       = string
-    private_ip        = optional(string)
-    size              = optional(string, "Standard_D2ds_v5")
+    availability_zone     = string
+    subnet_name           = string
+    private_ip            = optional(string)
+    size                  = optional(string, "Standard_D2ds_v5")
+    install_xdr_agent     = optional(bool, false)
+    install_xdr_collector = optional(bool, false)
   }))
   description = "The frontend VMs to deploy."
 }
 
 variable "ldap_vms" {
   type = map(object({
-    availability_zone = string
-    subnet_name       = string
-    private_ip        = optional(string)
-    size              = optional(string, "Standard_D2ds_v5")
+    availability_zone     = string
+    subnet_name           = string
+    private_ip            = optional(string)
+    size                  = optional(string, "Standard_D2ds_v5")
+    install_xdr_agent     = optional(bool, false)
+    install_xdr_collector = optional(bool, false)
   }))
   description = "The LDAP VMs to deploy."
 }
