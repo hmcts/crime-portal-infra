@@ -60,7 +60,7 @@ resource "azurerm_virtual_machine_extension" "AADSSHLoginForLinux" {
 }
 
 resource "azurerm_virtual_machine_extension" "install_docker" {
-  for_each = { for key, value in var.frontend_vms : key => value if contains(key, "prod") }
+  for_each                   = { for key, value in var.frontend_vms : key => value if contains(key, "prod") }
   name                       = "InstallDocker"
   virtual_machine_id         = module.virtual-machines[each.key].vm_id
   publisher                  = "Microsoft.CPlat.Core"

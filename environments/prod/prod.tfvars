@@ -230,16 +230,16 @@ network_security_groups = {
 
 ldap_vms = {
   crime-portal-ldap-vm01-prod = {
-    availability_zone = 1
-    subnet_name       = "backend"
+    availability_zone     = 1
+    subnet_name           = "backend"
     install_xdr_agent     = true
     install_xdr_collector = false
     install_docker        = false
 
   }
   crime-portal-ldap-vm02-prod = {
-    availability_zone = 2
-    subnet_name       = "backend"
+    availability_zone     = 2
+    subnet_name           = "backend"
     install_xdr_agent     = true
     install_xdr_collector = false
     install_docker        = false
