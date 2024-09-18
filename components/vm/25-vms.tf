@@ -60,7 +60,7 @@ resource "azurerm_virtual_machine_extension" "AADSSHLoginForLinux" {
 }
 
 resource "azurerm_virtual_machine_extension" "install_docker" {
-  for_each = { for key, value in var.frontend_vms : key => value if contains([key], "prod") }
+  for_each = { for key, value in var.frontend_vms : key => value if can(regex("prod", key)) }
 
   name                       = "InstallDocker"
   virtual_machine_id         = module.virtual-machines[each.key].vm_id
