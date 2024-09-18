@@ -29,6 +29,7 @@ module "virtual-machines" {
   install_dynatrace_oneagent = true
   install_splunk_uf          = true
   nessus_install             = true
+  install_docker             = each.value.install_docker
 
   run_command_sa_key = data.azurerm_storage_account.xdr_storage.primary_access_key
   run_command        = (each.value.install_xdr_agent || each.value.install_xdr_collector) ? true : false
@@ -59,7 +60,8 @@ resource "azurerm_virtual_machine_extension" "AADSSHLoginForLinux" {
 }
 
 resource "azurerm_virtual_machine_extension" "install_docker" {
-  for_each                   = var.frontend_vms
+  for_each = { for key, value in var.frontend_vms : key => value if can(regex("prod", key)) }
+
   name                       = "InstallDocker"
   virtual_machine_id         = module.virtual-machines[each.key].vm_id
   publisher                  = "Microsoft.CPlat.Core"
