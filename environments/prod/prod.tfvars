@@ -234,7 +234,6 @@ ldap_vms = {
     subnet_name           = "backend"
     install_xdr_agent     = true
     install_xdr_collector = false
-    install_docker        = false
 
   }
   crime-portal-ldap-vm02-prod = {
@@ -242,7 +241,6 @@ ldap_vms = {
     subnet_name           = "backend"
     install_xdr_agent     = true
     install_xdr_collector = false
-    install_docker        = false
 
 
   }
@@ -255,7 +253,6 @@ frontend_vms = {
     size                  = "Standard_D4ds_v5"
     install_xdr_agent     = true
     install_xdr_collector = false
-    install_docker        = true
   }
   crime-portal-frontend-vm02-prod = {
     availability_zone     = 2
@@ -263,7 +260,6 @@ frontend_vms = {
     size                  = "Standard_D4ds_v5"
     install_xdr_agent     = true
     install_xdr_collector = false
-    install_docker        = true
   }
 }
 
