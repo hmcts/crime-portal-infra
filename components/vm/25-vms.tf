@@ -7,7 +7,7 @@ module "virtual-machines" {
   }
 
   for_each                = local.virtual_machines
-  source                  = "github.com/hmcts/terraform-module-virtual-machine.git?ref=ama-extension"
+  source                  = "github.com/hmcts/terraform-module-virtual-machine.git?ref=add-tags-for-crimeportal"
   vm_type                 = "linux"
   vm_name                 = each.key
   env                     = var.env == "stg" ? "nonprod" : var.env
@@ -38,6 +38,7 @@ module "virtual-machines" {
 
   custom_script_extension_name = "HMCTSVMBootstrap"
   tags                         = module.ctags.common_tags
+  xdr_tags                   = "${var.tags.activityName},${var.tags.application},${var.env}"
 }
 
 resource "azurerm_backup_protected_vm" "vm" {
