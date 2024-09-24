@@ -29,7 +29,6 @@ module "virtual-machines" {
   install_dynatrace_oneagent = true
   install_splunk_uf          = true
   nessus_install             = true
-  install_docker             = each.value.install_docker
 
   run_command_sa_key = data.azurerm_storage_account.xdr_storage.primary_access_key
   run_command        = (each.value.install_xdr_agent || each.value.install_xdr_collector) ? true : false
