@@ -56,3 +56,8 @@ variable "subnets" {
   }))
   description = "Map of subnets to refernence."
 }
+
+variable "tags" {
+  description = "A map of tags to apply to the resources."
+  type        = map(string)
+}
