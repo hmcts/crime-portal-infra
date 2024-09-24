@@ -38,7 +38,7 @@ module "virtual-machines" {
 
   custom_script_extension_name = "HMCTSVMBootstrap"
   tags                         = module.ctags.common_tags
-  xdr_tags                   = "${var.tags.activityName},${var.tags.application},${var.env}"
+  xdr_tags                     = "${var.tags.activityName},${var.tags.application},${var.env}"
 }
 
 resource "azurerm_backup_protected_vm" "vm" {
