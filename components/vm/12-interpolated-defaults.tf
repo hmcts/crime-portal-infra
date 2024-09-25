@@ -3,10 +3,12 @@ locals {
     "stg"  = "nle"
     "prod" = "prod"
   }
+  
+  env = lookup(local.env_map, var.env, "nonprod")
+
   resource_group_name              = "crime-portal-rg-${var.env}"
   virtual_machines                 = merge(var.frontend_vms, var.ldap_vms)
   azure_reserved_ip_address_offset = 4
-
 }
 
 module "ctags" {
