@@ -6,20 +6,19 @@ locals {
 
   xdr_env = var.env == "stg" ? "nonprod" : var.env
 
-  xdr_tags_map = {
+  xdr_tags = {
     activityName = "heritage"
     application  = "crimeportal"
     org          = "hmcts"
     server       = "server"
     env          = local.xdr_env
   }
-
-  xdr_tags = jsonencode(local.xdr_tags_map)
-
+  
   resource_group_name              = "crime-portal-rg-${var.env}"
   virtual_machines                 = merge(var.frontend_vms, var.ldap_vms)
   azure_reserved_ip_address_offset = 4
 }
+
 
 
 module "ctags" {
