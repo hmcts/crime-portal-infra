@@ -7,7 +7,7 @@ module "virtual-machines" {
   }
 
   for_each                = local.virtual_machines
-  source                  = "github.com/hmcts/terraform-module-virtual-machine.git?ref=add-tags-for-crimeportal"
+  source                  = "github.com/hmcts/terraform-module-virtual-machine.git?ref=ama-extension"
   vm_type                 = "linux"
   vm_name                 = each.key
   env                     = var.env == "stg" ? "nonprod" : var.env
