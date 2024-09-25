@@ -3,7 +3,7 @@ locals {
     "stg"  = "nle"
     "prod" = "prod"
   }
-  
+
   env = lookup(local.env_map, var.env, "nonprod")
 
   resource_group_name              = "crime-portal-rg-${var.env}"
