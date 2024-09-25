@@ -5,7 +5,7 @@ locals {
   }
 
   xdr_env = var.env == "stg" ? "nonprod" : var.env
-  
+
   xdr_tags = merge(var.xdr_tags, { env = local.xdr_env })
 
   resource_group_name              = "crime-portal-rg-${var.env}"
