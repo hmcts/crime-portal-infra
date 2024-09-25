@@ -1,6 +1,8 @@
 xdr_tags = {
-  activityName = "crimeportal"
-  application  = "heritage"
+  activityName = "heritage"
+  application  = "crimeportal"
+  org          = "hmcts"
+  server       = "server"
 }
 
 subnets = {
