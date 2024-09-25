@@ -6,12 +6,30 @@ locals {
 
   xdr_env = var.env == "stg" ? "nonprod" : var.env
 
-  xdr_tags = "activityName=${var.xdr_tags.activityName},application=${var.xdr_tags.application},org=${var.xdr_tags.org},server=${var.xdr_tags.server},env=${local.xdr_env}"
+  xdr_tags = {
+    activityName = "heritage"
+    application  = "crimeportal"
+    org          = "hmcts"
+    server       = "server"
+    env          = local.xdr_env
+  }
 
   resource_group_name              = "crime-portal-rg-${var.env}"
   virtual_machines                 = merge(var.frontend_vms, var.ldap_vms)
   azure_reserved_ip_address_offset = 4
 }
+
+locals {
+  env_map = {
+    "stg"  = "nle"
+    "prod" = "prod"
+  }
+  resource_group_name              = "crime-portal-rg-${var.env}"
+  virtual_machines                 = merge(var.frontend_vms, var.ldap_vms)
+  azure_reserved_ip_address_offset = 4
+
+}
+
 
 module "ctags" {
   source = "github.com/hmcts/terraform-module-common-tags"
