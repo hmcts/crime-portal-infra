@@ -4,7 +4,7 @@ locals {
     "prod" = "prod"
   }
 
-  env = lookup(local.env_map, var.env, "nonprod")
+  xdr_env = lookup(local.env_map, var.env, "nonprod")
 
   resource_group_name              = "crime-portal-rg-${var.env}"
   virtual_machines                 = merge(var.frontend_vms, var.ldap_vms)
