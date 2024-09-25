@@ -19,17 +19,6 @@ locals {
   azure_reserved_ip_address_offset = 4
 }
 
-locals {
-  env_map = {
-    "stg"  = "nle"
-    "prod" = "prod"
-  }
-  resource_group_name              = "crime-portal-rg-${var.env}"
-  virtual_machines                 = merge(var.frontend_vms, var.ldap_vms)
-  azure_reserved_ip_address_offset = 4
-
-}
-
 
 module "ctags" {
   source = "github.com/hmcts/terraform-module-common-tags"
