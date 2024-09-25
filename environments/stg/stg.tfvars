@@ -1,5 +1,5 @@
 tags = {
-  activityName = "crime-portal"
+  activityName = "crimeportal"
   application  = "heritage"
 }
 
