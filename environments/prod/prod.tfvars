@@ -1,3 +1,8 @@
+tags = {
+  activityName = "crimeportal"
+  application  = "heritage"
+}
+
 subnets = {
   gateway = {
     address_prefixes  = ["10.24.246.0/28"]
