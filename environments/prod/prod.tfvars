@@ -1,4 +1,4 @@
-tags = {
+xdr_tags = {
   activityName = "crimeportal"
   application  = "heritage"
 }
