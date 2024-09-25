@@ -4,7 +4,9 @@ locals {
     "prod" = "prod"
   }
 
-  xdr_env = lookup(local.env_map, var.env, "nonprod")
+  xdr_env = var.env == "stg" ? "nonprod" : var.env
+  
+  xdr_tags = merge(var.xdr_tags, { env = local.xdr_env })
 
   resource_group_name              = "crime-portal-rg-${var.env}"
   virtual_machines                 = merge(var.frontend_vms, var.ldap_vms)
