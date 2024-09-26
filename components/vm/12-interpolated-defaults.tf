@@ -4,7 +4,7 @@ locals {
     "prod" = "prod"
   }
 
-  xdr_tag_map = {
+  xdr_tags = {
     activityName = "heritage"
     application  = "crimeportal"
     org          = "hmcts"
