@@ -4,13 +4,13 @@ locals {
     "prod" = "prod"
   }
 
-  xdr_tags = {
+  xdr_tag_map = {
     activityName = "heritage"
     application  = "crimeportal"
-    org          = "hmcts"
-    server       = "server"
     env          = var.env == "stg" ? "nonprod" : var.env
   }
+
+  xdr_tags = join(",", values(local.xdr_tag_map))
 
   resource_group_name              = "crime-portal-rg-${var.env}"
   virtual_machines                 = merge(var.frontend_vms, var.ldap_vms)
