@@ -19,3 +19,7 @@ variable "postgres_databases" {
     }
   ]
 }
+variable "pgsql_storage_mb" {
+  description = "Max storage allowed for the PGSql Flexibile instance"
+  type        = number
+}
