@@ -22,7 +22,7 @@ KeyVault: `crime-portal-kv-prod`
 | Area of Responsibility                        | Responsible Party |
 | --------------------------------------------- | ----------------- |
 | Azure Infrastructure                          | PlatOps           |
-| AADSSHLoginForLinux                           | PlatOps
+| AADSSHLoginForLinux                           | PlatOps           |
 | Domain Join                                   | PlatOps           |
 | OS/Software/SQL config                        | CGI               |
 
