@@ -14,6 +14,18 @@ As well as external interfaces, there is an administration role performed by Cri
 
 This README file provides an overview of the project, including VM details, networking configurations, automation/installation of the operating system, relevant documentation links, diagrams and operational information.
 
+Resource group: `crime-portal-rg-prod`
+KeyVault: `crime-portal-kv-prod`
+
+## Responsibilities
+
+| Area of Responsibility                        | Responsible Party |
+| --------------------------------------------- | ----------------- |
+| Azure Infrastructure                          | PlatOps           |
+| AADSSHLoginForLinux                           | PlatOps           |
+| Domain Join                                   | PlatOps           |
+| OS/Software/SQL config                        | CGI               |
+
 ## VM Details
 
 Crime Portal is deployed to two environments, Staging (STG), and Production (Prod) as two sets of redundant virtual machines:
