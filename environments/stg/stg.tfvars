@@ -393,3 +393,5 @@ app_gateway = {
 }
 
 install_azure_monitor = true
+
+pgsql_storage_mb = 131072
