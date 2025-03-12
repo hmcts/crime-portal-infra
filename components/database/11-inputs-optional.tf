@@ -13,7 +13,7 @@ variable "pgsql_version" {
 variable "pgsql_storage_mb" {
   type        = number
   description = "Size of the PostgreSQL storage in MB."
-  default     = 65536
+  default     = 131072
 }
 
 variable "postgres_databases" {
