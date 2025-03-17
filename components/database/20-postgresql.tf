@@ -15,6 +15,7 @@ module "postgresql" {
   pgsql_databases               = var.postgres_databases
   pgsql_version                 = var.pgsql_version
   pgsql_delegated_subnet_id     = data.azurerm_subnet.backend-postgresql.id
+  pgsql_storage_mb              = var.pgsql_storage_mb
   admin_user_object_id          = data.azurerm_client_config.current.object_id
   enable_read_only_group_access = false
 

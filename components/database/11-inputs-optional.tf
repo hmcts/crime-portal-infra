@@ -10,6 +10,12 @@ variable "pgsql_version" {
   default     = 15
 }
 
+variable "pgsql_storage_mb" {
+  type        = number
+  description = "Size of the PostgreSQL storage in MB."
+  default     = 131072
+}
+
 variable "postgres_databases" {
   type        = list(object({ name : string, collation : optional(string), charset : optional(string) }))
   description = "The names of the Postgresql databases to deploy."
