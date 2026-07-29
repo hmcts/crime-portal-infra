@@ -36,6 +36,7 @@ resource "azurerm_backup_policy_vm" "this" {
 
   policy_type                    = "V2"
   timezone                       = "UTC"
+  consistency_type               = "OnlyCrashConsistent"
   instant_restore_retention_days = var.instant_restore_retention_days
 
   backup {
