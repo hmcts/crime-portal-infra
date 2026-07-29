@@ -398,4 +398,36 @@ app_gateway = {
 
 install_azure_monitor = true
 
+# DTSPO-32146: RSV baseline policy uplift (prod only, per agreed crit4/5 targets).
+# Monthly and yearly are kept at their existing live values rather than the
+# crit4/5 defaults (2 / 1) since they're already above baseline - see the
+# DTSPO-32146 comparison table for full rationale.
+vault_immutability = "Disabled" # immutability lock tracked as a separate follow-up PR
+
+backup_policy_frequency = "Hourly"
+backup_hour_interval    = 4
+backup_hour_duration    = 24
+
+# Instant restore retention must be between 1 and 30 days
+instant_restore_retention_days = 7
+
+# Daily: uplift from 28 to 56
+backup_retention_daily_count = 56
+
+# Weekly: new tier, 8 weeks, Sundays
+backup_retention_weekly_enabled  = true
+backup_retention_weekly_count    = 8
+backup_retention_weekly_weekdays = ["Sunday"]
+
+# Monthly: keep at existing 12 (above the crit4/5 default of 2)
+backup_retention_monthly_count    = 12
+backup_retention_monthly_weekdays = ["Sunday"]
+backup_retention_monthly_weeks    = ["First"]
+
+# Yearly: keep at existing 1
+backup_retention_yearly_count    = 1
+backup_retention_yearly_weekdays = ["Sunday"]
+backup_retention_yearly_weeks    = ["First"]
+backup_retention_yearly_months   = ["January"]
+
 pgsql_storage_mb = 262144

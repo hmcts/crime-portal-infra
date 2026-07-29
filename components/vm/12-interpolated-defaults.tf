@@ -39,7 +39,10 @@ data "azurerm_key_vault" "vault" {
   resource_group_name = local.resource_group_name
 }
 
+// DTSPO-32146: baseline policy is Terraform-managed for prod only (see 26-backup-policy.tf).
+// stg keeps its existing out-of-band policy, looked up here via data source, unchanged.
 data "azurerm_backup_policy_vm" "policy" {
+  count               = var.env == "prod" ? 0 : 1
   name                = "crime-portal-daily-bp-${var.env}"
   recovery_vault_name = "crime-portal-rsv-${var.env}"
   resource_group_name = local.resource_group_name
