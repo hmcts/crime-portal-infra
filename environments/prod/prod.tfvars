@@ -398,11 +398,12 @@ app_gateway = {
 
 install_azure_monitor = true
 
-# DTSPO-32146: RSV baseline policy uplift (prod only, per agreed crit4/5 targets).
-# Monthly and yearly are kept at their existing live values rather than the
-# crit4/5 defaults (2 / 1) since they're already above baseline - see the
-# DTSPO-32146 comparison table for full rationale.
-vault_immutability = "Disabled" # immutability lock tracked as a separate follow-up PR
+# DTSPO-32146: RSV baseline policy uplift (prod only).
+# Uplifted to the agreed baseline: Enhanced (V2) policy, 4-hourly schedule,
+# 7 day instant restore, 56 day daily retention, new 8 week weekly tier, GRS.
+# Monthly and yearly are deliberately left at their current live values, which
+# are already at or above the baseline, so no existing recovery points are lost.
+vault_immutability = "Disabled" # unchanged from live; immutability lock is a separate follow-up PR
 
 backup_policy_frequency = "Hourly"
 backup_hour_interval    = 4
@@ -419,15 +420,17 @@ backup_retention_weekly_enabled  = true
 backup_retention_weekly_count    = 8
 backup_retention_weekly_weekdays = ["Sunday"]
 
-# Monthly: keep at existing 12 (above the crit4/5 default of 2)
+# Monthly: unchanged from live (count 12, already above the baseline's 2).
+# Weekday/week pattern also left exactly as live so no monthly recovery points
+# are lost - narrowing the pattern would reduce qualifying days.
 backup_retention_monthly_count    = 12
-backup_retention_monthly_weekdays = ["Sunday"]
-backup_retention_monthly_weeks    = ["First"]
+backup_retention_monthly_weekdays = ["Sunday", "Wednesday"]
+backup_retention_monthly_weeks    = ["First", "Last"]
 
-# Yearly: keep at existing 1
+# Yearly: unchanged from live (count 1, last Sunday of January).
 backup_retention_yearly_count    = 1
 backup_retention_yearly_weekdays = ["Sunday"]
-backup_retention_yearly_weeks    = ["First"]
+backup_retention_yearly_weeks    = ["Last"]
 backup_retention_yearly_months   = ["January"]
 
 pgsql_storage_mb = 262144

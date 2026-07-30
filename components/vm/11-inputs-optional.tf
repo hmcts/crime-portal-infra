@@ -7,10 +7,12 @@ variable "install_azure_monitor" {
   default = false
 }
 
-# DTSPO-32146: RSV baseline policy inputs (prod only, see 26-backup-policy.tf).
-# Defaults reflect the current live crime-portal-daily-bp-prod policy, so stg
-# (which never reads these) and any un-overridden prod value stay unchanged
-# until explicitly uplifted in environments/prod/prod.tfvars.
+# DTSPO-32146: RSV baseline policy inputs (see 26-backup-policy.tf). Both prod
+# and stg build their own azurerm_backup_policy_vm from these.
+# Defaults mirror the verified live crime-portal-daily-bp-prod policy, so any
+# value not explicitly overridden in a <env>.tfvars is a no-op against Azure.
+# stg pins its own current live values in environments/stg/stg.tfvars; only
+# prod overrides these with the uplifted baseline targets.
 variable "vault_immutability" {
   type        = string
   description = "Immutability setting for the RSV. DTSPO-32146 scope is the policy uplift only; immutability lock is a separate follow-up PR."
@@ -71,12 +73,12 @@ variable "backup_retention_monthly_count" {
 
 variable "backup_retention_monthly_weekdays" {
   type    = list(string)
-  default = ["Sunday"]
+  default = ["Sunday", "Wednesday"]
 }
 
 variable "backup_retention_monthly_weeks" {
   type    = list(string)
-  default = ["First"]
+  default = ["First", "Last"]
 }
 
 variable "backup_retention_yearly_count" {
@@ -91,7 +93,7 @@ variable "backup_retention_yearly_weekdays" {
 
 variable "backup_retention_yearly_weeks" {
   type    = list(string)
-  default = ["First"]
+  default = ["Last"]
 }
 
 variable "backup_retention_yearly_months" {

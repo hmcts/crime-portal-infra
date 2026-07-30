@@ -1,23 +1,36 @@
-# DTSPO-32146: crime-portal RSV baseline policy uplift - prod only.
+# DTSPO-32146: crime-portal RSV baseline policy uplift.
 #
-# crime-portal-rsv-prod and crime-portal-daily-bp-prod already exist (created
-# out-of-band, previously only referenced via data source). Bringing them
-# under Terraform management here requires an import before the first apply:
+# Per Daniel Wilson's feedback (30/07), both prod and stg vaults/policies are
+# declared here as first-class resource blocks - Terraform is the source of
+# truth for both, rather than stg relying on an external data lookup.
+#
+# The baseline uplift itself remains prod only (Daniel Wilson, 29/07). stg pins
+# every input to its current live configuration in environments/stg/stg.tfvars,
+# so stg plans as a no-op once imported.
+#
+# crime-portal-rsv-<env> and crime-portal-daily-bp-<env> already exist in both
+# environments (created out-of-band). They must be imported per environment
+# before the first apply in that environment:
 #
 #   terraform import 'azurerm_recovery_services_vault.this[0]' \
-#     /subscriptions/<sub>/resourceGroups/crime-portal-rg-prod/providers/Microsoft.RecoveryServices/vaults/crime-portal-rsv-prod
+#     /subscriptions/<sub>/resourceGroups/crime-portal-rg-<env>/providers/Microsoft.RecoveryServices/vaults/crime-portal-rsv-<env>
 #   terraform import 'azurerm_backup_policy_vm.this[0]' \
-#     /subscriptions/<sub>/resourceGroups/crime-portal-rg-prod/providers/Microsoft.RecoveryServices/vaults/crime-portal-rsv-prod/backupPolicies/crime-portal-daily-bp-prod
+#     /subscriptions/<sub>/resourceGroups/crime-portal-rg-<env>/providers/Microsoft.RecoveryServices/vaults/crime-portal-rsv-<env>/backupPolicies/crime-portal-daily-bp-<env>
 #
-# stg is intentionally out of scope (Daniel Wilson, 29/07) and continues to use
-# the existing out-of-band policy via data.azurerm_backup_policy_vm.policy in
-# 12-interpolated-defaults.tf.
+# The hardcoded values below were checked against both live vaults/policies and
+# already match in each environment, so they do not force any change:
+#   sku Standard, GeoRedundant storage, cross region restore enabled,
+#   policy_type V2 (both policies are already Enhanced, so no replacement).
 #
-# Immutability is left at "Disabled" (var.vault_immutability default) in this
-# PR - locking the vault is tracked as a separate follow-up per the ticket.
+# The baseline document's sample also sets consistency_type = OnlyCrashConsistent,
+# but that argument does not exist on azurerm_backup_policy_vm in the azurerm 4.x
+# provider (4.22.0 is pinned here), so it is omitted.
+#
+# Immutability is left at "Disabled" in both environments, matching live.
+# Locking the vault is tracked as a separate follow-up per the ticket.
 
 resource "azurerm_recovery_services_vault" "this" {
-  count                 = var.env == "prod" ? 1 : 0
+  count                 = contains(["prod", "stg"], var.env) ? 1 : 0
   name                  = "crime-portal-rsv-${var.env}"
   resource_group_name   = local.resource_group_name
   location              = var.location
@@ -29,14 +42,13 @@ resource "azurerm_recovery_services_vault" "this" {
 }
 
 resource "azurerm_backup_policy_vm" "this" {
-  count               = var.env == "prod" ? 1 : 0
+  count               = contains(["prod", "stg"], var.env) ? 1 : 0
   name                = "crime-portal-daily-bp-${var.env}"
   resource_group_name = local.resource_group_name
   recovery_vault_name = azurerm_recovery_services_vault.this[0].name
 
   policy_type                    = "V2"
   timezone                       = "UTC"
-  consistency_type               = "OnlyCrashConsistent"
   instant_restore_retention_days = var.instant_restore_retention_days
 
   backup {
@@ -73,6 +85,6 @@ resource "azurerm_backup_policy_vm" "this" {
 }
 
 locals {
-  recovery_vault_name = var.env == "prod" ? azurerm_recovery_services_vault.this[0].name : "crime-portal-rsv-${var.env}"
-  backup_policy_id    = var.env == "prod" ? azurerm_backup_policy_vm.this[0].id : data.azurerm_backup_policy_vm.policy[0].id
+  recovery_vault_name = azurerm_recovery_services_vault.this[0].name
+  backup_policy_id    = azurerm_backup_policy_vm.this[0].id
 }
