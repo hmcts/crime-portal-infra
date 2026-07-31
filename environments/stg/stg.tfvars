@@ -393,29 +393,3 @@ app_gateway = {
 }
 
 install_azure_monitor = true
-
-# DTSPO-32146: stg RSV vault/policy are Terraform-managed resources (see
-# components/vm/26-backup-policy.tf) so Terraform is the source of truth rather
-# than an external data lookup. The baseline uplift is prod only, so every
-# value below is pinned to stg's current live configuration - this should plan
-# as a no-op once the vault and policy are imported.
-vault_immutability = "Disabled" # unchanged from live
-
-backup_policy_frequency = "Daily"
-backup_policy_time      = "01:00"
-
-instant_restore_retention_days = 1
-
-backup_retention_daily_count = 7
-
-# Live stg policy has no weekly retention tier
-backup_retention_weekly_enabled = false
-
-backup_retention_monthly_count    = 12
-backup_retention_monthly_weekdays = ["Sunday", "Wednesday"]
-backup_retention_monthly_weeks    = ["First", "Last"]
-
-backup_retention_yearly_count    = 1
-backup_retention_yearly_weekdays = ["Sunday"]
-backup_retention_yearly_weeks    = ["Last"]
-backup_retention_yearly_months   = ["January"]

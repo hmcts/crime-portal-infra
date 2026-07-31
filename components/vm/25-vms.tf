@@ -44,9 +44,9 @@ module "virtual-machines" {
 resource "azurerm_backup_protected_vm" "vm" {
   for_each            = local.virtual_machines
   resource_group_name = local.resource_group_name
-  recovery_vault_name = local.recovery_vault_name
+  recovery_vault_name = "crime-portal-rsv-${var.env}"
   source_vm_id        = module.virtual-machines[each.key].vm_id
-  backup_policy_id    = local.backup_policy_id
+  backup_policy_id    = var.env == "prod" ? azurerm_backup_policy_vm.this[0].id : data.azurerm_backup_policy_vm.policy[0].id
 }
 
 resource "azurerm_virtual_machine_extension" "AADSSHLoginForLinux" {

@@ -398,39 +398,32 @@ app_gateway = {
 
 install_azure_monitor = true
 
-# DTSPO-32146: RSV baseline policy uplift (prod only).
-# Uplifted to the agreed baseline: Enhanced (V2) policy, 4-hourly schedule,
-# 7 day instant restore, 56 day daily retention, new 8 week weekly tier, GRS.
-# Monthly and yearly are deliberately left at their current live values, which
-# are already at or above the baseline, so no existing recovery points are lost.
-vault_immutability = "Disabled" # unchanged from live; immutability lock is a separate follow-up PR
+backup_schedule = {
+  frequency     = "Hourly"
+  time          = "01:00"
+  hour_interval = 4
+  hour_duration = 24
+}
 
-backup_policy_frequency = "Hourly"
-backup_hour_interval    = 4
-backup_hour_duration    = 24
-
-# Instant restore retention must be between 1 and 30 days
 instant_restore_retention_days = 7
+backup_retention_daily_count   = 56
 
-# Daily: uplift from 28 to 56
-backup_retention_daily_count = 56
+backup_retention_weekly = {
+  count    = 8
+  weekdays = ["Sunday"]
+}
 
-# Weekly: new tier, 8 weeks, Sundays
-backup_retention_weekly_enabled  = true
-backup_retention_weekly_count    = 8
-backup_retention_weekly_weekdays = ["Sunday"]
+backup_retention_monthly = {
+  count    = 2
+  weekdays = ["Sunday"]
+  weeks    = ["First"]
+}
 
-# Monthly: unchanged from live (count 12, already above the baseline's 2).
-# Weekday/week pattern also left exactly as live so no monthly recovery points
-# are lost - narrowing the pattern would reduce qualifying days.
-backup_retention_monthly_count    = 12
-backup_retention_monthly_weekdays = ["Sunday", "Wednesday"]
-backup_retention_monthly_weeks    = ["First", "Last"]
-
-# Yearly: unchanged from live (count 1, last Sunday of January).
-backup_retention_yearly_count    = 1
-backup_retention_yearly_weekdays = ["Sunday"]
-backup_retention_yearly_weeks    = ["Last"]
-backup_retention_yearly_months   = ["January"]
+backup_retention_yearly = {
+  count    = 1
+  weekdays = ["Sunday"]
+  weeks    = ["First"]
+  months   = ["January"]
+}
 
 pgsql_storage_mb = 262144

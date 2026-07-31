@@ -7,96 +7,73 @@ variable "install_azure_monitor" {
   default = false
 }
 
-# DTSPO-32146: RSV baseline policy inputs (see 26-backup-policy.tf). Both prod
-# and stg build their own azurerm_backup_policy_vm from these.
-# Defaults mirror the verified live crime-portal-daily-bp-prod policy, so any
-# value not explicitly overridden in a <env>.tfvars is a no-op against Azure.
-# stg pins its own current live values in environments/stg/stg.tfvars; only
-# prod overrides these with the uplifted baseline targets.
-variable "vault_immutability" {
-  type        = string
-  description = "Immutability setting for the RSV. DTSPO-32146 scope is the policy uplift only; immutability lock is a separate follow-up PR."
-  default     = "Disabled"
-}
-
-variable "backup_policy_frequency" {
-  type    = string
-  default = "Daily"
-}
-
-variable "backup_policy_time" {
-  type    = string
-  default = "01:00"
-}
-
-variable "backup_hour_interval" {
-  type     = number
-  default  = null
-  nullable = true
-}
-
-variable "backup_hour_duration" {
-  type     = number
-  default  = null
-  nullable = true
+variable "backup_schedule" {
+  type = object({
+    frequency     = string
+    time          = string
+    hour_interval = optional(number)
+    hour_duration = optional(number)
+  })
+  description = "Backup schedule for the VM backup policy."
+  default = {
+    frequency     = "Hourly"
+    time          = "01:00"
+    hour_interval = 4
+    hour_duration = 24
+  }
 }
 
 variable "instant_restore_retention_days" {
-  type    = number
-  default = 1
+  type        = number
+  description = "Instant restore retention in days."
+  default     = 7
 }
 
 variable "backup_retention_daily_count" {
-  type    = number
-  default = 28
+  type        = number
+  description = "Number of daily recovery points to retain."
+  default     = 56
 }
 
-variable "backup_retention_weekly_enabled" {
-  type    = bool
-  default = false
+variable "backup_retention_weekly" {
+  type = object({
+    count    = number
+    weekdays = list(string)
+  })
+  description = "Weekly retention tier. Null disables it."
+  nullable    = true
+  default = {
+    count    = 8
+    weekdays = ["Sunday"]
+  }
 }
 
-variable "backup_retention_weekly_count" {
-  type    = number
-  default = 8
+variable "backup_retention_monthly" {
+  type = object({
+    count    = number
+    weekdays = list(string)
+    weeks    = list(string)
+  })
+  description = "Monthly retention tier."
+  default = {
+    count    = 2
+    weekdays = ["Sunday"]
+    weeks    = ["First"]
+  }
 }
 
-variable "backup_retention_weekly_weekdays" {
-  type    = list(string)
-  default = ["Sunday"]
-}
-
-variable "backup_retention_monthly_count" {
-  type    = number
-  default = 12
-}
-
-variable "backup_retention_monthly_weekdays" {
-  type    = list(string)
-  default = ["Sunday", "Wednesday"]
-}
-
-variable "backup_retention_monthly_weeks" {
-  type    = list(string)
-  default = ["First", "Last"]
-}
-
-variable "backup_retention_yearly_count" {
-  type    = number
-  default = 1
-}
-
-variable "backup_retention_yearly_weekdays" {
-  type    = list(string)
-  default = ["Sunday"]
-}
-
-variable "backup_retention_yearly_weeks" {
-  type    = list(string)
-  default = ["Last"]
-}
-
-variable "backup_retention_yearly_months" {
-  type    = list(string)
-  default = ["January"]
+variable "backup_retention_yearly" {
+  type = object({
+    count    = number
+    weekdays = list(string)
+    weeks    = list(string)
+    months   = list(string)
+  })
+  description = "Yearly retention tier."
+  default = {
+    count    = 1
+    weekdays = ["Sunday"]
+    weeks    = ["First"]
+    months   = ["January"]
+  }
 }
