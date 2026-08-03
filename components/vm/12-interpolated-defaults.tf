@@ -39,6 +39,8 @@ data "azurerm_key_vault" "vault" {
   resource_group_name = local.resource_group_name
 }
 
+data "azurerm_client_config" "current" {}
+
 data "azurerm_recovery_services_vault" "this" {
   name                = "crime-portal-rsv-${var.env}"
   resource_group_name = local.resource_group_name

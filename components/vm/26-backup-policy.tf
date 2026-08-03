@@ -1,4 +1,8 @@
-# terraform import 'azurerm_backup_policy_vm.this[0]' /subscriptions/<sub>/resourceGroups/crime-portal-rg-prod/providers/Microsoft.RecoveryServices/vaults/crime-portal-rsv-prod/backupPolicies/crime-portal-daily-bp-prod
+import {
+  for_each = var.env == "prod" ? toset(["this"]) : toset([])
+  to       = azurerm_backup_policy_vm.this[0]
+  id       = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourceGroups/${local.resource_group_name}/providers/Microsoft.RecoveryServices/vaults/crime-portal-rsv-${var.env}/backupPolicies/crime-portal-daily-bp-${var.env}"
+}
 
 resource "azurerm_backup_policy_vm" "this" {
   count               = var.env == "prod" ? 1 : 0
