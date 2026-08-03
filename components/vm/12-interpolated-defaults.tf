@@ -39,7 +39,15 @@ data "azurerm_key_vault" "vault" {
   resource_group_name = local.resource_group_name
 }
 
+data "azurerm_client_config" "current" {}
+
+data "azurerm_recovery_services_vault" "this" {
+  name                = "crime-portal-rsv-${var.env}"
+  resource_group_name = local.resource_group_name
+}
+
 data "azurerm_backup_policy_vm" "policy" {
+  count               = var.env == "prod" ? 0 : 1
   name                = "crime-portal-daily-bp-${var.env}"
   recovery_vault_name = "crime-portal-rsv-${var.env}"
   resource_group_name = local.resource_group_name

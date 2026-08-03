@@ -398,4 +398,32 @@ app_gateway = {
 
 install_azure_monitor = true
 
+backup_schedule = {
+  frequency     = "Hourly"
+  time          = "01:00"
+  hour_interval = 4
+  hour_duration = 24
+}
+
+instant_restore_retention_days = 7
+backup_retention_daily_count   = 56
+
+backup_retention_weekly = {
+  count    = 8
+  weekdays = ["Sunday"]
+}
+
+backup_retention_monthly = {
+  count    = 2
+  weekdays = ["Sunday"]
+  weeks    = ["First"]
+}
+
+backup_retention_yearly = {
+  count    = 1
+  weekdays = ["Sunday"]
+  weeks    = ["First"]
+  months   = ["January"]
+}
+
 pgsql_storage_mb = 262144
