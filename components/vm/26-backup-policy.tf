@@ -21,12 +21,9 @@ resource "azurerm_backup_policy_vm" "this" {
     count = var.backup_retention_daily_count
   }
 
-  dynamic "retention_weekly" {
-    for_each = var.backup_retention_weekly != null ? [var.backup_retention_weekly] : []
-    content {
-      count    = retention_weekly.value.count
-      weekdays = retention_weekly.value.weekdays
-    }
+  retention_weekly {
+    count    = var.backup_retention_weekly.count
+    weekdays = var.backup_retention_weekly.weekdays
   }
 
   retention_monthly {

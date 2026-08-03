@@ -40,8 +40,7 @@ variable "backup_retention_weekly" {
     count    = number
     weekdays = list(string)
   })
-  description = "Weekly retention tier. Null disables it."
-  nullable    = true
+  description = "Weekly retention tier."
   default = {
     count    = 8
     weekdays = ["Sunday"]
